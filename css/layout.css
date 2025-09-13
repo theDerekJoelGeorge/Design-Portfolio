@@ -1070,7 +1070,7 @@ footer {
 .main-container {
     min-height: 100vh;
     width: 100%;
-    background-color: #0d0d0d;
+    background-color: var(--background-color);
 }
 
 /* Hero Header with Device Mockups */

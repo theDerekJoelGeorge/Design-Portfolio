@@ -326,6 +326,14 @@ body {
   min-height: 100vh;
 }
 
+/* Work Section - Vertically Centered */
+#work.section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0;
+}
+
 .hero h1 .static-name {
   color: var(--primary-color);
 }

@@ -322,8 +322,20 @@ body {
 
 /* Hero Section Visual Styles */
 .hero {
-  padding: 8rem 0 4rem 0;
+  padding: 6rem 0 3rem 0;
   min-height: 100vh;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
 }
 
 /* Work Section - Vertically Centered */
@@ -391,7 +403,7 @@ body {
 .social-icon {
   width: 50px;
   height: 50px;
-  margin-right: 1vw;
+  margin-right: 0.5rem;
   color: var(--text-color);
 }
 
@@ -506,8 +518,7 @@ body {
 /* Header Section Visual Styles */
 .header-text h1 {
   text-align: left;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-color);
   margin-top: 2rem;
@@ -602,8 +613,8 @@ body {
 
 /* Thumbnails Container */
 .thumbnails-container {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  margin-left: 0;
   overflow: hidden;
   position: relative;
   padding: 1rem 0;
@@ -714,8 +725,7 @@ body {
 }
 
 .tagline {
-  font-size: 1vw;
-  font-size: clamp(1rem, 1vw, 2rem);
+  font-size: 1.2rem;
   color: var(--primary-color);
   margin-bottom: 2rem;
   font-weight: 500;
@@ -724,8 +734,7 @@ body {
 }
 
 .intro {
-  font-size: 1vw;
-  font-size: clamp(0.9rem, 1vw, 1.5rem);
+  font-size: 1.1rem;
   color: var(--text-color);
   max-width: 800px;
   margin: 0 auto;
@@ -745,8 +754,7 @@ body {
 
 .bio-text h2 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   margin-top: 2rem;
   margin-bottom: 4rem;
   padding-top: 1rem;
@@ -757,7 +765,7 @@ body {
 }
 
 .bio-text p {
-  font-size: calc(1vw + 0.5rem);
+  font-size: 1.1rem;
   line-height: 1.8;
   text-align: justify;
   /* margin-bottom: 2.5rem; */
@@ -955,8 +963,7 @@ p {
 }
 
 .horizontal-slideshow-section h3 {
-  font-size: 1.5vw;
-  font-size: clamp(1.1rem, 1.5vw, 1.8rem);
+  font-size: 1.3rem;
   margin-bottom: 2rem;
   color: var(--primary-color);
   text-align: left;
@@ -1163,8 +1170,7 @@ p {
 
 .timeline-column h2 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   margin-top: 2rem;
   margin-bottom: 4rem;
   padding-top: 1rem;
@@ -1224,22 +1230,20 @@ p {
 }
 
 .timeline-year {
-  font-size: calc(1vw + 0.5rem);
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 0.7rem;
 }
 
 .timeline-content h3 {
-  font-size: 1.5vw;
-  font-size: clamp(1.7rem, 1.5vw, 2.5rem);
+  font-size: 1.5rem;
   margin-bottom: 0.7rem;
   color: var(--text-color);
 }
 
 .timeline-content h4 {
-  font-size: 1.5vw;
-  font-size: clamp(1.5rem, 1.5vw, 2rem);
+  font-size: 1.3rem;
   color: var(--primary-color);
   margin-bottom: 1.2rem;
   font-weight: 500;
@@ -1249,13 +1253,13 @@ p {
   color: var(--text-color);
   line-height: 1.7;
   margin-bottom: 1.2rem;
-  font-size: calc(1vw + 0.5rem);
+  font-size: 1rem;
   text-align: justify;
 }
 
 .timeline-content li {
   color: var(--text-color);
-  font-size: calc(1vw + 0.5rem);
+  font-size: 1rem;
   position: relative;
   padding-left: 1.5rem;
   margin-bottom: 0.5rem;
@@ -1278,8 +1282,7 @@ p {
 
 /* Extra Curriculars Visual Styles */
 .extracurriculars-heading {
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   color: var(--text-color);
   text-align: center;
   margin-top: 2rem;
@@ -1293,8 +1296,7 @@ p {
 /* Awards Section Visual Styles */
 .awards-section h2 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   margin-top: 2rem;
   margin-bottom: 4rem;
   padding-top: 1rem;
@@ -1317,23 +1319,20 @@ p {
 }
 
 .award-content h3 {
-  font-size: 1.5vw;
-  font-size: clamp(1.8rem, 1.5vw, 2.5rem);
+  font-size: 1.5rem;
   margin-bottom: 0.8rem;
   color: var(--text-color);
 }
 
 .award-content h4 {
-  font-size: 1.5vw;
-  font-size: clamp(1.7rem, 1.5vw, 2.3rem);
+  font-size: 1.3rem;
   color: var(--primary-color);
   margin-bottom: 1.2rem;
   font-weight: 500;
 }
 
 .award-content p {
-  font-size: 1.5vw;
-  font-size: clamp(1.6rem, 1.5vw, 2.1rem);
+  font-size: 1.1rem;
   color: var(--text-color);
   line-height: 1.7;
   margin-bottom: 1.2rem;
@@ -1389,16 +1388,14 @@ p {
 }
 
 .contact-details h3 {
-  font-size: 1.5vw;
-  font-size: clamp(1.5rem, 1.5vw, 2rem);
+  font-size: 1.3rem;
   margin-bottom: 0.8rem;
   color: var(--primary-color);
   font-weight: 600;
 }
 
 .contact-details p {
-  font-size: 1.2vw;
-  font-size: clamp(1.2rem, 1.2vw, 1.8rem);
+  font-size: 1rem;
   color: var(--text-color);
   margin: 0;
   word-break: break-all;
@@ -1428,8 +1425,7 @@ p {
 
 .faq-section h2 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2rem;
   margin-bottom: 3rem;
   color: var(--text-color);
   font-weight: bold;
@@ -1471,7 +1467,7 @@ p {
   cursor: pointer;
   color: var(--text-color);
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 1.2rem;
   list-style: none;
   transition: all 0.3s ease;
   width: 100%;
@@ -1507,7 +1503,7 @@ p {
 
 .faq-answer p {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 1rem;
   text-align: justify;
 }
 
@@ -1536,8 +1532,7 @@ p {
 
 .projects-content h1 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
   padding-top: 1rem;
@@ -1854,8 +1849,7 @@ p {
 /* Contact Section Visual Styles */
 .contact-section h2 {
   text-align: center;
-  font-size: 3vw;
-  font-size: clamp(2.5rem, 3vw, 4rem);
+  font-size: 2.5rem;
   margin-top: 2rem;
   margin-bottom: 4rem;
   padding-top: 1rem;
@@ -1880,7 +1874,7 @@ p {
 }
 
 .contact-details h3 {
-  font-size: 2vw;
+  font-size: 1.3rem;
   margin-bottom: 0.7rem;
   color: var(--text-color);
 }
@@ -1888,7 +1882,7 @@ p {
 .contact-details p {
   color: var(--text-color);
   opacity: 0.8;
-  font-size: 1vw;
+  font-size: 1rem;
   text-align: justify;
 }
 
@@ -2938,11 +2932,11 @@ p {
 /* Home Page Responsive Visual Styles */
 @media (max-width: 1024px) {
   .hero h1 {
-    font-size: 4rem;
+    font-size: 2.5rem;
   }
   
   .hero p {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   
   .social-icon {
@@ -2951,21 +2945,21 @@ p {
   }
   
   .section h2 {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
   
   .section p {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
   }
   
   .hero p {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   
   .social-icon {
@@ -2978,21 +2972,21 @@ p {
   }
   
   .section h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
   }
   
   .section p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .hero p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
   
   .social-icon {
@@ -3005,21 +2999,21 @@ p {
   }
   
   .section h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
   
   .section p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 360px) {
   .hero h1 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   .hero p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
   
   .social-icon {
@@ -3032,11 +3026,11 @@ p {
   }
   
   .section h2 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   .section p {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -4000,7 +3994,7 @@ p {
 
 /* EventHive Breathing Text */
 .eventhive-breathing-text {
-  font-size: 5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   line-height: 1.6;
   margin: 0;
@@ -4010,7 +4004,7 @@ p {
 /* EventHive Section Titles */
 .eventhive-section-title {
   color: var(--eventhive-purple);
-  font-size: 2.5rem;
+  font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -4030,7 +4024,7 @@ p {
 /* EventHive Section Headings */
 .eventhive-section-heading {
   color: white;
-  font-size: 3.5rem;
+  font-size: 2rem;
   font-weight: bold;
   margin: 0;
   line-height: 1.2;
@@ -4040,7 +4034,7 @@ p {
 /* EventHive Section Descriptions */
 .eventhive-section-description {
   color: white;
-  font-size: 3rem;
+  font-size: 1.1rem;
   line-height: 1.6;
   margin: 0;
 }
@@ -4050,9 +4044,9 @@ p {
   background: var(--eventhive-purple-transparent);
   color: white;
   border: none;
-  padding: 1.5rem 3rem;
+  padding: 1rem 2rem;
   border-radius: 0.5rem;
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -4297,24 +4291,24 @@ p {
 }
 
 .eventhive-main-title {
-  font-size: 5.5rem;
+  font-size: 3rem;
   margin: 0;
 }
 
 .eventhive-year {
-  font-size: 5rem;
+  font-size: 2rem;
   color: rgb(201, 98, 226);
   align-self: flex-end;
   font-weight: bold;
 }
 
 .eventhive-subtitle {
-  font-size: 3.5rem;
+  font-size: 1.5rem;
   color: darkgrey;
 }
 
 .eventhive-description {
-  font-size: 3rem;
+  font-size: 1.1rem;
   color: white;
   margin-top: 2%;
 }
@@ -4361,7 +4355,7 @@ p {
 }
 
 .eventhive-quote-text {
-  font-size: 4rem;
+  font-size: 1.8rem;
   font-weight: bold;
   line-height: 1.4;
   margin: 3rem 0 1rem 0;
@@ -4370,7 +4364,7 @@ p {
 
 .eventhive-quote-attribution {
   color: white;
-  font-size: 2.5rem;
+  font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -4395,7 +4389,7 @@ p {
 
 .eventhive-research-card p {
   color: white;
-  font-size: 2.5rem;
+  font-size: 1rem;
   line-height: 1.4;
   margin: 0;
   font-weight: bold;
@@ -4433,7 +4427,7 @@ p {
 
 .eventhive-table th {
   color: white;
-  font-size: 3rem;
+  font-size: 1.2rem;
   font-weight: bold;
   padding: 1.5rem;
   text-align: left;
@@ -4442,7 +4436,7 @@ p {
 
 .eventhive-table td {
   color: #e0e0e0;
-  font-size: 3rem;
+  font-size: 1rem;
   padding: 1.5rem;
   border-bottom: 1px solid rgba(194, 56, 221, 0.3);
   line-height: 1.4;
@@ -4467,7 +4461,7 @@ p {
   border: none;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -4502,7 +4496,7 @@ p {
 
 .eventhive-problem-title {
   color: #ffffff;
-  font-size: 2.5rem;
+  font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -4510,7 +4504,7 @@ p {
 }
 
 .eventhive-problem-question {
-  font-size: 4rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
   line-height: 1.2;

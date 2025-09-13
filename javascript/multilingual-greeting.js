@@ -88,12 +88,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const languageIndicator = document.createElement('div');
   languageIndicator.style.cssText = `
     position: absolute;
-    top: -30px;
+    top: -25px;
     left: 0;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--text-color-secondary);
-    opacity: 0.7;
+    opacity: 0.8;
     transition: opacity 0.3s ease;
+    font-weight: 500;
   `;
   
   function updateLanguageIndicator() {

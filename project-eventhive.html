@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventHive: Your Hub for Events at UQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    * {
+      cursor: none !important;
+    }
+
+    @keyframes textBreathing {
+
+      0%,
+      100% {
+        background: linear-gradient(45deg, #c238dd, #bb43da, #c238dd);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      50% {
+        background: linear-gradient(45deg, #bb43da, #a832c7, #bb43da);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .breathing-text {
+      animation: textBreathing 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Particle Background -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo">
+      <a href="index.html" aria-label="Derek Joel George - Home">
+        <img src="images/Logo(white).png" alt="Derek Joel George Logo" />
+      </a>
+    </div>
+    <ul class="nav-links" role="menubar">
+      <li role="none"><a href="about.html" id="about-link" role="menuitem">About</a></li>
+      <li role="none"><a href="projects.html" id="projects-link" class="active" role="menuitem"
+          aria-current="page">Projects</a></li>
+      <li role="none"><a href="https://drive.google.com/file/d/14vVA3JfiB90y71_3F9RnhGBED2Y7NxWh/view?usp=sharing"
+          id="resume-link" role="menuitem" target="_blank" rel="noopener noreferrer">Resume</a></li>
+    </ul>
+  </nav>
+
+
+   <div class="main-container" id="main-content">
+      <div class="container">
+       <div class="eventhive-header-container">
+         <img src="images/projects/eventhive/header.png" class="eventhive-header-image project-main-image"
+           alt="EventHive platform interface showing event management features" />
+       </div>
+       <div class="eventhive-title-container">
+       <h1 class="eventhive-main-title">EventHive - Your Hub for Events at UQ</h1>
+       <div class="eventhive-year">2024</div>
+           </div>
+      <h2 class="eventhive-subtitle">University of Queensland | Product Designer</h2>
+     <!-- Content will go here -->
+     </div>
+     <div class="container">
+        <p class="eventhive-description">EventHive was designed as part of the DECO7250 Human-Computer Interaction course at The University of Queensland. Our team identified a major issue faced by students: the fragmented nature of campus event promotion and the hidden fees involved in ticketing. With over 220 clubs and societies, many students were unaware of most events happening around them, while organisers struggled to reach audiences effectively. <br><br>My role in this project included conducting user research, synthesising insights, and contributing to the design of the EventHive prototype. I worked closely with my team to analyse existing systems, develop personas and storyboards, and design a mobile-first solution that integrated event discovery, ticketing, and social interaction into one seamless platform.</p>
+     </div>
+       
+    <!-- The Challenge Section -->
+    <div id="challenge" class="container eventhive-section-container">
+     <div class="eventhive-text-container">
+       <!-- Left Column -->
+       <div>
+         <div class="eventhive-section-title">THE CHALLENGE</div>
+         <h2 class="eventhive-section-heading">Why was this problem worth solving?</h2>
+         </div>
+         
+       <!-- Right Column -->
+       <div>
+         <p class="eventhive-section-description">Students consistently reported missing events because information was scattered across Instagram pages, posters, or word-of-mouth. Ticketing often relied on third-party platforms like Eventbrite, which added fees that inflated costs. This created frustration for students and reduced attendance at events that could have otherwise fostered community and belonging.</p>
+       </div>
+     </div>
+      </div>
+      <!-- Quote within Challenge Section -->
+      <div class="eventhive-quote-container">
+        <div class="eventhive-quote-content">
+          <blockquote class="breathing-text eventhive-quote-text">
+            "I missed out on events just because I didn't hear about them until the last minute."
+          </blockquote>
+          <div class="eventhive-quote-attribution">STUDENT INTERVIEWEE</div>
+        </div>
+         </div>
+       </div>
+       </div>
+
+       <!-- Research Section -->
+       <div id="research" class="container eventhive-section-container-alt">
+         <div class="eventhive-text-container">
+           <!-- Left Column -->
+           <div>
+             <div class="eventhive-section-title">THE RESEARCH</div>
+             <h2 class="eventhive-section-heading">How did we understand user needs?</h2>
+           </div>
+           
+           <!-- Right Column -->
+           <div>
+             <p class="eventhive-section-description">We began with contextual inquiry, competitor analysis, and user research. We compared existing systems like UQU What's On, UQ Events, Eventbrite, and Humanitix. While each had strengths, none provided a complete solution for UQ students. Limitations included outdated UI, limited filtering options, and ticketing fees.</p>
+             
+             <p class="eventhive-section-description" style="margin: 2rem 0 0 0;">We then conducted short interviews with ~20 students and surveys with 9 students. Key findings included:</p>
+             
+             <div class="eventhive-research-cards">
+               <div class="eventhive-research-card">
+                 <p>50% of students didn't know the UQU "What's On" calendar existed.</p>
+               </div>
+               <div class="eventhive-research-card">
+                 <p>Social media was the primary way students heard about events.</p>
+               </div>
+               <div class="eventhive-research-card">
+                 <p>Students valued event categories, personal calendars, and in-app ticket purchasing.</p>
+               </div>
+               <div class="eventhive-research-card">
+                 <p>Motivation to attend increased if friends were going or if the process was easier.</p>
+               </div>
+             </div>
+             
+           </div>
+           
+         </div>
+       </div>
+       
+       <div class="eventhive-table-container">
+         <div class="eventhive-table-wrapper-research">
+           <table class="eventhive-table">
+             <thead>
+               <tr>
+                 <th>User Group</th>
+                 <th>Needs</th>
+                 <th>Values</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>Students</td>
+                 <td>Easy access to information about campus events and news.<br>- Opportunities for social engagement with the campus community.</td>
+                 <td>- Convenience<br>- A sense of engagement and belonging</td>
+               </tr>
+               <tr>
+                 <td>Club and Student Union Members</td>
+                 <td>A platform to promote their events.<br>- Tools for efficiently organizing and managing events.</td>
+                 <td>Increased visibility and support for their events.</td>
+               </tr>
+               <tr>
+                 <td>Faculty and Staff</td>
+                 <td>- Ways to support and engage with students outside the classroom.<br>- Access to relevant information about campus activities.</td>
+                 <td>- Supporting student development.<br>- Strengthening connections with students.</td>
+               </tr>
+               <tr>
+                 <td>University Administrators</td>
+                 <td>- A platform for monitoring events and ensuring compliance with campus policies.</td>
+                 <td>- Supporting student development.<br>- Strengthening connections with students.</td>
+               </tr>
+               <tr>
+                 <td>Alumni</td>
+                 <td>- Ways to stay connected and engaged with their alma mater.</td>
+                 <td>- A sense of connection with alma mater.</td>
+               </tr>
+             </tbody>
+           </table>
+         </div>
+       </div>
+       
+       <!-- Problem Statement Section -->
+       <div id="problem" class="container eventhive-problem-section">
+         <div class="eventhive-problem-container">
+           <div class="eventhive-problem-title">DEFINING THE PROBLEM</div>
+           <h2 class="breathing-text eventhive-problem-question">
+            How might we centralise event discovery and ticketing at UQ, while making it fair, transparent, and socially engaging for students?
+           </h2>
+         </div>
+       </div>
+
+       <!-- Ideation Section -->
+       <div id="ideation" class="container eventhive-section-container-alt">
+         <div class="eventhive-text-container">
+           <!-- Left Column -->
+           <div>
+             <div class="eventhive-section-title">IDEATION</div>
+             <h2 class="eventhive-section-heading">How did we approach the solution?</h2>
+           </div>
+           
+           <!-- Right Column -->
+           <div>
+             <p class="eventhive-section-description">We brainstormed solutions ranging from purely informational websites to social-first apps. Through feedback and iteration, we refined the idea into a mobile-first event platform that combined:</p>
+             
+             <div class="eventhive-research-cards">
+              <div class="eventhive-research-card">
+                <p>Discovery: Search, filters, recommendations, and categories.</p>
+              </div>
+              <div class="eventhive-research-card">
+                <p>Transaction: Integrated payments, autofill, and transparent ticketing.</p>
+              </div>
+              <div class="eventhive-research-card">
+                <p>Community: Club profiles, chats, and group features.</p>
+              </div>
+            </div>
+            
+            <p class="eventhive-section-description" style="margin: 2rem 0 0 0;">Our personas (e.g., Peter, a first-year student; Alejandra, an alumnus) helped us ground the solution in diverse user needs. Storyboards illustrated how EventHive would fit into a student's day, from finding an event to attending it with friends.</p>
+           </div>
+         </div>
+       </div>
+       <div class="eventhive-quote-container">
+        <div class="eventhive-quote-content">
+          <!-- Button Navigation -->
+          <div class="eventhive-image-switcher">
+            <button id="personasBtn" class="eventhive-switcher-btn active">Personas</button>
+            <button id="storyboardBtn" class="eventhive-switcher-btn">Storyboard</button>
+          </div>
+          
+          <!-- Image Container -->
+          <div class="eventhive-switcher-image">
+            <img id="personasImg" src="images/projects/eventhive/User Personas.png" style="width: 100%; display: block;" alt="User Personas" />
+            <img id="storyboardImg" src="images/projects/eventhive/storyboard.png" style="width: 100%; display: none;" alt="Storyboard" />
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const personasBtn = document.getElementById('personasBtn');
+          const storyboardBtn = document.getElementById('storyboardBtn');
+          const personasImg = document.getElementById('personasImg');
+          const storyboardImg = document.getElementById('storyboardImg');
+          
+          function showPersonas() {
+            personasImg.style.display = 'block';
+            storyboardImg.style.display = 'none';
+            personasBtn.style.background = '#c238dd';
+            storyboardBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+          }
+          
+          function showStoryboard() {
+            personasImg.style.display = 'none';
+            storyboardImg.style.display = 'block';
+            personasBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+            storyboardBtn.style.background = '#c238dd';
+          }
+          
+          personasBtn.addEventListener('click', showPersonas);
+          storyboardBtn.addEventListener('click', showStoryboard);
+        });
+      </script>
+      <div id="solution" class="container eventhive-solution-section">
+        <!-- Sub-container 1: Left and Right Columns -->
+        <div class="eventhive-solution-content">
+          <!-- Left Column - EventHive Title -->
+          <div>
+            <h2 class="breathing-text eventhive-solution-title">EventHive</h2>
+          </div>
+          
+          <!-- Right Column - Description -->
+          <div>
+            <p class="eventhive-solution-description">EventHive is a holistic event ecosystem that combines discovery, booking, and social engagement into one seamless app. By centralising event information, removing ticketing fees, and adding community-driven features like chats and club profiles, EventHive transforms attending events from a scattered, frustrating process into an accessible, inclusive, and engaging campus experience.</p>
+          </div>
+        </div>
+        
+        <!-- UI Mockups Image -->
+        <div class="eventhive-mockups-container">
+          <div style="max-width: 100%; margin: 0 auto;">
+            <img src="images/projects/eventhive/UI Mocks.png" class="eventhive-image" alt="EventHive UI Mockups showing the five key pages" />
+          </div>
+        </div>
+        
+        <!-- Sub-container 2: Key Pages Text -->
+        <div class="eventhive-key-features-text">
+          <p>The key features of the app are:</p>
+        </div>
+        
+        <!-- Page Navigation Buttons -->
+        <div class="eventhive-nav-container">
+          <button id="homePageBtn" class="eventhive-nav-btn active">Home</button>
+          <button id="eventsPageBtn" class="eventhive-nav-btn">Find Events and Clubs</button>
+          <button id="clubsPageBtn" class="eventhive-nav-btn">Events Calendar</button>
+          <button id="profilePageBtn" class="eventhive-nav-btn">Ticket Purchasing</button>
+          <button id="chatPageBtn" class="eventhive-nav-btn">Chat and Community</button>
+        </div>
+         
+      </div>
+      
+      <!-- Home Page Section -->
+      <div id="home-page" class="container eventhive-feature-section active">
+        <!-- Text Content Container -->
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">HOME PAGE</div>
+            <h2 class="eventhive-section-heading">Welcome and Discovery Hub</h2>
+        </div>
+        
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">The Home page serves as the central hub where students can discover upcoming events, see personalized recommendations, and quickly access their saved events. It features a clean, intuitive interface with event cards, search functionality, and quick access to popular clubs and trending events on campus.</p>
+            <p class="eventhive-linked-need">
+              <span class="eventhive-linked-need-label">Linked User Need:</span><br>
+              Students said they often missed events because information was scattered across Instagram and posters.
+            </p>
+        </div>
+        </div>
+        <img src="images/projects/eventhive/HomePage.png" class="eventhive-image" alt="Home Page" />
+      </div>
+      
+      <!-- Find Events and Clubs Section -->
+      <div id="events-page" class="container eventhive-feature-section">
+        <!-- Text Content Container -->
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">FIND EVENTS & CLUBS</div>
+            <h2 class="eventhive-section-heading">Comprehensive Discovery Experience</h2>
+        </div>
+        
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">Students expressed frustration with unclear or incomplete event information. The Search and Event Details pages solve this by providing filters, transparent pricing, organiser details, and visual galleries. With everything accessible in one place, students can make informed decisions, discover new clubs, and confidently plan their participation in campus events.</p>
+            <p class="eventhive-linked-need">
+              <span class="eventhive-linked-need-label">Linked User Need:</span><br>
+              Students wanted clearer event details and transparency, including who was hosting, pricing, and location.
+            </p>
+        </div>
+        </div>
+        <img src="images/projects/eventhive/SearchPage.png" class="eventhive-image" alt="Find Events & Clubs" />
+
+      </div>
+      
+      <!-- Events Calendar Section -->
+      <div id="clubs-page" class="container eventhive-feature-section">
+        <!-- Text Content Container -->
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">EVENTS CALENDAR</div>
+            <h2 class="eventhive-section-heading">Personal Event Management</h2>
+        </div>
+        
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">The Events Calendar provides students with a personalized view of their saved events, upcoming activities, and schedule management. It integrates with their personal calendar, sends reminders, and allows them to track their event history and preferences for better future recommendations.</p>
+            <p class="eventhive-linked-need">
+              <span class="eventhive-linked-need-label">Linked User Need:</span><br>
+              Students struggled to keep track of multiple events across different platforms.
+            </p>
+        </div>
+        </div>
+        <img src="images/projects/eventhive/CalendarPage.png" class="eventhive-image" alt="Events Calendar" />
+
+      </div>
+      
+      <!-- Ticket Purchasing Section -->
+      <div id="profile-page" class="container eventhive-feature-section">
+        <!-- Text Content Container -->
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">TICKET PURCHASING</div>
+            <h2 class="eventhive-section-heading">Seamless Booking Experience</h2>
+        </div>
+        
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">The Ticket Purchasing feature eliminates traditional ticketing fees and provides a streamlined booking process. Students can purchase tickets directly through the app with secure payment options, receive instant confirmations, and manage their ticket collection all in one place.</p>
+            <p class="eventhive-linked-need">
+              <span class="eventhive-linked-need-label">Linked User Need:</span><br>
+              Students disliked hidden service charges and long, multi-step checkouts on Eventbrite.
+            </p>
+            
+            <!-- Quote in Right Column -->
+            <div class="eventhive-quote-content" style="margin-top: 2rem;">
+              <blockquote class="breathing-text eventhive-quote-text">
+                "I hate filling in my student details all the time I try to buy tickets on different platforms."
+              </blockquote>
+              <div class="eventhive-quote-attribution">STUDENT INTERVIEWEE</div>
+            </div>
+        </div>
+        </div>
+        
+        <!-- Transaction Pages Slideshow -->
+        <div class="eventhive-slideshow">
+          <div class="eventhive-slide active">
+            <img src="images/projects/eventhive/TransactionPage1.png" class="eventhive-image" alt="Transaction Page 1" />
+          </div>
+          <div class="eventhive-slide">
+            <img src="images/projects/eventhive/TransactionPage2.png" class="eventhive-image" alt="Transaction Page 2" />
+          </div>
+          
+          <!-- Navigation Arrows -->
+          <button class="eventhive-slideshow-nav prev">❮</button>
+          <button class="eventhive-slideshow-nav next">❯</button>
+          
+          <!-- Dots -->
+          <div class="eventhive-slideshow-dots">
+            <span class="eventhive-dot active"></span>
+            <span class="eventhive-dot"></span>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Chat and Community Section -->
+      <div id="chat-page" class="container eventhive-feature-section">
+        <!-- Text Content Container -->
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">CHAT & COMMUNITY</div>
+            <h2 class="eventhive-section-heading">Social Engagement Platform</h2>
+        </div>
+        
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">The Chat and Community feature fosters social connections by allowing students to join event-specific group chats, share experiences, and build relationships with fellow attendees. It includes club discussion forums, event updates, and a platform for students to connect before, during, and after events.</p>
+            <p class="eventhive-linked-need">
+              <span class="eventhive-linked-need-label">Linked User Need:</span><br>
+              Students wanted to attend events with friends and connect with like-minded peers.
+            </p>
+        </div>
+        </div>
+        <img src="images/projects/eventhive/ChatPage.png" class="eventhive-image" alt="Chat and Community" />
+
+      </div>
+      
+      <!-- Figma Prototype Section -->
+      <div class="container eventhive-prototype-section">
+        <!-- Text Content -->
+        <div class="eventhive-prototype-text">
+          <blockquote class="breathing-text eventhive-breathing-text">You can play around with the Figma prototype.</blockquote>
+        </div>
+        
+        <!-- Figma Prototype Container -->
+        <div class="eventhive-prototype-container">
+          <div style="max-width: 100%; margin: 0 auto;">
+            <iframe class="eventhive-prototype-iframe" src="https://embed.figma.com/proto/tDOm8gMnXD8gNIhvHcFmLb/hci?page-id=0%3A1&node-id=1-2&viewport=348%2C248%2C0.25&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1%3A2&embed-host=share" allowfullscreen></iframe>
+            <p class="eventhive-prototype-disclaimer">Disclaimer: Not every element has been inlcuded to work in the prototype.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- User Testing Section -->
+      <div id="user-testing" class="container eventhive-section-container-alt">
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">USER TESTING</div>
+            <h2 class="eventhive-section-heading">Did the solution meet user expectations?</h2>
+          </div>
+          
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">We built a high-fidelity prototype in Figma and tested it with students to evaluate usability, satisfaction, and task efficiency. Our evaluation combined heuristic evaluations, think-aloud tests, and task-based studies</p>
+            
+            <p class="eventhive-section-description" style="margin: 2rem 0 0 0;">Key tasks included:</p>
+            
+            <ul style="margin: 1.5rem 0 0 0; padding-left: 0; list-style: none;">
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Finding an event using the search function.
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Purchasing a ticket with autofill enabled.
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Accessing a purchased ticket QR code.
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Joining a club and exploring its events.
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+
+      <!-- Results Section - Full Width -->
+      <div class="container" style="margin: 1rem auto;">        
+        <div class="eventhive-table-container">
+          <div class="eventhive-table-wrapper">
+            <table class="eventhive-table">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Success rate</td>
+                  <td>All participants were able to complete the core tasks successfully.</td>
+                </tr>
+                <tr>
+                  <td>Time-on-task</td>
+                  <td>On average, students completed ticket purchases in under 1 minute, significantly faster than Eventbrite's multi-step checkout.</td>
+                </tr>
+                <tr>
+                  <td>Satisfaction</td>
+                  <td>Most students reported that the app felt "clear," "fast," and "less stressful" compared to existing systems.</td>
+                </tr>
+                <tr>
+                  <td>Navigation</td>
+                  <td>The persistent bottom navigation bar helped users quickly return to the home screen or tickets page.</td>
+                </tr>
+                <tr>
+                  <td>Pain points</td>
+                  <td>Some students wanted a clearer distinction between personal chats and group event chats. Others suggested adding push notifications for ticket reminders.</td>
+                </tr>
+                <tr>
+                  <td>SUS Score</td>
+                  <td>Average SUS (System Usability Scale) score: <span style="font-size: 3.5rem; color: var(--eventhive-purple); font-weight: bold;">84</span>, indicating excellent usability.</td>
+                </tr>
+                <tr>
+                  <td>User Preference</td>
+                  <td><span style="font-size: 3.5rem; color: var(--eventhive-purple); font-weight: bold;">90%</span> of participants said they would prefer EventHive over current ticketing methods.</td>
+                </tr>
+                <tr>
+                  <td>Event Attendance</td>
+                  <td><span style="font-size: 3.5rem; color: var(--eventhive-purple); font-weight: bold;">80%</span> of participants said the simplified ticketing flow would make them attend more events.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ethical Considerations Section -->
+      <div id="ethical-considerations" class="container eventhive-section-container-alt">
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">ETHICAL CONSIDERATIONS</div>
+            <h2 class="eventhive-section-heading">What risks did we need to address while designing?</h2>
+          </div>
+          
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">We value data privacy and align to the ACS (Australian Computer Society) Code of Ethics in our design approach. Understanding that user data is sensitive, we implemented several safeguards to protect user privacy and maintain ethical standards.</p>
+            
+            <p class="eventhive-section-description" style="margin: 2rem 0 0 0;">Key ethical considerations include:</p>
+            
+            <ul style="margin: 1.5rem 0 0 0; padding-left: 0; list-style: none;">
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Data collection for user understanding is completely optional
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Users have full authority to disable data collection at any time
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Transparent privacy policies and clear consent mechanisms
+              </li>
+              <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                Ensuring the app benefits both students and clubs equally.
+              </li>
+                <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                        <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                        Preventing ticket scalping or bulk resales.
+                </li>
+                <li style="margin: 1rem 0; padding-left: 2rem; position: relative; font-size: 3rem; line-height: 1.6; font-weight: bold;">
+                    <span style="position: absolute; left: 0; color: var(--eventhive-purple);">•</span>
+                    Accessibility (contrast levels, readability, multi-language support).                
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reflection Section -->
+      <div id="reflection" class="container eventhive-section-container-alt">
+        <div class="eventhive-text-container">
+          <!-- Left Column -->
+          <div>
+            <div class="eventhive-section-title">REFLECTION</div>
+            <h2 class="eventhive-section-heading">What did I learn from this project?</h2>
+          </div>
+          
+          <!-- Right Column -->
+          <div>
+            <p class="eventhive-section-description">This project highlighted the importance of grounding design in real user frustrations. Our research revealed that awareness and affordability were just as critical as usability. I learned how to balance the needs of students, clubs, and administrators while still delivering a clean, student-friendly experience. I also developed skills in competitor analysis, user research synthesis, and iterative prototyping.</p>
+            
+            <p class="eventhive-section-description" style="margin: 2rem 0 0 0;">Looking ahead, EventHive could integrate features like hashtags, UQ Maps, premium memberships, and organiser tools to scale its impact.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Projects Section -->
+      <section class="section" aria-labelledby="other-projects-heading" style="margin-top: 8rem; width: 100%;">
+        <div style="width: 100%; padding: 0 5%;">
+          <h1 id="other-projects-heading" style="text-align: center; font-size: 4rem; margin-bottom: 2rem;">Take a look at another case study of mine</h1>
+          <div style="display: flex; justify-content: center;">
+            <!-- Unmoot Project Card -->
+            <a href="project-unmoot.html" style="text-decoration: none; color: inherit;">
+              <div style="text-align: center;">
+                <div style="width: 100%; height: 50rem; border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                  <img src="images/projects/unmoot/header.png" alt="Unmoot platform interface showing collaborative classroom features" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <div style="text-align: center;">
+                  <h3 style="color: white; font-size: 2.5rem; font-weight: bold; margin: 0 0 0.5rem 0; text-align: left;">Unmoot | Collaborative Classroom Participation</h3>
+                  <p style="color: #ccc; font-size: 1.8rem; margin: 0 0 0.5rem 0;">University of Queensland | Product Designer</p>
+                  <p style="color: #c93246; font-size: 1.8rem; font-weight: bold; margin: 0;">2025</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george" target="_blank"
+        rel="noopener noreferrer">this human</a></p>
+  </footer>
+  
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" title="Back to Top">
+    TOP
+  </button>
+
+  <!-- Scripts -->
+  <script src="javascript/effects.js"></script>
+  <script src="javascript/pointer-effect.js"></script>
+  <script src="javascript/multilingual-greeting.js"></script>
+  
+  <!-- Page Navigation Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const homePageBtn = document.getElementById('homePageBtn');
+      const eventsPageBtn = document.getElementById('eventsPageBtn');
+      const clubsPageBtn = document.getElementById('clubsPageBtn');
+      const profilePageBtn = document.getElementById('profilePageBtn');
+      const chatPageBtn = document.getElementById('chatPageBtn');
+      
+      const homePageSection = document.getElementById('home-page');
+      const eventsPageSection = document.getElementById('events-page');
+      const clubsPageSection = document.getElementById('clubs-page');
+      const profilePageSection = document.getElementById('profile-page');
+      const chatPageSection = document.getElementById('chat-page');
+      
+      function showHomePage() {
+        // Hide all sections
+        homePageSection.style.display = 'flex';
+        eventsPageSection.style.display = 'none';
+        clubsPageSection.style.display = 'none';
+        profilePageSection.style.display = 'none';
+        chatPageSection.style.display = 'none';
+        
+        // Update button states
+        homePageBtn.style.background = '#c238dd';
+        eventsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        clubsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        profilePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        chatPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+      }
+      
+      function showEventsPage() {
+        // Hide all sections
+        homePageSection.style.display = 'none';
+        eventsPageSection.style.display = 'flex';
+        clubsPageSection.style.display = 'none';
+        profilePageSection.style.display = 'none';
+        chatPageSection.style.display = 'none';
+        
+        // Update button states
+        homePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        eventsPageBtn.style.background = '#c238dd';
+        clubsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        profilePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        chatPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+      }
+      
+      function showClubsPage() {
+        // Hide all sections
+        homePageSection.style.display = 'none';
+        eventsPageSection.style.display = 'none';
+        clubsPageSection.style.display = 'flex';
+        profilePageSection.style.display = 'none';
+        chatPageSection.style.display = 'none';
+        
+        // Update button states
+        homePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        eventsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        clubsPageBtn.style.background = '#c238dd';
+        profilePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        chatPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+      }
+      
+      function showProfilePage() {
+        // Hide all sections
+        homePageSection.style.display = 'none';
+        eventsPageSection.style.display = 'none';
+        clubsPageSection.style.display = 'none';
+        profilePageSection.style.display = 'flex';
+        chatPageSection.style.display = 'none';
+        
+        // Update button states
+        homePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        eventsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        clubsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        profilePageBtn.style.background = '#c238dd';
+        chatPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+      }
+      
+      function showChatPage() {
+        // Hide all sections
+        homePageSection.style.display = 'none';
+        eventsPageSection.style.display = 'none';
+        clubsPageSection.style.display = 'none';
+        profilePageSection.style.display = 'none';
+        chatPageSection.style.display = 'flex';
+        
+        // Update button states
+        homePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        eventsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        clubsPageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        profilePageBtn.style.background = 'rgba(194, 56, 221, 0.3)';
+        chatPageBtn.style.background = '#c238dd';
+      }
+      
+      // Add event listeners
+      if (homePageBtn) homePageBtn.addEventListener('click', showHomePage);
+      if (eventsPageBtn) eventsPageBtn.addEventListener('click', showEventsPage);
+      if (clubsPageBtn) clubsPageBtn.addEventListener('click', showClubsPage);
+      if (profilePageBtn) profilePageBtn.addEventListener('click', showProfilePage);
+      if (chatPageBtn) chatPageBtn.addEventListener('click', showChatPage);
+    });
+  </script>
+  
+  <!-- Transaction Pages Slideshow Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let currentSlide = 0;
+      const slides = document.querySelectorAll('.eventhive-slide');
+      const dots = document.querySelectorAll('.eventhive-dot');
+      const prevBtn = document.querySelector('.eventhive-slideshow-nav.prev');
+      const nextBtn = document.querySelector('.eventhive-slideshow-nav.next');
+      
+      function showSlide(n) {
+        slides.forEach(slide => slide.style.display = 'none');
+        dots.forEach(dot => dot.style.backgroundColor = 'rgba(194, 56, 221, 0.3)');
+        
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].style.display = 'block';
+        dots[currentSlide].style.backgroundColor = '#c238dd';
+      }
+      
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+      
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+      
+      // Event listeners
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+      
+      // Dot navigation
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+      });
+      
+      // Initialize first slide
+      showSlide(currentSlide);
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unmoot: Improving Class Participation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    * {
+      cursor: none !important;
+    }
+
+    @keyframes textBreathing {
+
+      0%,
+      100% {
+        background: linear-gradient(45deg, #ff6b35, #ff8c42, #ff6b35);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      50% {
+        background: linear-gradient(45deg, #ff8c42, #ffa726, #ff8c42);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .breathing-text {
+      animation: textBreathing 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Particle Background -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo">
+      <a href="index.html" aria-label="Derek Joel George - Home">
+        <img src="images/Logo(white).png" alt="Derek Joel George Logo" />
+      </a>
+    </div>
+    <ul class="nav-links" role="menubar">
+      <li role="none"><a href="about.html" id="about-link" role="menuitem">About</a></li>
+      <li role="none"><a href="projects.html" id="projects-link" class="active" role="menuitem"
+          aria-current="page">Projects</a></li>
+      <li role="none"><a href="https://drive.google.com/file/d/14vVA3JfiB90y71_3F9RnhGBED2Y7NxWh/view?usp=sharing"
+          id="resume-link" role="menuitem" target="_blank" rel="noopener noreferrer">Resume</a></li>
+    </ul>
+  </nav>
+
+
+   <div class="main-container" id="main-content">
+      <div class="container">
+       <div style="text-align: center; margin-bottom: 2rem;">
+         <img src="images/projects/unmoot/header.png" style="width: 100%;"
+           alt="Unmoot platform interface showing collaborative classroom features" class="project-main-image" />
+       </div>
+      <div
+        style="position: relative; display: flex; align-items: flex-end; justify-content: space-between; margin-top: 2%;">
+        <h1 style="font-size: 5.5rem; margin: 0;">Unmoot - Class Participation Platform</h1>
+        <div style="font-size: 5rem; color: rgb(218, 140, 140); align-self: flex-end; font-weight: bold;">2025</div>
+            </div>
+       <h2 style="font-size: 3.5rem; color: darkgrey;">University of Queensland | Product Designer</h2>
+      <!-- Content will go here -->
+      </div>
+      <div class="container">
+      <p style="font-size: 3rem; color: white; margin-top: 2%;">Unmoot, was developed as part of the Design Computing
+        Studio 3: Proposal course at the University of Queensland. Our team set out to explore the barriers to class
+        participation among IT students and design an inclusive solution to encourage engagement. My role primarily
+        involved user research, synthesizing insights, and leading the design of the prototype in Figma. Over the course
+        of the semester, I collaborated with my teammates to conduct interviews, analyze findings, and iterate on the
+        solution.</p>
+      </div>
+        
+     <!-- The Challenge Section -->
+     <div id="challenge" class="container" style="margin-top: 4%; padding-top: 15rem; display: flex; flex-direction: column;">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+        <!-- Left Column -->
+        <div>
+          <div
+            style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+            THE CHALLENGE
+            <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+      </div>
+          <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">Why
+            was class participation such a problem worth solving?</h2>
+          </div>
+          
+        <!-- Right Column -->
+        <div>
+          <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">Class participation is a critical
+            element of active learning, yet many students find it difficult to contribute in classroom discussions. Our
+            research revealed a range of barriers including fear of judgement, peer pressure, large class sizes,
+            language difficulties, and teaching styles. These challenges limited both international and domestic
+            students, preventing meaningful contributions in tutorials and lectures. Our goal was to design a solution
+            that would reduce these barriers and create a more inclusive learning environment for all students.</p>
+        </div>
+      </div>
+      
+      <!-- Quote within Challenge Section -->
+      <div style="padding: 4rem 0; margin: 2rem 0; text-align: center; width: 100%;">
+        <div style="max-width: 100%; margin: 0 auto;">
+          <blockquote class="breathing-text"
+            style="font-size: 4rem; font-weight: bold; line-height: 1.4; margin: 3rem 0 1rem 0; text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);">
+            "I overthink a lot... before I say something, I usually think, what will people respond like? What are the
+            repercussions?"
+          </blockquote>
+          <div
+            style="color: white; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em;">
+            STUDENT INTERVIEWEE
+          </div>
+        </div>
+      </div>
+    </div>
+         <!-- The Research Section -->
+         <div id="research" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;">
+          <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+            <!-- Left Column -->
+            <div>
+              <div
+                style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                THE RESEARCH
+                <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+          </div>
+              <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">How did we uncover the real barriers to participation?</h2>
+          </div>
+          
+            <!-- Right Column -->
+            <div>
+              <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">We began by focusing on accent-related barriers to participation, assuming this was the primary issue affecting international students. However, after feedback and early interviews, we realized this framing was too narrow. We pivoted to a broader exploration of classroom participation challenges as a whole. To investigate, we conducted a literature review, held semi-structured interviews with students and lecturers, and coded the transcripts on Miro to extract themes.</p>
+          </div>
+          </div>
+          </div>
+          
+          <!-- Research Image -->
+          <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+            <div style="max-width: 80%; margin: 0 auto;">
+              <img src="images/projects/unmoot/Interviews.png" style="width: 100%;"
+                alt="Unmoot platform interface showing collaborative classroom features" class="project-main-image" />
+            </div>
+          </div>
+           <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0; text-align: center;">From this process, we identified multiple factors to which we narrowed down to 4</p>
+           
+           <!-- 4 Cards Container -->
+           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 3rem auto; width: fit-content;">
+             <!-- Card 1 -->
+             <div style="background: #333; border-radius: 1rem; padding: 4rem 1rem; text-align: center; min-height: 8rem; display: flex; align-items: center; justify-content: center;">
+               <p style="color: white; font-size: 3rem; line-height: 1.5; margin: 0; font-weight: bold;">Peer influence and class size</p>
+             </div>
+             
+             <!-- Card 2 -->
+             <div style="background: #333; border-radius: 1rem; padding: 4rem 1rem; text-align: center; min-height: 8rem; display: flex; align-items: center; justify-content: center;">
+               <p style="color: white; font-size: 3rem; line-height: 1.5; margin: 0; font-weight: bold;">Teaching style and faculty behavior</p>
+             </div>
+             
+             <!-- Card 3 -->
+             <div style="background: #333; border-radius: 1rem; padding: 4rem 1rem; text-align: center; min-height: 8rem; display: flex; align-items: center; justify-content: center;">
+               <p style="color: white; font-size: 3rem; line-height: 1.5; margin: 0; font-weight: bold;">Language and communication barriers</p>
+             </div>
+             
+             <!-- Card 4 -->
+             <div style="background: #333; border-radius: 1rem; padding: 4rem 1rem; text-align: center; min-height: 8rem; display: flex; align-items: center; justify-content: center;">
+               <p style="color: white; font-size: 3rem; line-height: 1.5; margin: 0; font-weight: bold;">Personal factors such as anxiety and fear of being wrong</p>
+             </div>
+           </div>
+          <!-- Problem Statement Section -->
+           <div id="problem" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; justify-content: center; align-items: center; min-height: 50vh;">
+            <div style="text-align: center; max-width: 80%;">
+              <div style="color: #ffffff; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2rem;">
+                DEFINING THE PROBLEM
+              </div>
+               <h2 class="breathing-text" style="font-size: 4rem; font-weight: bold; margin: 0; line-height: 1.3; text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);">
+                 How might we reduce barriers to classroom participation and create inclusive ways for students to engage in discussions?
+               </h2>
+            </div>
+          </div>
+          <!-- New Section -->
+          <div id="ideation" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  IDEATION AND CONCEPT DEVELOPMENT
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+            </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">What ideas did we explore, and how did we choose a direction?</h2>
+            </div>
+            
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">During ideation, we explored various ways to support participation without increasing pressure on students. Early concepts included tools for anonymous contributions, comprehension aids, and peer-driven collaboration. Through feedback sessions and low-fidelity prototypes, we refined our direction toward table-based collaboration and real-time comprehension support. This ensured that students could engage in smaller, safer group formats while still contributing to the larger class discussion.</p>
+            </div>
+            </div>
+            </div>
+            
+            <!-- Ideation Image -->
+            <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+              <div style="max-width: 80%; margin: 0 auto;">
+                <img src="images/projects/unmoot/development.png" style="width: 100%;"
+                  alt="Unmoot ideation process showing concept development and brainstorming" class="project-main-image" />
+              </div>
+            </div>
+            
+            <!-- Additional Ideation Text -->
+            <div style="padding: 2rem 0; margin: 2rem 0;">
+              <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0; text-align: justify; max-width: 80%; margin: 0 auto;">We followed an iterative design process, moving from sketches and wireframes to mid-fidelity prototypes and eventually a semi-high-fidelity prototype in Figma. My focus was on creating a clear, minimal interface that encouraged contribution without distractions. Accessibility was central to our design, leading us to include multimodal inputs to ensure every student could participate in ways that felt comfortable. Regular feedback from peers and lecturers ensured the system aligned with real teaching and learning practices.</p>
+            </div>
+            </div>
+             <!-- Solution Section -->
+          <div id="solution" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; align-items: center; min-height: 50vh;">
+             <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center; width: 100%;">
+               <!-- Left Column - Unmoot Title -->
+               <div>
+                 <h2 class="breathing-text" style="font-size: 15rem; font-weight: bold; margin: 0; line-height: 1.3; text-shadow: 0 0 10px rgba(255, 107, 53, 0.3); margin-right: 5rem;">
+                 Unmoot</h2>
+               </div>
+               
+               <!-- Right Column - Description -->
+               <div>
+                 <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0; text-align: justify;">Our final concept, Unmoot, is a digital-physical hybrid platform that supports inclusive, low-pressure class participation. The system consists of three screens: a table-based discussion screen, a student device interface, and a lecturer dashboard.</p>
+               </div>
+            </div>
+          </div>
+          
+          <!-- Screen Navigation Buttons -->
+          <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 8%; flex-wrap: wrap;">
+            <button id="tableScreenBtn" class="screen-nav-btn active" style="background: #ff4444; color: white; border: none; padding: 1.5rem 3rem; border-radius: 0.5rem; font-size: 2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">Table Screen</button>
+            <button id="studentScreenBtn" class="screen-nav-btn" style="background: rgba(255, 68, 68, 0.3); color: white; border: none; padding: 1.5rem 3rem; border-radius: 0.5rem; font-size: 2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">Student Screen</button>
+            <button id="lecturerScreenBtn" class="screen-nav-btn" style="background: rgba(255, 68, 68, 0.3); color: white; border: none; padding: 1.5rem 3rem; border-radius: 0.5rem; font-size: 2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">Lecturer Screen</button>
+          </div>
+          
+          <!-- Table Screen Section -->
+          <div id="table-screen" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; flex-direction: column;">
+            <!-- Text Content Container -->
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  TABLE SCREEN
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+            </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">Encouraging Group Participation</h2>
+            </div>
+            
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">The Table Screen was designed to shift the pressure away from individuals and encourage collective participation. By focusing on group discussions, students feel less anxious about being "put on the spot" and more comfortable sharing ideas with their peers. This shared hub acts as a natural icebreaker, helping students build connections and confidence before contributing to the wider class discussion. The format also allows quieter students to be heard, as their voices are supported within a group submission rather than judged in isolation.</p>
+                <blockquote class="breathing-text" style="font-size: 2.5rem; font-weight: bold; line-height: 1.4; margin: 2rem 0 0 0; text-shadow: 0 0 10px rgba(255, 68, 68, 0.3);">You can play around the figma prototype below.</blockquote>
+            </div>
+            </div>
+            
+            <!-- Figma Prototype Container -->
+            <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+              <div style="max-width: 80%; margin: 0 auto;">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 90rem;" src="https://embed.figma.com/proto/oHUT90HMffl3bvM2PZgAdQ/Class-Participation-App-%22unmoot%22?page-id=0%3A1&node-id=4-127&p=f&viewport=531%2C153%2C0.11&scaling=contain&content-scaling=fixed&starting-point-node-id=4%3A127&show-proto-sidebar=1&embed-host=share" allowfullscreen></iframe>
+                <p style="color: #ccc; font-size: 2rem; line-height: 1.4; margin: 2rem 0 0 0; text-align: center;">Disclaimer: This is a semi high fidelity prototype and hence I am sorry for the broken elements.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Student Screen Section -->
+          <div id="student-screen" class="container" style="margin-top: 2%; padding-top: 0rem; display: none; flex-direction: column;">
+            <!-- Text Content Container -->
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  STUDENT SCREEN
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+            </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">How do students interact with the platform?</h2>
+            </div>
+            
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">The Student Screen was designed to provide every learner with a personal space for safe, inclusive engagement. Many students hesitate to speak out loud, but with this interface, they can choose from multiple ways of contributing — whether typing, drawing, speaking, or even uploading an image. This flexibility gives students ownership over how they communicate and ensures language barriers don't limit participation. The screen also includes a live transcript of lectures, which is particularly helpful for international students or those who struggle with note-taking. To further support comprehension, the AI-powered simplification tool allows students to revisit complex ideas in plain language, while the comprehension slider lets them indicate whether they're following along, giving lecturers instant feedback they can act on.</p>
+                <blockquote class="breathing-text" style="font-size: 2.5rem; font-weight: bold; line-height: 1.4; margin: 2rem 0 0 0; text-shadow: 0 0 10px rgba(255, 68, 68, 0.3);">You can play around the figma prototype below.</blockquote>
+            </div>
+            </div>
+            
+            <!-- Figma Prototype Container -->
+            <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+              <div style="max-width: 80%; margin: 0 auto;">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 90rem;" src="https://embed.figma.com/proto/oHUT90HMffl3bvM2PZgAdQ/Class-Participation-App-%22unmoot%22?page-id=0%3A1&node-id=4-800&viewport=531%2C153%2C0.11&scaling=contain&content-scaling=fixed&starting-point-node-id=4%3A800&embed-host=share" allowfullscreen></iframe>
+                <p style="color: #ccc; font-size: 2rem; line-height: 1.4; margin: 2rem 0 0 0; text-align: center;">Disclaimer: This is a semi high fidelity prototype and hence I am sorry for the broken elements.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Lecturer Screen Section -->
+          <div id="lecturer-screen" class="container" style="margin-top: 2%; padding-top: 0rem; display: none; flex-direction: column;">
+            <!-- Text Content Container -->
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  LECTURER SCREEN
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+            </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">How do lecturers monitor and facilitate discussions?</h2>
+            </div>
+            
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">The Lecturer Dashboard brings everything together by giving instructors real-time visibility into student engagement. Instead of relying on a handful of raised hands, lecturers can now see patterns across the entire class, identifying which groups are struggling and where comprehension drops. The dashboard makes it easy to launch quick Live Pulse tasks, either for groups or individuals, which help check understanding in the moment without interrupting the flow of teaching. It also surfaces student questions in one consolidated view, reducing the chance that quieter students are overlooked. Importantly, the dashboard is designed to reduce — not increase — lecturer workload by automating participation tracking and highlighting insights that would otherwise be invisible.</p>
+                <blockquote class="breathing-text" style="font-size: 2.5rem; font-weight: bold; line-height: 1.4; margin: 2rem 0 0 0; text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);">You can play around the figma prototype below.</blockquote>
+            </div>
+            </div>
+            
+            <!-- Figma Prototype Container -->
+            <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+              <div style="max-width: 80%; margin: 0 auto;">
+                <iframe style="border: 1px solid rgba(0, 0, 0, 0.1); width: 100%; height: 90rem;" src="https://embed.figma.com/proto/oHUT90HMffl3bvM2PZgAdQ/Class-Participation-App-%22unmoot%22?page-id=0%3A1&node-id=98-536&viewport=531%2C117%2C0.11&scaling=contain&content-scaling=fixed&starting-point-node-id=98%3A536&embed-host=share" allowfullscreen></iframe>
+                <p style="color: #ccc; font-size: 2rem; line-height: 1.4; margin: 2rem 0 0 0; text-align: center;">Disclaimer: This is a semi high fidelity prototype and hence I am sorry for the broken elements.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ethical Considerations Section -->
+          <div id="ethical-considerations" class="container" style="margin-top: 2%; padding-top: 8rem; display: flex; align-items: center; min-height: 50vh;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  ETHICAL CONSIDERATIONS
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+                </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">What risks did we need to address while designing?</h2>
+              </div>
+              
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">We carefully considered ethical implications throughout the design. Concerns included data privacy and student consent, AI-generated simplifications potentially misrepresenting content, accessibility for students without reliable devices, and the risk of weakening teacher–student relationships. Our approach was to design a system that supported lecturers rather than replacing them, ensuring their autonomy remained central.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Testing Section -->
+          <div id="user-testing" class="container" style="margin-top: 2%; padding-top: 8rem; display: flex; align-items: center; min-height: 50vh;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  USER TESTING
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+                </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">Did the solution actually work for students and lecturers?</h2>
+              </div>
+              
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">To evaluate usability, we conducted a System Usability Scale (SUS) survey with 20 students while they interacted with the prototype. Unmoot scored 87, reflecting excellent usability. Students praised the badge system and multimodal input options, while lecturers appreciated the potential for real-time insights. However, lecturers also raised concerns about added workload and questioned how the system would scale across different class formats.</p>
+                
+                <!-- Metrics Display -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 3rem; padding: 2rem;">
+                  <!-- Participants -->
+                  <div style="text-align: center; flex: 1;">
+                    <div style="color: #ff6b35; font-size: 15rem; font-weight: bold; line-height: 1; margin: 0;">20</div>
+                    <div style="color: white; font-size: 3rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem;">PARTICIPANTS</div>
+                  </div>
+                  
+                  <!-- SUS Score -->
+                  <div style="text-align: center; flex: 1;">
+                    <div style="color: #ff6b35; font-size: 15rem; font-weight: bold; line-height: 1; margin: 0;">87</div>
+                    <div style="color: white; font-size: 3rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem;">SYSTEM USABILITY SCORE</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reflection Section -->
+          <div id="reflection" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+              <!-- Left Column -->
+              <div>
+                <div
+                  style="color: #ff4444; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; position: relative;">
+                  REFLECTION
+                  <div style="position: absolute; bottom: -0.5rem; left: 0; width: 100%; height: 2px;"></div>
+            </div>
+                <h2 style="color: white; font-size: 3.5rem; font-weight: bold; margin: 0; line-height: 1.2; max-width: 70%;">What did I learn from this project?</h2>
+            </div>
+            
+              <!-- Right Column -->
+              <div>
+                <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0;">This project taught me the importance of flexibility in design research. Our pivot from accent-specific issues to broader participation barriers reinforced the need to challenge assumptions and remain adaptable. I learned the value of designing for multiple stakeholders and balancing user needs with practical feasibility.</p>
+            </div>
+            </div>
+            </div>
+            
+            <!-- Reflection Image -->
+            <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+              <div style="max-width: 80%; margin: 0 auto;">
+                <img src="images/projects/unmoot/Group Photo.jpg" style="width: 100%;"
+                  alt="Reflection on the Unmoot project development process" class="project-main-image" />
+              </div>
+            </div>
+            
+            <!-- Additional Reflection Text -->
+            <div style="padding: 2rem 0; margin: 2rem 0;">
+              <p style="color: white; font-size: 3rem; line-height: 1.6; margin: 0; text-align: justify; max-width: 80%; margin: 0 auto;">Personally, I developed stronger skills in qualitative research, thematic analysis, and turning insights into actionable design features. Moving forward, I see opportunities to test Unmoot in real classrooms, refine the AI-driven features, and integrate with institutional learning systems to create lasting impact.</p>
+            </div>
+            </div>
+
+      <!-- Other Projects Section -->
+      <section class="section" aria-labelledby="other-projects-heading" style="margin-top: 8rem; width: 100%;">
+        <div style="width: 100%; padding: 0 5%;">
+          <h1 id="other-projects-heading" style="text-align: center; font-size: 4rem; margin-bottom: 2rem;">Take a look at another case study of mine</h1>
+          <div style="display: flex; justify-content: center;">
+            <!-- EventHive Project Card -->
+            <a href="project-eventhive.html" style="text-decoration: none; color: inherit;">
+              <div style="text-align: center;">
+                <div style="width: 100%; height: 50rem; border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                  <img src="images/projects/eventhive/header.png" alt="EventHive platform interface showing event management features" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <div style="text-align: center;">
+                  <h3 style="color: white; font-size: 2.5rem; font-weight: bold; margin: 0 0 0.5rem 0; text-align: left;">EventHive | Your Hub for Events at UQ</h3>
+                  <p style="color: #ccc; font-size: 1.8rem; margin: 0 0 0.5rem 0;">University of Queensland | Product Designer</p>
+                  <p style="color: #c444ff; font-size: 1.8rem; font-weight: bold; margin: 0;">2024</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+          <!-- Bottom Spacing -->
+          <div style="height: 10rem;"></div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george" target="_blank"
+        rel="noopener noreferrer">this human</a></p>
+  </footer>
+  
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" title="Back to Top">
+    TOP
+  </button>
+
+   <!-- JavaScript -->
+   <script src="javascript/effects.js"></script>
+   <script src="javascript/pointer-effect.js"></script>
+   
+   <!-- Screen Navigation Script -->
+   <script>
+     document.addEventListener('DOMContentLoaded', function() {
+       const tableScreenBtn = document.getElementById('tableScreenBtn');
+       const studentScreenBtn = document.getElementById('studentScreenBtn');
+       const lecturerScreenBtn = document.getElementById('lecturerScreenBtn');
+       
+       const tableScreenSection = document.getElementById('table-screen');
+       const studentScreenSection = document.getElementById('student-screen');
+       const lecturerScreenSection = document.getElementById('lecturer-screen');
+       
+       function showTableScreen() {
+         // Hide all sections
+         tableScreenSection.style.display = 'flex';
+         studentScreenSection.style.display = 'none';
+         lecturerScreenSection.style.display = 'none';
+         
+         // Update button states
+         tableScreenBtn.style.background = '#ff4444';
+         studentScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+         lecturerScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+       }
+       
+       function showStudentScreen() {
+         // Hide all sections
+         tableScreenSection.style.display = 'none';
+         studentScreenSection.style.display = 'flex';
+         lecturerScreenSection.style.display = 'none';
+         
+         // Update button states
+         tableScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+         studentScreenBtn.style.background = '#ff4444';
+         lecturerScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+       }
+       
+       function showLecturerScreen() {
+         // Hide all sections
+         tableScreenSection.style.display = 'none';
+         studentScreenSection.style.display = 'none';
+         lecturerScreenSection.style.display = 'flex';
+         
+         // Update button states
+         tableScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+         studentScreenBtn.style.background = 'rgba(255, 68, 68, 0.3)';
+         lecturerScreenBtn.style.background = '#ff4444';
+       }
+       
+       // Add event listeners
+       if (tableScreenBtn) tableScreenBtn.addEventListener('click', showTableScreen);
+       if (studentScreenBtn) studentScreenBtn.addEventListener('click', showStudentScreen);
+       if (lecturerScreenBtn) lecturerScreenBtn.addEventListener('click', showLecturerScreen);
+     });
+   </script>
+   
+   
+  <script>
+   // Slideshow functionality for all slideshows
+   document.addEventListener('DOMContentLoaded', function() {
+     const slideshowIds = ['table-slideshow', 'student-slideshow', 'lecturer-slideshow'];
+     
+     slideshowIds.forEach(slideshowId => {
+       const slideshow = document.getElementById(slideshowId);
+       if (!slideshow) return;
+       
+       const slides = slideshow.querySelectorAll('.slide');
+       const dots = slideshow.querySelectorAll('.slide-dot');
+       const prevBtn = slideshow.querySelector('.prev');
+       const nextBtn = slideshow.querySelector('.next');
+       let currentSlide = 0;
+       
+       function showSlide(index) {
+         slides.forEach((slide, i) => {
+           slide.style.opacity = i === index ? '1' : '0';
+         });
+         dots.forEach((dot, i) => {
+           dot.style.background = i === index ? 'rgba(255, 255, 255, 0.5)' : 'rgba(255, 255, 255, 0.3)';
+         });
+         currentSlide = index;
+       }
+       
+       function nextSlide() {
+         currentSlide = (currentSlide + 1) % slides.length;
+         showSlide(currentSlide);
+       }
+       
+       function prevSlide() {
+         currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+         showSlide(currentSlide);
+       }
+       
+       // Event listeners
+       if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+       if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+       
+       dots.forEach((dot, index) => {
+         dot.addEventListener('click', () => showSlide(index));
+       });
+       
+       // Auto-play (optional)
+       setInterval(nextSlide, 5000);
+     });
+   });
+   </script>
+</body>
+
+</html>

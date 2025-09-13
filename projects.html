@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Derek Joel George</title>
+  <link rel="stylesheet" href="css/style.css?v=1.1" />
+  <link rel="stylesheet" href="css/layout.css?v=1.1" />
+  <link rel="stylesheet" href="css/reset.css?v=1.1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Particle Background -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo">
+      <a href="index.html" aria-label="Derek Joel George - Home">
+        <img src="images/Logo(white).png" alt="Derek Joel George Logo" />
+      </a>
+    </div>
+    <ul class="nav-links" role="menubar">
+      <li role="none"><a href="about.html" id="about-link" role="menuitem">About</a></li>
+      <li role="none"><a href="projects.html" id="projects-link" class="active" role="menuitem" aria-current="page">Projects</a></li>
+      <li role="none"><a href="https://drive.google.com/file/d/14vVA3JfiB90y71_3F9RnhGBED2Y7NxWh/view?usp=sharing" id="resume-link" role="menuitem" target="_blank" rel="noopener noreferrer">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- Project Filter Navigation -->
+  <nav class="project-filter-nav" role="navigation" aria-label="Project filters">
+    <ul class="filter-nav-links" role="list">
+      <li role="listitem"><a href="#" class="filter-btn active" data-filter="all" aria-label="Show all projects">
+        <span class="filter-label">All</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="ui/ux" aria-label="Filter by UI/UX Design projects">
+        <span class="filter-label">UI/UX</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="mobile" aria-label="Filter by Mobile projects">
+        <span class="filter-label">Mobile</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="web" aria-label="Filter by Web projects">
+        <span class="filter-label">Web</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="dashboard" aria-label="Filter by Dashboard projects">
+        <span class="filter-label">Dashboard</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="social" aria-label="Filter by Social Media projects">
+        <span class="filter-label">Social</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="productivity" aria-label="Filter by Productivity projects">
+        <span class="filter-label">Productivity</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="fitness" aria-label="Filter by Fitness projects">
+        <span class="filter-label">Fitness</span>
+      </a></li>
+      <li role="listitem"><a href="#" class="filter-btn" data-filter="portfolio" aria-label="Filter by Portfolio projects">
+        <span class="filter-label">Portfolio</span>
+      </a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section" aria-labelledby="projects-heading">
+      <div class="container">
+        <div class="projects-content">
+          <h1 id="projects-heading">My Projects</h1>
+          <p class="projects-subtitle">A collection of my work</p>
+          
+          <div class="projects-grid" role="list" aria-label="Project portfolio">
+          <!-- Unmoot Project -->
+          <a href="project-unmoot.html" class="project-card project-link" role="listitem" aria-label="View Unmoot project">
+            <div class="project-image">
+              <img src="images/projects/unmoot/header.png" alt="Unmoot platform interface showing collaborative classroom features" />
+            </div>
+            <div class="project-content">
+              <h3>Unmoot</h3>
+              <div class="project-tags" role="list" aria-label="Project technologies">
+                <span class="tag" role="listitem">UI/UX Design</span>
+                <span class="tag" role="listitem">Education</span>
+                <span class="tag" role="listitem">Figma</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- EventHive Project -->
+          <a href="project-eventhive.html" class="project-card project-link" role="listitem" aria-label="View EventHive project">
+            <div class="project-image">
+              <img src="images/projects/eventhive/header.png" alt="EventHive platform interface showing event management features" />
+            </div>
+            <div class="project-content">
+              <h3>EventHive</h3>
+              <div class="project-tags" role="list" aria-label="Project technologies">
+                <span class="tag" role="listitem">UI/UX Design</span>
+                <span class="tag" role="listitem">Mobile</span>
+                <span class="tag" role="listitem">Figma</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george" target="_blank" rel="noopener noreferrer">this human</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="javascript/effects.js"></script>
+  <script src="javascript/pointer-effect.js"></script>
+  <script src="javascript/projects.js"></script>
+  <script src="javascript/filter.js"></script>
+  
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" title="Back to Top">
+    TOP
+  </button>
+
+</body>
+</html>

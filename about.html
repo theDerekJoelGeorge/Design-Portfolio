@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Derek Joel George</title>
+  <link rel="stylesheet" href="css/style.css?v=1.1" />
+  <link rel="stylesheet" href="css/layout.css?v=1.1" />
+  <link rel="stylesheet" href="css/reset.css?v=1.1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Particle Background -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="logo">
+      <a href="index.html" aria-label="Derek Joel George - Home">
+        <img src="images/Logo(white).png" alt="Derek Joel George Logo" />
+      </a>
+    </div>
+    <ul class="nav-links" role="menubar">
+      <li role="none"><a href="about.html" id="about-link" class="active" role="menuitem" aria-current="page">About</a></li>
+      <li role="none"><a href="projects.html" id="projects-link" role="menuitem">Projects</a></li>
+      <li role="none"><a href="https://drive.google.com/file/d/14vVA3JfiB90y71_3F9RnhGBED2Y7NxWh/view?usp=sharing" id="resume-link" role="menuitem" target="_blank" rel="noopener noreferrer">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- Vertical Section Navigation -->
+  <nav class="vertical-nav" role="navigation" aria-label="Page sections">
+    <ul class="vertical-nav-links" role="list">
+      <li role="listitem"><a href="#bio" class="nav-dot active" data-section="bio" aria-label="Go to My Story section">
+        <span class="nav-label">My Story</span>
+      </a></li>
+      <li role="listitem"><a href="#timeline" class="nav-dot" data-section="timeline" aria-label="Go to Experience section">
+        <span class="nav-label">Experience</span>
+      </a></li>
+      <li role="listitem"><a href="#awards" class="nav-dot" data-section="awards" aria-label="Go to Awards section">
+        <span class="nav-label">Awards</span>
+      </a></li>
+      <li role="listitem"><a href="#faq" class="nav-dot" data-section="faq" aria-label="Go to FAQ section">
+        <span class="nav-label">FAQ</span>
+      </a></li>
+      <li role="listitem"><a href="#contact" class="nav-dot" data-section="contact" aria-label="Go to Contact section">
+        <span class="nav-label">Contact</span>
+      </a></li>
+    </ul>
+  </nav>    
+
+  <!-- Header Section -->
+  <header id="header" class="about-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="header-photo">
+          <div class="flip-card" id="flipCard">
+            <div class="flip-card-inner">
+              <!-- Front of the card -->
+              <div class="flip-card-front">
+                <img src="images/Flip Card about page/Front.jpg" alt="Derek Joel George" />
+                <div class="flip-hint">Click to flip</div>
+              </div>
+              <!-- Back of the card -->
+              <div class="flip-card-back">
+                <img src="images/Flip Card about page/Back.png" alt="Back Image" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="header-text">
+          <h1>Nice to meet you! 
+            <br>I'm Derek</h1>
+          <p class="tagline">Product Designer & Creative Problem Solver</p>
+          <!-- Social Media Icons -->
+          <div class="social-icons">
+            <a href="#" class="social-link" title="LinkedIn">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            
+            <a href="#" class="social-link" title="Facebook">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            
+            <a href="#" class="social-link" title="Instagram">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+            
+            <a href="#" class="social-link" title="Behance">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.488.672-2.488 2.219zm-9.574 6.988h-6.466v-14.967h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zm-3.466-8.988h3.584c2.508 0 2.906-3-.312-3h-3.272v3zm3.391 3h-3.391v3.016h3.341c3.055 0 2.868-3.016.05-3.016z"/>
+              </svg>
+            </a>
+
+            <a href="#" class="social-link" title="YouTube">
+              <svg class="social-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>     
+      <br><br><br><p style="text-align: center; font-size: 2rem">Scroll down to know more about me.</p>
+
+    </div>
+  </header>
+
+  <!-- Personal Bio Section -->
+  <section id="bio" class="bio-section">
+    <div class="container">
+      <div class="bio-content">
+        <div class="bio-text">
+          <h2>My Story</h2>
+         <p class="quote-text"><i>"Why does it feel so confusing to use something that's supposed to make life easier?"</i></p>
+
+         <p>This curiosity led me to pursue a Master’s in Interaction Design from the University of Queensland, where I deepened my understanding of human-computer interaction, user research, and prototyping.
+         </p>
+         <br><br><p> I discovered that UX isn’t just about making things look nice—it’s about solving real problems for real people.</p>
+        
+        <br><br><p>Today, I love transforming complex problems into simple, user-friendly solutions and continually learning how design can make technology more human.</p>
+            
+            <!-- Horizontal Scrolling Slideshow -->
+            <div class="horizontal-slideshow-section">
+                <h3>Moments from My Journey</h3>
+                <div class="slideshow-container">
+                    <div class="slideshow-track" id="slideshowTrack">
+                        <!-- First set of images -->
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0044.jpg" alt="Journey Moment 1">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0046.jpg" alt="Journey Moment 2">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0047.jpg" alt="Journey Moment 3">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0048.jpg" alt="Journey Moment 4">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0050.jpg" alt="Journey Moment 5">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0051.jpg" alt="Journey Moment 6">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0052.jpg" alt="Journey Moment 7">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0055.jpg" alt="Journey Moment 8">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0056.jpg" alt="Journey Moment 9">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/WhatsApp Image 2025-09-07 at 10.28.43_9269f7b4.jpg" alt="Journey Moment 10">
+                        </div>
+                        
+                        <!-- Duplicate set for seamless loop -->
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0044.jpg" alt="Journey Moment 1">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0046.jpg" alt="Journey Moment 2">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0047.jpg" alt="Journey Moment 3">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0048.jpg" alt="Journey Moment 4">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0050.jpg" alt="Journey Moment 5">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0051.jpg" alt="Journey Moment 6">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0052.jpg" alt="Journey Moment 7">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0055.jpg" alt="Journey Moment 8">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/IMG-20250907-WA0056.jpg" alt="Journey Moment 9">
+                        </div>
+                        <div class="slide-card">
+                            <img src="images/about slideshow/WhatsApp Image 2025-09-07 at 10.28.43_9269f7b4.jpg" alt="Journey Moment 10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education and Work Experience Section -->
+  <section id="timeline" class="timeline-section">
+    <div class="container">
+      <div class="timeline-unified">
+        <!-- Work Experience Column -->
+        <div class="timeline-column work-timeline">
+          <h2>Work Experience</h2>
+          <div class="timeline-container">
+            <div class="timeline-wrapper">
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">July 2025 - Present</div>
+                  <h3>Casual Academic Tutor</h3>
+                  <h4>University of Queensland, Australia</h4>
+                  <p>Academic Tutor for the courses: DECO7140: Introduction to Website Design and DECO3801: Design Computing Studio 3: Build</p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">July 2024 - November 2024</div>
+                  <h3>Casual Academic Tutor</h3>
+                  <h4>University of Queensland, Australia</h4>
+                  <p>Academic Tutor DECO7140: Introduction to Website Design</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">August 2021 - June 2023</div>
+                  <h3>Senior Analyst</h3>
+                  <h4>Capgemini India Private Limited</h4>
+                  <p>Worked as a Senior Analyst in the Data Analytics and Artificial Intelligence team. Worked on the project: "AI-powered Analytics for Healthcare"</p>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education Column -->
+        <div class="timeline-column education-timeline">
+          <h2>Education</h2>
+          <div class="timeline-container">
+            <div class="timeline-wrapper">
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">July 2025</div>
+                  <h3>Master of Interaction Design</h3>
+                  <h4>University of Queensland, Australia</h4>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <div class="timeline-year">June 2021</div>
+                  <h3>B.Tech in Electronics and Communication Engineering</h3>
+                  <h4>National Institute of Technology Karnataka, India</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Extra Curriculars Section -->
+          <h2 class="extracurriculars-heading">Extra Curriculars</h2>
+          <div class="timeline-container">
+            <div class="timeline-wrapper">
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <!-- <div class="timeline-year">2023-2025</div> -->
+                  <h3>Secretary / Graphic Design Lead</h3>
+                  <h4>Association of Postgraduate Students, University of Queensland</h4>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <!-- <div class="timeline-year">2020 - 2021</div> -->
+                  <h3>Vice President / Graphic Design Lead</h3>
+                  <h4>Rotaract Club NIT Karnataka Chapter</h4>
+                  <!-- <p>Led the university's technology club, organizing coding competitions, hackathons, and tech workshops</p> -->
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <!-- <div class="timeline-year">2019 - Present</div> -->
+                  <h3>Co-Producer</h3>
+                  <h4>TEDxNITKSurathkal</h4>
+                  <!-- <p>Participated in multiple half-marathons and charity runs, promoting fitness and community engagement</p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards and Certifications Section -->
+  <section id="awards" class="awards-section">
+    <div class="container">
+      <h2>Awards and Certifications</h2>
+      <div class="awards-grid">
+        <!-- Awards Row 1 -->
+        <div class="award-item">
+          <div class="award-icon">🏆</div>
+          <div class="award-content">
+            <h3>Dean's Commendation Award</h3>
+            <h4>University of Queensland</h4>
+            <p>Academic Excellence Award for recieving a GPA of 6.6 or higher in a semester.</p>
+            <span class="award-year">2025</span>
+          </div>
+        </div>
+        
+        <div class="award-item">
+          <div class="award-icon">🏅</div>
+          <div class="award-content">
+            <h3>Employability Award</h3>
+            <h4>University of Queensland</h4>
+            <p>Recognition for having completed 75+ hours of voluntary work, 75+ hours of proffesional work and 5 supplementary activities.</p>
+            <span class="award-year">2025</span>
+          </div>
+        </div>
+        
+        <div class="award-item">
+          <div class="award-icon">📊</div>
+          <div class="award-content">
+            <h3>UX Design Fundamentals</h3>
+            <h4>CALARTS</h4>
+            <p> Learnt  the fundamental principles of how UX design functions to shape an audience's experience of a given body of content.</p>
+            <span class="award-year">2022</span>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq-section">
+    <div class="container">
+      <h2>Here are some questions employers ask me.</h2>
+      <div class="faq-container">
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What is your location and TimeZone?</span>
+            <span class="faq-arrow">▼</span>
+          </summary>
+          <div class="faq-answer">
+            <p>I am currently located in Brisbane, Australia, and I operate in the Australian Eastern Standard Time (AEST) timezone. I'm flexible with working across different time zones and can accommodate meetings and collaboration with international teams.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What kind of positions are you looking for?</span>
+            <span class="faq-arrow">▼</span>
+          </summary>
+          <div class="faq-answer">
+            <p>I'm seeking UX/UI Designer, Product Designer, or Interaction Designer positions. I'm particularly interested in roles that involve user research, prototyping, and creating user-centered digital experiences. I'm open to both full-time and contract opportunities.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>What is your current work eligibility?</span>
+            <span class="faq-arrow">▼</span>
+          </summary>
+          <div class="faq-answer">
+            <p>I am authorized to work in Australia and have full work rights. I can provide documentation as needed for employment verification and visa requirements.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            <span>Would you consider relocating for the opportunity?</span>
+            <span class="faq-arrow">▼</span>
+          </summary>
+          <div class="faq-answer">
+            <p>Yes, I am open to relocating for the right opportunity. I'm particularly interested in opportunities in major tech hubs and cities with vibrant design communities. I'm also comfortable with remote work arrangements.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <div id="contact" class="container eventhive-section-container-alt">
+    <div class="eventhive-text-container">
+      <!-- Left Column -->
+      <div>
+        <div class="eventhive-section-title">CONTACT</div>
+        <h2 class="eventhive-section-heading">Liked what you see? Let's work together</h2>
+      </div>
+      
+      <!-- Right Column -->
+      <div>
+        <p class="eventhive-section-description">I'm always excited to discuss new opportunities, collaborate on interesting projects, or simply chat about design and technology.<br> Feel free to reach out through any of the channels below.</p>
+        <p class="eventhive-section-description breathing-text">derekjoelgeorge@gmail.com | +61 478 670086</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george">this human</a></p>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="back-to-top" title="Back to Top">
+    TOP
+  </button>
+
+  <!-- JavaScript -->
+  <script src="javascript/effects.js"></script>
+  <script src="javascript/pointer-effect.js"></script>
+  <script src="javascript/about.js"></script>
+</body>
+</html>

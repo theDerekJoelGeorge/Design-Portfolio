@@ -13,11 +13,797 @@
   --focus-outline: 2px solid #55cac4;
   --focus-outline-offset: 2px;
   --font-family: "Funnel Display", sans-serif;
+  --text-scale: 1;
 }
 
 /* Global Visual Styles */
 * {
   font-family: var(--font-family);
+}
+
+/* Landscape Orientation Prompt */
+.landscape-prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background-color);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9998;
+  font-family: var(--font-family);
+}
+
+#landscape-particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.landscape-prompt-content {
+  text-align: center;
+  color: white;
+  max-width: 90%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+.landscape-prompt-logo {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landscape-logo {
+  height: 60px;
+  width: auto;
+  max-width: 200px;
+}
+
+.landscape-prompt-icon {
+  /* margin: 2rem 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-icon {
+  width: 120px;
+  height: 120px;
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTlsbHBvMXh3Zmx0MGU5aDhscTI0N25hYzNuOXk1aGp4dDBmeTVjdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/1DtYcLp3GDlY2RsVXd/giphy.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.landscape-prompt-recommendation {
+  font-size: 1.2rem;
+  /* margin: 0% 0 2rem 0; */
+  color: white;
+  font-weight: bold;
+}
+
+.landscape-option, .desktop-option {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.landscape-prompt-mode {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+  /* margin: 1rem 0 0.5rem 0; */
+  color: var(--primary-color);
+  text-transform: uppercase;
+  animation: breathing-text 3s ease-in-out infinite;
+}
+
+.desktop-mode {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+  /* margin: 1rem 0 0 0; */
+  color: var(--primary-color);
+  text-transform: uppercase;
+  animation: breathing-text 3s ease-in-out infinite;
+}
+
+.landscape-prompt-subtext, .desktop-subtext {
+  font-size: 1rem;
+  /* margin: 0.5rem 0; */
+  color: var(--text-color-secondary);
+  text-align: center;
+  font-weight: bold;
+}
+
+.highlight-word {
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.desktop-icon {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.monitor-icon {
+  width: 120px;
+  height: 120px;
+  background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExajI0YW1lZDllc3ljdHhhOHN2b205NTg2Y3NxNnc4cGFkc3JqaWxjZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VdoIFLsMIlwzfKD520/giphy.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.social-link:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.social-link:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.landscape-footer {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  color: white;
+}
+
+/* Show landscape prompt only on mobile portrait */
+@media (max-width: 768px) and (orientation: portrait) {
+  .landscape-prompt {
+    display: flex;
+  }
+  
+  /* Ensure hamburger menu and navigation stay above the landscape prompt */
+  .hamburger {
+    z-index: 9999 !important;
+  }
+  
+  .nav-links {
+    z-index: 9999 !important;
+  }
+}
+
+/* Hide landscape prompt on desktop and landscape */
+@media (min-width: 769px), (orientation: landscape) {
+  .landscape-prompt {
+    display: none !important;
+  }
+}
+
+/* Text Scaling for Mobile Accessibility */
+@media (max-width: 768px) {
+  h1, h2, h3, h4, h5, h6 {
+    font-size: calc(1em * var(--text-scale)) !important;
+  }
+  
+  p, span, div, a, li {
+    font-size: calc(1em * var(--text-scale)) !important;
+  }
+  
+  .nav-links li a {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .hero h1 {
+    font-size: calc(2.2rem * var(--text-scale)) !important;
+  }
+  
+  .hero p {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .section h1,
+  .section h2 {
+    font-size: calc(2.2rem * var(--text-scale)) !important;
+  }
+  
+  .section p {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  /* Subsection text scaling */
+  .bio-section h2,
+  .timeline-section h2,
+  .awards-section h2,
+  .faq-section h2,
+  .extracurriculars-heading {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h3 {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h4 {
+    font-size: calc(0.95rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item p {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .faq-question {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .faq-answer p {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-heading {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-description {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  /* Navigation text scaling */
+  .nav-links li a[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Hero section text scaling */
+  h1[style*="font-size: 3rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  h1 span[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  p[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* About page header text scaling */
+  .header-text h1[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  .tagline[style*="font-size: 1.2rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  /* Bio section text scaling */
+  .bio-content h2[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  .quote-text[style*="font-size: 1.3rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .bio-content p[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Slideshow text scaling */
+  .horizontal-slideshow-section h3[style*="font-size: 1.3rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  /* Timeline section text scaling */
+  .timeline-section h2[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-year[style*="font-size: 1.2rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h3[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h4[style*="font-size: 1.3rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item p[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Extra curriculars text scaling */
+  .extracurriculars-heading[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Awards section text scaling */
+  .awards-section h2[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table th[style*="font-size: 1.2rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.3rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  /* FAQ section text scaling */
+  .faq-section h2[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .faq-question[style*="font-size: 1.2rem"],
+  .faq-question[style*="font-size: 1.5rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  .faq-arrow[style*="font-size: 1.2rem"],
+  .faq-arrow[style*="font-size: 1.5rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  .faq-answer p[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Contact section text scaling */
+  .eventhive-section-title[style*="font-size: 1rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-heading[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Footer text scaling */
+  footer p[style*="font-size: 0.9rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  /* Work section text scaling */
+  .section h1[style*="text-align: center"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  .section h3[style*="font-size: 1.8rem"] {
+    font-size: calc(1.8rem * var(--text-scale)) !important;
+  }
+  
+  .section p[style*="font-size: 1.2rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  /* Project pages text scaling */
+  .eventhive-main-title[style*="font-size: 3rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-subtitle[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-title[style*="font-size: 1rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-heading[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  /* Unmoot project text scaling */
+  h1[style*="font-size: 3rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  div[style*="font-size: 5rem"] {
+    font-size: calc(5rem * var(--text-scale)) !important;
+  }
+  
+  h2[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  p[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  h2[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  /* Breathing text scaling */
+  .breathing-text[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  /* Catch-all for any remaining inline font-size styles */
+  *[style*="font-size:"] {
+    font-size: calc(var(--original-font-size, 1rem) * var(--text-scale)) !important;
+  }
+  
+  /* Override specific inline font-size styles for mobile */
+  p[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  h1[style*="font-size: 3rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  h2[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  h2[style*="font-size: 1.5rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  div[style*="font-size: 5rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  blockquote[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  th[style*="font-size: 1.5rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  td[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  td[style*="font-size: 1rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  button[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  button[style*="font-size: 1.5rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-main-title[style*="font-size: 3rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-subtitle[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-title[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-heading[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .breathing-text[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .breathing-text[style*="font-size: 5rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-quote-text[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-quote-attribution[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-solution-title[style*="font-size: 5rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-solution-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-prototype-disclaimer[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-problem-question[style*="font-size: 2rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-nav-btn[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  .screen-nav-btn[style*="font-size: 1.5rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-switcher-btn {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-slideshow-nav {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  .back-to-top {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  /* About page specific inline style overrides */
+  .bio-content h2[style*="font-size: 2.5rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .quote-text[style*="font-size: 1.3rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .bio-content p[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .horizontal-slideshow-section h3[style*="font-size: 1.3rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-section h2[style*="font-size: 2.5rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-year[style*="font-size: 1.2rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h3[style*="font-size: 1.5rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item h4[style*="font-size: 1.3rem"] {
+    font-size: calc(0.95rem * var(--text-scale)) !important;
+  }
+  
+  .timeline-item p[style*="font-size: 1.5rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .extracurriculars-heading[style*="font-size: 2.5rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .awards-section h2[style*="font-size: 2.5rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table th[style*="font-size: 1.2rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.3rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  .awards-table td[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  .faq-section h2[style*="font-size: 2rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .faq-question[style*="font-size: 1.2rem"],
+  .faq-question[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .faq-arrow[style*="font-size: 1.2rem"],
+  .faq-arrow[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .faq-answer p[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-title[style*="font-size: 1rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-heading[style*="font-size: 2rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  .eventhive-section-description[style*="font-size: 1.5rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  footer p[style*="font-size: 0.9rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  /* Index page specific inline style overrides */
+  .header-text h1[style*="font-size: 2.5rem"] {
+    font-size: calc(1.8rem * var(--text-scale)) !important;
+  }
+  
+  .tagline[style*="font-size: 1.2rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  .section h1[style*="text-align: center"] {
+    font-size: calc(1.8rem * var(--text-scale)) !important;
+  }
+  
+  .section h3[style*="font-size: 1.8rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .section p[style*="font-size: 1.2rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  /* Work section text scaling */
+  .section h1[style*="text-align: center"] {
+    font-size: calc(1.8rem * var(--text-scale)) !important;
+  }
+  
+  .section h3[style*="font-size: 1.8rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  .section p[style*="font-size: 1.2rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  /* Specific scaling for common font sizes that might be missed */
+  *[style*="font-size: 0.8rem"] {
+    font-size: calc(0.8rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 0.9rem"] {
+    font-size: calc(0.9rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1rem"] {
+    font-size: calc(1rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.1rem"] {
+    font-size: calc(1.1rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.2rem"] {
+    font-size: calc(1.2rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.3rem"] {
+    font-size: calc(1.3rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.4rem"] {
+    font-size: calc(1.4rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.5rem"] {
+    font-size: calc(1.5rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.6rem"] {
+    font-size: calc(1.6rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.7rem"] {
+    font-size: calc(1.7rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.8rem"] {
+    font-size: calc(1.8rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 1.9rem"] {
+    font-size: calc(1.9rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 2rem"] {
+    font-size: calc(2rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 2.5rem"] {
+    font-size: calc(2.5rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 3rem"] {
+    font-size: calc(3rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 4rem"] {
+    font-size: calc(4rem * var(--text-scale)) !important;
+  }
+  
+  *[style*="font-size: 5rem"] {
+    font-size: calc(5rem * var(--text-scale)) !important;
+  }
 }
 
 /* ========================================

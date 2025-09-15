@@ -45,6 +45,89 @@ body {
   z-index: 10;
 }
 
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Text Resize Controls */
+.text-resize-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.text-resize-btn {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-resize-btn:hover,
+.text-resize-btn:focus {
+  background: var(--primary-color);
+  color: var(--background-color);
+  transform: scale(1.1);
+}
+
+.text-resize-btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.text-size-indicator {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
 .logo img {
   height: 150px;
   width: auto;
@@ -110,6 +193,26 @@ body {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   box-sizing: border-box;
+}
+
+/* Hero section adjustments for landscape orientation */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    padding: 2rem 5%;
+    margin-top: 3rem;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .hero h1 {
@@ -1484,8 +1587,13 @@ footer {
   /* Navbar Mobile */
   .navbar {
     padding: 0.8rem 5%;
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .hamburger {
+    display: flex;
   }
   
   .logo img {
@@ -1493,16 +1601,39 @@ footer {
   }
   
   .nav-links {
-    gap: 2rem;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .nav-links.active {
+    left: 0;
   }
   
   .nav-links li a {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-links li a:hover,
+  .nav-links li a:focus {
+    color: var(--primary-color);
   }
   
   .nav-links li a.active::after {
-    bottom: -20px;
-    font-size: 16px;
+    display: none;
   }
   
   /* Hero Section Mobile */
@@ -1511,35 +1642,77 @@ footer {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     box-sizing: border-box;
+    padding-top: 2rem;
   }
   
   .hero h1 {
     font-size: 1.8rem;
-    white-space: nowrap;
+    white-space: normal;
     margin-left: 5%;
+    line-height: 1.2;
+    word-wrap: break-word;
   }
   
   .hero p {
     font-size: 1.1rem;
     margin-left: 5%;
+    line-height: 1.4;
   }
   
   .btn {
     padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   
   .section {
-    padding: 3rem 8%;
+    padding: 3rem 5%;
   }
   
+  .section h1,
   .section h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
   }
   
   .section p {
     font-size: 1rem;
-    padding: 0 1rem;
+    line-height: 1.5;
+    padding: 0;
+  }
+  
+  /* Work section mobile improvements */
+  .section div[style*="grid-template-columns: 1fr 1fr"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  .section div[style*="height: 30rem"] {
+    height: 20rem !important;
+  }
+  
+  .section h3[style*="font-size: 1.8rem"] {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .section p[style*="font-size: 1.2rem"] {
+    font-size: 0.9rem !important;
+  }
+  
+  /* Consistent styling for index page sections */
+  .section {
+    padding: 2rem 0 !important;
+    margin: 1.5rem auto 0 auto !important;
+    max-width: 90% !important;
+  }
+  
+  .section h1[style*="text-align: center"] {
+    font-size: 1.8rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
   }
   
   /* About Page Mobile */
@@ -1548,7 +1721,7 @@ footer {
   }
   
   .header-content {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 2rem;
     text-align: center;
   }
@@ -1557,25 +1730,205 @@ footer {
     text-align: center;
   }
   
+  .header-text h1[style*="font-size: 2.5rem"] {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .header-text .tagline[style*="font-size: 1.2rem"] {
+    font-size: 1.1rem !important;
+  }
+  
+  .header-photo {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Removed - now handled by consistent subsection styling above */
+  
+  /* Consistent Mobile Subsection Styling */
   .bio-section,
+  .timeline-section,
+  .awards-section,
+  .faq-section,
   .contact-section {
-    padding: 2rem 0 4rem 0;
-    margin-top: 5rem;
+    padding: 2rem 0 !important;
+    margin: 1.5rem auto 0 auto !important;
+    max-width: 90% !important;
+  }
+  
+  /* Consistent subsection headings */
+  .bio-section h2,
+  .timeline-section h2,
+  .awards-section h2,
+  .faq-section h2,
+  .extracurriculars-heading {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+  }
+  
+  /* Bio section mobile improvements */
+  .bio-content h2[style*="font-size: 2.5rem"] {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .bio-content p[style*="font-size: 1.5rem"] {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .bio-content p[style*="font-size: 1.3rem"] {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Horizontal slideshow mobile improvements */
+  .horizontal-slideshow-section h3[style*="font-size: 1.3rem"] {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+  }
+  
+  /* Slideshow container mobile adjustments */
+  .slideshow-container {
+    margin-top: 1rem !important;
+  }
+  
+  .slide-card {
+    min-width: 200px !important;
+    height: 150px !important;
+  }
+  
+  .slide-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+  
+  /* Timeline section mobile improvements */
+  .timeline-item h3[style*="font-size: 1.5rem"] {
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .timeline-item h4[style*="font-size: 1.3rem"] {
+    font-size: 0.95rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .timeline-item p[style*="font-size: 1.5rem"] {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .timeline-year[style*="font-size: 1.2rem"] {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Awards section mobile improvements */
+  .awards-table th[style*="font-size: 1.2rem"] {
+    font-size: 0.9rem !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.5rem"] {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .awards-table td[style*="font-size: 1.3rem"] {
+    font-size: 0.9rem !important;
+  }
+  
+  .awards-table td[style*="font-size: 1rem"] {
+    font-size: 0.8rem !important;
+  }
+  
+  /* FAQ section mobile improvements */
+  .faq-section h2[style*="font-size: 2rem"] {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .faq-question[style*="font-size: 1.2rem"] {
+    font-size: 1rem !important;
+  }
+  
+  .faq-answer p[style*="font-size: 1.5rem"] {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Contact section mobile improvements */
+  .eventhive-section-heading[style*="font-size: 2rem"] {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .eventhive-section-description[style*="font-size: 1.5rem"] {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .eventhive-section-title[style*="font-size: 1rem"] {
+    font-size: 0.8rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Contact section layout improvements */
+  .eventhive-text-container {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  
+  /* Consistent spacing for all subsection content */
+  .bio-content,
+  .timeline-unified,
+  .awards-table-container,
+  .faq-container,
+  .eventhive-text-container {
+    margin-top: 1rem !important;
+  }
+  
+  /* Button mobile improvements */
+  .screen-nav-btn[style*="font-size: 1.5rem"] {
+    font-size: 1.1rem !important;
+    padding: 1rem 2rem !important;
+  }
+  
+  .eventhive-nav-btn[style*="font-size: 1rem"] {
+    font-size: 0.8rem !important;
+    padding: 0.8rem 1.2rem !important;
+  }
+  
+  .eventhive-switcher-btn {
+    font-size: 0.9rem !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+  
+  .eventhive-slideshow-nav {
+    font-size: 1.2rem !important;
+    padding: 0.8rem !important;
+  }
+  
+  .back-to-top {
+    font-size: 1rem !important;
+    padding: 0.8rem !important;
   }
   
   .skills-section {
     padding: 4rem 0 2rem 0;
   }
   
-  .timeline-section {
-    padding: 4rem 0 4rem 0;
-    margin-top: 1.5rem;
-  }
-  
-  .awards-section {
-    padding: 4rem 0;
-    margin-top: 1.5rem;
-  }
+  /* Removed - now handled by consistent subsection styling above */
   
   .awards-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1722,17 +2075,8 @@ footer {
     height: 60px;
   }
   
-  .nav-links {
-    gap: 1.5rem;
-  }
-  
   .nav-links li a {
-    font-size: 1.2rem;
-  }
-  
-  .nav-links li a.active::after {
-    bottom: -18px;
-    font-size: 14px;
+    font-size: 1.8rem;
   }
   
   .hero {
@@ -1740,35 +2084,71 @@ footer {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     box-sizing: border-box;
+    padding-top: 1.5rem;
   }
   
   .hero h1 {
-    font-size: 1.4rem;
-    white-space: nowrap;
+    font-size: 1.5rem;
+    white-space: normal;
     margin-left: 4%;
+    line-height: 1.2;
+    word-wrap: break-word;
   }
   
   .hero p {
     font-size: 1rem;
     margin-left: 4%;
+    line-height: 1.4;
   }
   
   .btn {
     padding: 0.5rem 1.2rem;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   .section {
-    padding: 2rem 6%;
+    padding: 2rem 4%;
   }
   
+  .section h1,
   .section h2 {
     font-size: 1.8rem;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
   }
   
   .section p {
-    font-size: 0.9rem;
-    padding: 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 0;
+  }
+  
+  /* Work section small mobile improvements */
+  .section div[style*="height: 20rem"] {
+    height: 18rem !important;
+  }
+  
+  .section h3[style*="font-size: 1.5rem"] {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  .section p[style*="font-size: 1rem"] {
+    font-size: 0.9rem !important;
+  }
+  
+  /* Consistent styling for index page sections - Small Mobile */
+  .section {
+    padding: 1.5rem 0 !important;
+    margin: 1rem auto 0 auto !important;
+    max-width: 95% !important;
+  }
+  
+  .section h1[style*="text-align: center"] {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.2rem !important;
+    text-align: center !important;
   }
   
   /* About Page Small Mobile */
@@ -1776,14 +2156,57 @@ footer {
     max-width: 250px;
   }
   
+  /* Consistent Mobile Subsection Styling - Small Mobile */
   .bio-section,
+  .timeline-section,
+  .awards-section,
+  .faq-section,
   .contact-section {
-    padding: 1.5rem 0 3rem 0;
-    margin-top: 4rem;
+    padding: 1.5rem 0 !important;
+    margin: 1rem auto 0 auto !important;
+    max-width: 95% !important;
+  }
+  
+  /* Consistent subsection headings - Small Mobile */
+  .bio-section h2,
+  .timeline-section h2,
+  .awards-section h2,
+  .faq-section h2,
+  .extracurriculars-heading {
+    font-size: 1.4rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 1.2rem !important;
+    text-align: center !important;
   }
   
   .contact-content {
     gap: 1.5rem;
+  }
+  
+  /* Button mobile improvements - Small Mobile */
+  .screen-nav-btn[style*="font-size: 1.5rem"] {
+    font-size: 1rem !important;
+    padding: 0.8rem 1.5rem !important;
+  }
+  
+  .eventhive-nav-btn[style*="font-size: 1rem"] {
+    font-size: 0.7rem !important;
+    padding: 0.6rem 1rem !important;
+  }
+  
+  .eventhive-switcher-btn {
+    font-size: 0.8rem !important;
+    padding: 0.6rem 1.2rem !important;
+  }
+  
+  .eventhive-slideshow-nav {
+    font-size: 1rem !important;
+    padding: 0.6rem !important;
+  }
+  
+  .back-to-top {
+    font-size: 0.9rem !important;
+    padding: 0.6rem !important;
   }
   
   .contact-info {
@@ -1810,15 +2233,7 @@ footer {
     gap: 0.6rem;
   }
   
-  .timeline-section {
-    padding: 3rem 0 3rem 0;
-    margin-top: 1rem;
-  }
-  
-  .awards-section {
-    padding: 3rem 0;
-    margin-top: 1rem;
-  }
+  /* Removed - now handled by consistent subsection styling above */
   
   .awards-grid {
     grid-template-columns: 1fr;

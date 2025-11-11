@@ -1,0 +1,3461 @@
+<!DOCTYPE html>
+<!--
+  Timeline Game - 2D Side-Scrolling Timeline
+  ===========================================
+  
+  A pixel-art style timeline game where a character walks along a timeline
+  using arrow keys. When the character reaches timeline markers, a content
+  box appears in the background showing education and work experience.
+  The user can continue controlling the character while the content box is visible.
+  
+  How to Embed:
+  -------------
+  1. As an iframe:
+     <iframe src="timeline-game.html" width="100%" height="600px" frameborder="0"></iframe>
+  
+  2. Copy the entire content into your HTML file
+  
+  3. Customize the timeline data in the timelineData array (around line 359)
+  
+  Controls:
+  ---------
+  - Arrow Left/Right: Move character along timeline
+  - Content box appears automatically when near markers
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>my-journey.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #1a1a1a;
+      font-family: 'Funnel Display', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .timeline-game-container {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      background: #1a1a1a;
+      overflow: hidden;
+    }
+    
+    .location-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .location-india {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 153, 51, 0.15) 0%, rgba(19, 136, 8, 0.15) 50%, rgba(255, 153, 51, 0.15) 100%);
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 153, 51, 0.08) 2px, rgba(255, 153, 51, 0.08) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(19, 136, 8, 0.08) 2px, rgba(19, 136, 8, 0.08) 4px);
+      transition: width 0.3s ease;
+    }
+    
+    .location-australia {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, rgba(255, 255, 255, 0.15) 50%, rgba(0, 102, 204, 0.15) 100%);
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 102, 204, 0.08) 2px, rgba(0, 102, 204, 0.08) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.08) 2px, rgba(255, 255, 255, 0.08) 4px);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    
+    .location-flag {
+      position: absolute;
+      width: 120px;
+      height: 80px;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.9;
+      filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+    }
+    
+    .location-india .location-flag {
+      top: 20px;
+      right: 20px;
+    }
+    
+    .location-australia .location-flag {
+      top: 20px;
+      left: 20px;
+    }
+    
+    .location-flag img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .location-divider {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, 
+        rgba(255, 153, 51, 0.6) 0%, 
+        rgba(255, 255, 255, 0.7) 50%, 
+        rgba(0, 102, 204, 0.6) 100%);
+      z-index: 2;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      transition: left 0.3s ease;
+    }
+    
+    /* Canvas for pixel art */
+    .pixel-canvas {
+      position: fixed;
+      z-index: 2;
+      pointer-events: none;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    
+    .clouds-canvas {
+      top: 0;
+      left: 0;
+      opacity: 0.8;
+    }
+    
+    .birds-canvas {
+      top: 0;
+      left: 0;
+      opacity: 0.9;
+    }
+
+    .timeline-game-wrapper {
+      width: 4000px;
+      height: 100%;
+      position: relative;
+      overflow: visible;
+      transform: translateX(0);
+      z-index: 5;
+    }
+
+    .calendar-widget {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #2a2a2a;
+      border: 1px solid white;
+      border-radius: 0;
+      padding: 0;
+      width: 180px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      pointer-events: none;
+      box-shadow: none;
+    }
+
+    .calendar-date {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 2px;
+    }
+
+    .calendar-year {
+      font-size: 28px;
+      color: #00d2d3;
+      font-weight: bold;
+      text-shadow: none;
+      letter-spacing: 6px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .skills-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(42, 42, 42, 0.9);
+      border: 3px solid white;
+      border-radius: 8px;
+      padding: 20px;
+      min-width: 800px;
+      max-width: 1000px;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: white;
+      z-index: 100;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      pointer-events: auto;
+      display: none; /* TEMPORARILY HIDDEN - RESTORE BY REMOVING THIS LINE */
+    }
+
+    .experience-panel {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      min-width: 300px;
+      max-width: 400px;
+      color: white;
+      z-index: 100;
+      box-shadow: none;
+      pointer-events: auto;
+    }
+
+    .experience-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: white;
+      text-align: left;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .experience-categories {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .experience-category {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #d3d3d3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      position: relative;
+      border: 2px solid #999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .category-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .category-name {
+      font-size: 12px;
+      font-weight: bold;
+      color: #55cac4;
+      text-shadow: 1px 1px 0px #000;
+      text-align: center;
+    }
+
+    .category-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #55cac4;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .experience-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 400px;
+      width: max-content;
+      background: rgba(42, 42, 42, 0.95);
+      border: 2px solid #55cac4;
+      border-radius: 6px;
+      padding: 10px;
+      margin-top: 5px;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none;
+      z-index: 101;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .experience-category.active .experience-dropdown {
+      display: block;
+    }
+
+    .experience-dropdown::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .experience-dropdown::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 3px;
+    }
+
+    .experience-dropdown::-webkit-scrollbar-thumb {
+      background: #55cac4;
+      border-radius: 3px;
+    }
+
+    .experience-item {
+      background: rgba(85, 202, 196, 0.2);
+      border: 2px solid #55cac4;
+      border-radius: 6px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      margin-bottom: 4px;
+      min-width: 380px;
+      width: 100%;
+    }
+
+    .experience-item.new {
+      animation: skillAppear 0.8s ease;
+      background: rgba(76, 175, 80, 0.25);
+      border-color: #4caf50;
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 8px rgba(76, 175, 80, 0.6), 0 0 4px rgba(76, 175, 80, 0.4) !important;
+    }
+
+    .experience-item-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .experience-item-subtitle {
+      font-size: 13px;
+      color: #55cac4;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .experience-item-date {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    .skills-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #55cac4;
+      text-align: center;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .skills-section {
+      margin-bottom: 15px;
+    }
+
+    .skills-section-header {
+      background: rgba(85, 202, 196, 0.3);
+      border: 2px solid #55cac4;
+      border-radius: 6px;
+      padding: 10px 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .skills-section-header:hover {
+      background: rgba(85, 202, 196, 0.4);
+    }
+
+    .skills-section.collapsed .section-arrow {
+      transform: rotate(-90deg);
+    }
+
+    .section-arrow {
+      transition: transform 0.3s ease;
+      font-size: 14px;
+    }
+
+    .skills-section-content {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 8px;
+      max-height: 500px;
+      overflow-y: auto;
+      transition: max-height 0.3s ease;
+    }
+
+    .skills-section-content.collapsed {
+      max-height: 0;
+      margin-top: 0;
+      overflow: hidden;
+    }
+
+    .skill-item {
+      background: rgba(85, 202, 196, 0.2);
+      border: 2px solid #55cac4;
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+      width: 110px;
+      height: 90px;
+      box-sizing: border-box;
+      box-shadow: none;
+    }
+
+    .skill-icon {
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .skill-title {
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.2;
+      color: white;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      max-width: 100%;
+      white-space: normal;
+      word-break: normal;
+      hyphens: none;
+    }
+
+    .skill-item.new {
+      animation: skillAppear 0.8s ease;
+      background: rgba(76, 175, 80, 0.25) !important;
+      border-color: #4caf50 !important;
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 8px rgba(76, 175, 80, 0.6), 0 0 4px rgba(76, 175, 80, 0.4) !important;
+    }
+
+
+    .new-skills-notification {
+      margin-top: 10px;
+      padding: 8px;
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid #4caf50;
+      border-radius: 4px;
+      font-size: 12px;
+      text-align: center;
+      color: #4caf50;
+      animation: skillAppear 0.5s ease;
+    }
+
+    .section-unlock-notification {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(42, 42, 42, 0.95);
+      border: 3px solid #4caf50;
+      border-radius: 8px;
+      padding: 20px 30px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+      animation: skillAppear 0.5s ease;
+      pointer-events: none;
+    }
+
+    .skills-section.hidden {
+      display: none;
+    }
+
+    @keyframes skillAppear {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    .instructions {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      z-index: 100;
+      text-align: center;
+      text-shadow: 2px 2px 0px #000;
+      pointer-events: none;
+    }
+
+    .timeline-track {
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      width: 4000px;
+      height: 4px;
+      background: white;
+      z-index: 10;
+    }
+
+    .character {
+      position: absolute;
+      bottom: 50px; /* Aligned with timeline track */
+      left: 50px;
+      width: 40px;
+      height: 50px;
+      z-index: 50;
+      transition: left 0.1s linear;
+    }
+
+    .character-body {
+      width: 40px;
+      height: 50px;
+      position: relative;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    .character-head {
+      width: 18px;
+      height: 18px;
+      background: #ffdbac;
+      border: 2px solid #000;
+      position: absolute;
+      top: 2px;
+      left: 11px;
+      border-radius: 2px;
+    }
+
+    .character-eye {
+      width: 2px;
+      height: 2px;
+      background: #000;
+      position: absolute;
+      top: 6px;
+    }
+
+    .character-eye-left {
+      left: 5px;
+    }
+
+    .character-eye-right {
+      right: 5px;
+    }
+
+    .character-body-part {
+      width: 22px;
+      height: 18px;
+      background: #c238dd;
+      border: 2px solid #000;
+      position: absolute;
+      top: 18px;
+      left: 9px;
+    }
+
+    .character-legs {
+      width: 6px;
+      height: 14px;
+      background: #8b4513;
+      border: 2px solid #000;
+      position: absolute;
+      top: 34px;
+    }
+
+    .character-leg-left {
+      left: 11px;
+    }
+
+    .character-leg-right {
+      left: 23px;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      bottom: 20px; /* Below the timeline track (which is at bottom: 50px) */
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 3px solid #000;
+      z-index: 20;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .timeline-marker:hover {
+      transform: scale(1.2);
+    }
+
+    .timeline-marker.education.start,
+    .timeline-marker.work.start {
+      background: #4caf50;
+    }
+
+    .timeline-marker.education.end,
+    .timeline-marker.work.end {
+      background: #f44336;
+    }
+
+    .timeline-marker.extracurricular {
+      background: #2196f3;
+    }
+    
+    .timeline-marker.education.single,
+    .timeline-marker.work.single {
+      background: #ff9800;
+    }
+
+    .timeline-year {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 2px 2px 0px #000;
+      white-space: nowrap;
+      z-index: 25;
+    }
+
+    .marker-icon {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      filter: brightness(0) invert(1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1;
+      font-size: 16px;
+    }
+
+    .content-box {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 450px;
+      min-height: 220px;
+      background: #d3d3d3;
+      border: 2px solid #2196f3;
+      border-radius: 4px;
+      padding: 25px;
+      display: none;
+      z-index: 15;
+      color: #333;
+      font-size: 15px;
+      line-height: 1.7;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+    }
+
+    .content-box.active {
+      display: block;
+    }
+
+    .content-box-year {
+      font-size: 16px;
+      color: #2196f3;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .content-box-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .content-box-subtitle {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .content-box-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+      white-space: pre-line; /* Preserve line breaks */
+    }
+    
+    .content-box-details {
+      margin-top: 15px;
+    }
+    
+    .content-box-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    
+    .content-box-badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    
+    .content-box-badge.blue {
+      background: #2196f3;
+      color: white;
+    }
+    
+    .content-box-badge.black {
+      background: #333;
+      color: white;
+    }
+    
+    .content-box-courses {
+      margin-top: 15px;
+    }
+    
+    .content-box-courses-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 10px;
+    }
+    
+    .content-box-courses-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sparkles {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #c238dd;
+      border: 1px solid #000;
+    }
+
+    .sparkle:nth-child(1) { top: 0; left: 10px; }
+    .sparkle:nth-child(2) { top: 10px; right: 0; }
+    .sparkle:nth-child(3) { bottom: 0; right: 5px; }
+
+    @keyframes walk {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(-2deg); }
+      75% { transform: translateY(-3px) rotate(2deg); }
+    }
+
+    .character.walking .character-body {
+      animation: walk 0.4s infinite;
+    }
+
+    .character.walking .character-leg-left {
+      animation: legWalkLeft 0.4s infinite;
+    }
+
+    .character.walking .character-leg-right {
+      animation: legWalkRight 0.4s infinite;
+    }
+
+    @keyframes legWalkLeft {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(-2px) rotate(-10deg); }
+    }
+
+    @keyframes legWalkRight {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      50% { transform: translateX(2px) rotate(10deg); }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .sparkle {
+      animation: sparkle 1s infinite;
+    }
+
+    .sparkle:nth-child(2) { animation-delay: 0.3s; }
+    .sparkle:nth-child(3) { animation-delay: 0.6s; }
+
+    /* Firework animation */
+    .firework {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .firework-rocket {
+      position: absolute;
+      width: 4px;
+      height: 8px;
+      background: #ffaa00;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .firework-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      will-change: transform, opacity;
+      box-shadow: 0 0 4px currentColor;
+    }
+
+    @keyframes rocketFly {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      95% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(var(--fly-height));
+        opacity: 0;
+      }
+    }
+    
+    .firework-rocket {
+      animation: rocketFly 1s ease-out forwards;
+    }
+
+    @keyframes firework {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+      }
+      1% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(calc(var(--tx) * 0.5), calc(var(--ty) * 0.5)) scale(1);
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .firework-rocket {
+      animation: rocketFly 1s ease-out forwards;
+    }
+
+    .firework-particle {
+      animation: firework 1.5s ease-out forwards;
+    }
+    
+    .start-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 26, 0.8);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .start-screen.hidden {
+      display: none;
+    }
+    
+    .start-screen-arrows {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+    }
+    
+    .start-screen-arrows-container {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+    }
+    
+    .start-screen-divider {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.5) 0px,
+        rgba(255, 255, 255, 0.5) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+    
+    .start-screen-arrow {
+      width: 120px;
+      height: 120px;
+      background: transparent;
+      border: 2px solid white;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+      position: relative;
+      padding: 12px;
+    }
+    
+    .start-screen-arrow:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+    
+    .start-screen-arrow:active {
+      transform: scale(0.95);
+    }
+    
+    .start-screen-arrow-line {
+      width: 30px;
+      height: 3px;
+      background: white;
+      margin-bottom: 16px;
+    }
+    
+    .start-screen-arrow-icon {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .start-screen-arrow-icon.left::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-right: 30px solid white;
+    }
+    
+    .start-screen-arrow-icon.right::after {
+      content: '';
+      position: absolute;
+      right: 50%;
+      top: 50%;
+      transform: translate(50%, -50%);
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 30px solid white;
+    }
+    
+    .start-screen-instruction {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    
+    .start-screen-click-instruction {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 1px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="start-screen" id="startScreen">
+    <div class="start-screen-arrows">
+      <div class="start-screen-arrows-container">
+        <div class="start-screen-arrow" id="startArrowLeft">
+          <div class="start-screen-arrow-line"></div>
+          <div class="start-screen-arrow-icon left"></div>
+        </div>
+        <div class="start-screen-divider"></div>
+        <div class="start-screen-arrow" id="startArrowRight">
+          <div class="start-screen-arrow-line"></div>
+          <div class="start-screen-arrow-icon right"></div>
+        </div>
+      </div>
+      <div class="start-screen-instruction">Use the Arrow Keys to navigate.</div>
+      <div class="start-screen-click-instruction">Click Anywhere to Begin.</div>
+    </div>
+  </div>
+  
+  <div class="timeline-game-container">
+    <div class="location-background">
+      <div class="location-india" id="locationIndia">
+        <div class="location-flag">
+          <img src="images/Timeline Sprites/flags/India.jpg" alt="India Flag">
+        </div>
+      </div>
+      <div class="location-australia" id="locationAustralia">
+        <div class="location-flag">
+          <img src="images/Timeline Sprites/flags/Australia.jpg" alt="Australia Flag">
+        </div>
+      </div>
+      <div class="location-divider" id="locationDivider"></div>
+      
+      <!-- Canvas for pixel art -->
+      <canvas class="pixel-canvas clouds-canvas" id="cloudsCanvas"></canvas>
+      <canvas class="pixel-canvas birds-canvas" id="birdsCanvas"></canvas>
+    </div>
+    <div class="calendar-widget" id="calendarWidget">
+      <div class="calendar-date" id="calendarDate">MARCH</div>
+      <div class="calendar-year" id="calendarYear">2017</div>
+    </div>
+    <div class="skills-panel" id="skillsPanel">
+      <div class="skills-title">Skills</div>
+      <div class="skills-list" id="skillsList">
+        <div class="skills-section" data-institution="nitk">
+          <div class="skills-section-header">
+            <span>At NITK</span>
+            <span class="section-arrow">▼</span>
+          </div>
+          <div class="skills-section-content" id="nitkSkills"></div>
+        </div>
+        <div class="skills-section hidden" data-institution="capgemini" id="capgeminiSection">
+          <div class="skills-section-header">
+            <span>At Capgemini</span>
+            <span class="section-arrow">▼</span>
+          </div>
+          <div class="skills-section-content" id="capgeminiSkills"></div>
+        </div>
+        <div class="skills-section hidden" data-institution="uq" id="uqSection">
+          <div class="skills-section-header">
+            <span>At UQ</span>
+            <span class="section-arrow">▼</span>
+          </div>
+          <div class="skills-section-content" id="uqSkills"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="experience-panel" id="experiencePanel">
+      <div class="experience-categories" id="experienceList">
+        <div class="experience-category" data-type="education">
+          <div class="category-icon">
+            🎓
+            <div class="category-count" id="educationCount">0</div>
+          </div>
+          <div class="category-info">
+            <div class="category-name">EDUCATION</div>
+          </div>
+          <div class="experience-dropdown" id="educationContainer"></div>
+        </div>
+        <div class="experience-category" data-type="work">
+          <div class="category-icon">
+            💼
+            <div class="category-count" id="workCount">0</div>
+          </div>
+          <div class="category-info">
+            <div class="category-name">WORK EXPERIENCE</div>
+          </div>
+          <div class="experience-dropdown" id="workContainer"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-game-wrapper">
+      
+      <div class="timeline-track" id="timelineTrack"></div>
+      
+      <div class="character" id="character">
+        <img id="characterSprite" src="" alt="Character" style="width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; image-rendering: -moz-crisp-edges; image-rendering: crisp-edges;" />
+      </div>
+      
+      <!-- Timeline markers will be added dynamically -->
+      
+      <div class="content-box" id="contentBox">
+        <div class="content-box-year" id="contentBoxYear"></div>
+        <div class="content-box-title" id="contentBoxTitle"></div>
+        <div class="content-box-subtitle" id="contentBoxSubtitle"></div>
+        <div class="content-box-details" id="contentBoxDetails"></div>
+        <div class="content-box-description" id="contentBoxDescription"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Timeline data - scaled to time (2017-2025 = 8 years, 400px per year for compact browsing)
+    // Position calculation: (year - 2017) * 400 + month offset
+    // Month offset: Jan=0, Feb=33, Mar=67, Apr=100, May=133, Jun=167, Jul=200, Aug=233, Sep=267, Oct=300, Nov=333, Dec=367
+    const monthOffset = {
+      'Jan': 0, 'Feb': 33, 'Mar': 67, 'Apr': 100, 'May': 133, 'Jun': 167,
+      'Jul': 200, 'Aug': 233, 'Sep': 267, 'Oct': 300, 'Nov': 333, 'Dec': 367
+    };
+    
+    function getPosition(year, month = null) {
+      const baseYear = 2017;
+      const yearOffset = (year - baseYear) * 400;
+      const monthValue = month ? (monthOffset[month] || 0) : 0;
+      return yearOffset + monthValue;
+    }
+    
+    // Skills mapping for each period with institution
+    const skillsByPeriod = {
+      'btech': { skills: ['Electronics', 'Communication Systems', 'Signal Processing', 'C Programming', 'MATLAB'], institution: 'nitk' },
+      'grd-designs': { skills: ['Graphic Design', 'Business Management', 'Product Design', 'Marketing', 'E-commerce'], institution: 'nitk' },
+      'rotaract': { skills: ['Graphic Design', 'Leadership', 'Team Management', 'Adobe Creative Suite'], institution: 'nitk' },
+      'capgemini': { skills: ['Data Analytics', 'Python', 'Machine Learning', 'AI', 'Healthcare Analytics', 'SQL', 'Tableau'], institution: 'capgemini' },
+      'aps-gdo': { skills: ['Graphic Design', 'Adobe Creative Suite', 'Visual Communication', 'Branding'], institution: 'uq' },
+      'aps-vp': { skills: ['Leadership', 'Community Development', 'Project Management', 'Strategic Planning'], institution: 'uq' },
+      'aps-secretary': { skills: ['Administration', 'Documentation', 'Event Planning', 'Communication'], institution: 'uq' },
+      'masters': { skills: ['Interaction Design', 'User Experience Design', 'User Research', 'Prototyping', 'Figma', 'Design Thinking'], institution: 'uq' },
+      'tutor-1': { skills: ['Web Design', 'Teaching', 'HTML', 'CSS', 'JavaScript', 'User-Centered Design'], institution: 'uq' },
+      'tutor-2': { skills: ['Web Design', 'Teaching', 'HTML', 'CSS', 'JavaScript', 'React', 'Full-Stack Development', 'User-Centered Design'], institution: 'uq' }
+    };
+    
+    // Track all skills learned (with their position when first learned)
+    const allSkillsByPosition = {
+      nitk: new Map(), // skill -> position where first learned
+      capgemini: new Map(),
+      uq: new Map()
+    };
+    
+    // Track current active skills (based on current position)
+    const currentActiveSkills = {
+      nitk: new Set(),
+      capgemini: new Set(),
+      uq: new Set()
+    };
+    
+    // Track newly added skills for animation
+    const newlyAddedSkills = {
+      nitk: new Set(),
+      capgemini: new Set(),
+      uq: new Set()
+    };
+    
+    // Track which sections have been reached (stay visible once reached when moving forward)
+    const reachedSections = {
+      nitk: true, // Always visible
+      capgemini: false,
+      uq: false
+    };
+    
+    // Track the position where each section was first reached
+    const sectionReachedPosition = {
+      capgemini: null,
+      uq: null
+    };
+    
+    // Track if a section was just unlocked
+    const newlyUnlockedSections = {
+      capgemini: false,
+      uq: false
+    };
+    
+    // Track skill order by timeline (when each skill was first learned)
+    const skillOrder = {
+      nitk: [],
+      capgemini: [],
+      uq: []
+    };
+    
+    // Track maximum position reached (for forward accumulation)
+    let maxPositionReached = 0;
+    
+    // Track experience (education and work) - similar to skills tracking
+    const allExperienceByPosition = {
+      education: new Map(), // period index -> position where first reached
+      work: new Map()
+    };
+    const currentActiveExperience = {
+      education: new Set(),
+      work: new Set()
+    };
+    const newlyAddedExperience = {
+      education: new Set(),
+      work: new Set()
+    };
+
+    const timelinePeriods = [
+      {
+        startPosition: getPosition(2017, 'Aug'),
+        endPosition: getPosition(2021, 'Jun'),
+        startYear: '2017',
+        endYear: '2021',
+        startDate: 'August 2017',
+        endDate: 'June 2021',
+        type: 'education',
+        title: 'B.Tech in Electronics and Communication Engineering',
+        subtitle: 'National Institute of Technology Karnataka, India',
+        description: 'Bachelor of Technology in Electronics and Communication Engineering',
+        skillsKey: 'btech'
+      },
+      {
+        startPosition: getPosition(2019,'Jan'),
+        endPosition: getPosition(2021,'May'),
+        startYear: '2019',
+        endYear: '2021',
+        startDate: 'January 2019',
+        endDate: 'May 2021',
+        type: 'extracurricular',
+        title: 'Started Gradiant Designs',
+        subtitle: 'NIT Karnataka',
+        description: '• Founded a student-led clothing brand that produced modern, youth-driven apparel under the label Gradiant Designs.\n\n• Achieved over ₹1,00,000 in revenue and successfully sold 1,000+ T-shirts through online and on-ground marketing.\n\n• Managed end-to-end operations including design, production, branding, and sales, building a strong and recognisable brand presence.',
+        skillsKey: 'grd-designs'
+      },
+      {
+        startPosition: getPosition(2020,'Jan'),
+        endPosition: getPosition(2021,'May'),
+        startYear: '2020',
+        endYear: '2021',
+        startDate: 'January 2020',
+        endDate: 'May 2021',
+        type: 'extracurricular',
+        title: 'Vice President / Graphic Design Lead',
+        subtitle: 'Rotaract Club NIT Karnataka Chapter',
+        description: '• Led the club\'s visual identity, creating posters, social media content, and event branding that significantly improved outreach and engagement.\n\n• Oversaw and coordinated multiple community-driven initiatives, managing teams, workflows, and event execution as Vice President.\n\n• Collaborated with cross-functional committees to plan fundraisers, service projects, and cultural events, ensuring smooth operations and strong participation.\n\n• Mentored junior designers and volunteers, setting design standards and building a cohesive creative team within the club.',
+        skillsKey: 'rotaract'
+      },
+      {
+        startPosition: getPosition(2021, 'Aug'),
+        endPosition: getPosition(2023, 'May'),
+        startYear: '2021',
+        endYear: '2023',
+        startDate: 'August 2021',
+        endDate: 'May 2023',
+        type: 'work',
+        title: 'Senior Analyst',
+        subtitle: 'Capgemini India Private Limited',
+        description: '• Collaborated with project managers to design and implement RESTful APIs, ensuring seamless integration for diverse project deployments, with a focus on scalability and performance optimization.\n\n• Developed a Proof of Concept (POC) website, incorporating the Stripe payments platform to support its expansion into the Indian market, ensuring compliance with local payment regulations and optimizing transaction workflows.',
+        skillsKey: 'capgemini'
+      },
+      {
+        startPosition: getPosition(2024, 'Jan'),
+        endPosition: getPosition(2024, 'May'),
+        startYear: '2024',
+        endYear: '2024',
+        startDate: 'January 2024',
+        endDate: 'May 2024',
+        type: 'extracurricular',
+        title: 'Graphic Design Officer',
+        subtitle: 'Association of Postgraduate Students, University of Queensland',
+        description: '• Designed event graphics, promotional materials and social media content that strengthened APS\'s visual identity and boosted engagement across the postgraduate community.\n\n• Supported committee leads in delivering cohesive visual campaigns and maintaining consistent branding for major events and initiatives.',
+        skillsKey: 'aps-gdo'
+      },
+      {
+        startPosition: getPosition(2024, 'Jun'),
+        endPosition: getPosition(2024, 'Dec'),
+        startYear: '2024',
+        endYear: '2024',
+        startDate: 'June 2024',
+        endDate: 'December 2024',
+        type: 'extracurricular',
+        title: 'Vice President (Community Development)',
+        subtitle: 'Association of Postgraduate Students, University of Queensland',
+        description: '• Led initiatives to build a more connected postgraduate community by organising events, workshops and engagement programs tailored to student needs.\n\n• Oversaw volunteer teams, coordinated with university partners, and ensured smooth execution of community-focused projects that improved student participation and wellbeing.',
+        skillsKey: 'aps-vp'
+      },
+      {
+        startPosition: getPosition(2024, 'Dec'),
+        endPosition: getPosition(2025, 'Jul'),
+        startYear: '2024',
+        endYear: '2025',
+        startDate: 'December 2024',
+        endDate: 'July 2025',
+        type: 'extracurricular',
+        title: 'Secretary',
+        subtitle: 'Association of Postgraduate Students, University of Queensland',
+        description: '• Managed administrative operations, including meeting coordination, record-keeping, and official communications to ensure smooth functioning of the association.\n\n• Acted as a liaison between committee members, volunteers, and stakeholders, facilitating effective collaboration and timely execution of initiatives.',
+        skillsKey: 'aps-secretary'
+      },
+      {
+        startPosition: getPosition(2023, 'Jul'),
+        endPosition: getPosition(2025, 'Jun'),
+        startYear: '2023',
+        endYear: '2025',
+        startDate: 'July 2023',
+        endDate: 'June 2025',
+        type: 'education',
+        title: 'Master of Interaction Design',
+        subtitle: 'University of Queensland, Australia',
+        description: '• Developed strong human-centred design skills, including user research, usability evaluation, and designing interactive systems that meaningfully support everyday practices.\n\n• Built technical capability through hands-on projects in prototyping, UX design, physical computing, and digital interfaces across multiple studio-based courses.\n\n• Delivered real-world design solutions by collaborating in multidisciplinary teams, iterating through evidence-based design processes, and showcasing work in public exhibitions.',
+        skillsKey: 'masters',
+        sectionStartPosition: getPosition(2023, 'Jul') // Position where UQ section starts
+      },
+      {
+        startPosition: getPosition(2024, 'Jul'),
+        endPosition: getPosition(2024, 'Nov'),
+        startYear: '2024',
+        endYear: '2024',
+        startDate: 'July 2024',
+        endDate: 'November 2024',
+        type: 'work',
+        title: 'Casual Academic Tutor',
+        subtitle: 'University of Queensland, Australia',
+        description: '• Conducted weekly tutorials on web design fundamentals, covering HTML, CSS, responsive design principles, and introductory JavaScript programming\n\n• Guided postgraduate students through theoretical concepts and practical applications of web design, fostering a deep understanding of modern web development practices and tools.',
+        skillsKey: 'tutor-1'
+      },
+      {
+        startPosition: getPosition(2025, 'Jul'),
+        endPosition: getPosition(2025, 'Nov'),
+        startYear: '2025',
+        endYear: '2025',
+        startDate: 'July 2025',
+        endDate: 'November 2025',
+        type: 'work',
+        title: 'Casual Academic Tutor',
+        subtitle: 'University of Queensland, Australia',
+        description: '• Conducted weekly tutorials on web design fundamentals, covering HTML, CSS, responsive design principles, and introductory JavaScript programming\n\n• Guided postgraduate students through theoretical concepts and practical applications of web design, fostering a deep understanding of modern web development practices and tools.',
+        skillsKey: 'tutor-2'
+      },
+      {
+        startPosition: (() => {
+          const now = new Date();
+          const currentYear = now.getFullYear();
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const currentMonth = monthNames[now.getMonth()];
+          return getPosition(currentYear, currentMonth);
+        })(),
+        endPosition: (() => {
+          const now = new Date();
+          const currentYear = now.getFullYear();
+          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const currentMonth = monthNames[now.getMonth()];
+          return getPosition(currentYear, currentMonth);
+        })(), // Single point, same as start
+        startYear: (() => new Date().getFullYear().toString())(),
+        endYear: (() => new Date().getFullYear().toString())(),
+        startDate: (() => {
+          const now = new Date();
+          const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          return `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+        })(),
+        endDate: (() => {
+          const now = new Date();
+          const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+          return `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+        })(),
+        type: 'extracurricular',
+        title: 'Seeking Opportunities',
+        subtitle: 'Product Design, UI Design, UX Design / UX Researcher',
+        description: 'I’m a UX/Product Designer transitioning from a technical background into human-centered design. Through my design degree and project work, I’ve built strong foundations in UX research, interaction design, prototyping, and visual design. My experience working with cross-functional teams in industry enables me to translate complex ideas into clear user experiences and contribute effectively to product development. \n I am currently looking for roles in Product Design, UI Design, and UX Design / UX Researcher positions',
+        skillsKey: 'job-search'
+      }
+    ];
+
+    // Convert periods to individual markers (start and end for education/work, single for extracurriculars)
+    const timelineData = [];
+    timelinePeriods.forEach((period, periodIndex) => {
+      // Add start marker for education and work
+      if (period.type === 'education' || period.type === 'work') {
+        timelineData.push({
+          position: period.startPosition,
+          year: period.startYear,
+          type: period.type,
+          date: period.startDate,
+          title: period.title,
+          subtitle: period.subtitle,
+          description: period.description,
+          markerType: 'start',
+          periodIndex: periodIndex
+        });
+        
+        // Add end marker if end position is different
+        if (period.endPosition !== period.startPosition) {
+          timelineData.push({
+            position: period.endPosition,
+            year: period.endYear,
+            type: period.type,
+            date: period.endDate,
+            title: period.title,
+            subtitle: period.subtitle,
+            description: period.description,
+            markerType: 'end',
+            periodIndex: periodIndex
+          });
+        }
+      } else {
+        // Extracurriculars get a single marker
+        timelineData.push({
+          position: period.startPosition,
+          year: period.startYear,
+          type: period.type,
+          date: period.startDate,
+          title: period.title,
+          subtitle: period.subtitle,
+          description: period.description,
+          markerType: 'single',
+          periodIndex: periodIndex
+        });
+      }
+    });
+    
+    // Sort by position
+    timelineData.sort((a, b) => a.position - b.position);
+    
+    // Add spacing for markers that are too close together
+    const minSpacing = 80; // Minimum spacing between markers in pixels
+    
+    for (let i = 0; i < timelineData.length - 1; i++) {
+      const currentPos = timelineData[i].position;
+      const nextPos = timelineData[i + 1].position;
+      const spacing = nextPos - currentPos;
+      
+      if (spacing < minSpacing) {
+        // Add extra spacing by shifting all subsequent markers
+        const extraSpacing = minSpacing - spacing;
+        for (let j = i + 1; j < timelineData.length; j++) {
+          timelineData[j].position += extraSpacing;
+        }
+      }
+    }
+    
+    // Update timeline width to accommodate spacing
+    const maxPosition = Math.max(...timelineData.map(m => m.position));
+    // Add extra padding to accommodate content box (450px wide, so need at least 225px + viewport width)
+    const screenWidth = window.innerWidth || 1920;
+    const extraPadding = Math.max(400, screenWidth / 2 + 100); // Enough space for content box to display fully
+    let finalTimelineWidth = Math.max(4000, maxPosition + extraPadding);
+    
+    // Update timeline track and wrapper width if needed
+    if (finalTimelineWidth > 4000) {
+      const track = document.querySelector('.timeline-track');
+      const wrapper = document.querySelector('.timeline-game-wrapper');
+      if (track) track.style.width = `${finalTimelineWidth}px`;
+      if (wrapper) wrapper.style.width = `${finalTimelineWidth}px`;
+    }
+    
+    // Store timeline width for camera bounds
+    window.timelineWidth = finalTimelineWidth;
+
+    // Game state
+    let characterPosition = 50;
+    let isWalking = false;
+    let currentMarker = null;
+    let cameraOffset = 0;
+
+    const character = document.getElementById('character');
+    const characterSprite = document.getElementById('characterSprite');
+    const timelineTrack = document.getElementById('timelineTrack');
+    
+    // Load character sprites
+    const characterIdleImage = new Image();
+    const characterWalkImages = []; // Array for walk1 through walk9
+    let characterIdleLoaded = false;
+    let characterWalkLoaded = 0; // Count of loaded walk sprites
+    let lastCharacterDirection = 'right'; // Track last movement direction
+    let walkAnimationFrame = 0; // Current frame in walk animation (0-8 for walk1-walk9)
+    let walkAnimationLastTime = 0; // Last time the animation frame was updated
+    const walkAnimationFrameDuration = 120; // Time in ms between frame changes (lower = faster, higher = slower)
+    
+    // Load idle sprite
+    characterIdleImage.onload = () => {
+      characterIdleLoaded = true;
+      console.log('Character idle sprite loaded');
+      // Set initial sprite
+      if (!isWalking && characterSprite) {
+        characterSprite.src = characterIdleImage.src;
+      }
+    };
+    characterIdleImage.onerror = () => {
+      console.warn('Failed to load character idle sprite');
+      characterIdleLoaded = true;
+    };
+    characterIdleImage.src = 'images/Timeline Sprites/User/Idle.png';
+    
+    // Load walk sprites (walk1 through walk9)
+    for (let i = 1; i <= 9; i++) {
+      const walkImg = new Image();
+      walkImg.onload = () => {
+        characterWalkLoaded++;
+        if (characterWalkLoaded === 9) {
+          console.log('All character walk sprites loaded');
+        }
+      };
+      walkImg.onerror = () => {
+        console.warn(`Failed to load walk${i} sprite`);
+        characterWalkLoaded++;
+      };
+      walkImg.src = `images/Timeline Sprites/User/walk${i}.png`;
+      characterWalkImages.push(walkImg);
+    }
+    const calendarDate = document.getElementById('calendarDate');
+    const calendarYear = document.getElementById('calendarYear');
+    const contentBox = document.getElementById('contentBox');
+    const contentBoxYear = document.getElementById('contentBoxYear');
+    const contentBoxTitle = document.getElementById('contentBoxTitle');
+    const contentBoxSubtitle = document.getElementById('contentBoxSubtitle');
+    const contentBoxDescription = document.getElementById('contentBoxDescription');
+    const educationContainer = document.getElementById('educationContainer');
+    const workContainer = document.getElementById('workContainer');
+    const gameWrapper = document.querySelector('.timeline-game-wrapper');
+    const skillsList = document.getElementById('skillsList');
+    const nitkSkillsContainer = document.getElementById('nitkSkills');
+    const capgeminiSkillsContainer = document.getElementById('capgeminiSkills');
+    const uqSkillsContainer = document.getElementById('uqSkills');
+    const locationIndia = document.getElementById('locationIndia');
+    const locationAustralia = document.getElementById('locationAustralia');
+    const locationDivider = document.getElementById('locationDivider');
+    
+    // Position where you moved to Australia (July 2023)
+    const australiaStartPosition = getPosition(2023, 'Jul');
+    
+    // Verify elements exist
+    if (!character) console.error('Character element not found');
+    if (!gameWrapper) console.error('Game wrapper not found');
+    if (!skillsList) console.error('Skills list element not found');
+    
+    // Setup collapsible sections
+    document.querySelectorAll('.skills-section-header').forEach(header => {
+      header.addEventListener('click', function() {
+        const section = this.closest('.skills-section');
+        const content = section.querySelector('.skills-section-content');
+        section.classList.toggle('collapsed');
+        content.classList.toggle('collapsed');
+      });
+    });
+    
+    // Function to convert position to date (inverse of getPosition)
+    function positionToDate(position) {
+      const baseYear = 2017;
+      const yearOffset = Math.floor(position / 400);
+      const monthOffset = position % 400;
+      const year = baseYear + yearOffset;
+      
+      // Convert month offset back to month name
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+      let monthIndex = 0;
+      if (monthOffset < 33) monthIndex = 0;
+      else if (monthOffset < 67) monthIndex = 1;
+      else if (monthOffset < 100) monthIndex = 2;
+      else if (monthOffset < 133) monthIndex = 3;
+      else if (monthOffset < 167) monthIndex = 4;
+      else if (monthOffset < 200) monthIndex = 5;
+      else if (monthOffset < 233) monthIndex = 6;
+      else if (monthOffset < 267) monthIndex = 7;
+      else if (monthOffset < 300) monthIndex = 8;
+      else if (monthOffset < 333) monthIndex = 9;
+      else if (monthOffset < 367) monthIndex = 10;
+      else monthIndex = 11;
+      
+      const month = monthNames[monthIndex];
+      return { month, year, yearNum: year };
+    }
+
+    // Initialize pixel art canvas elements
+    function initPixelArt() {
+      const cloudsCanvas = document.getElementById('cloudsCanvas');
+      const birdsCanvas = document.getElementById('birdsCanvas');
+      
+      if (!cloudsCanvas || !birdsCanvas) return;
+      
+      // Set canvas sizes
+      cloudsCanvas.width = window.innerWidth;
+      cloudsCanvas.height = window.innerHeight;
+      birdsCanvas.width = window.innerWidth;
+      birdsCanvas.height = window.innerHeight;
+      
+      const cloudsCtx = cloudsCanvas.getContext('2d');
+      const birdsCtx = birdsCanvas.getContext('2d');
+      
+      // Disable image smoothing for pixel art
+      cloudsCtx.imageSmoothingEnabled = false;
+      birdsCtx.imageSmoothingEnabled = false;
+      
+      // Load cloud sprites
+      const cloudImages = [];
+      const cloudSpritePaths = [
+        'images/Timeline Sprites/Clouds/Asset 5.png',
+        'images/Timeline Sprites/Clouds/Asset 6.png',
+        'images/Timeline Sprites/Clouds/Asset 7.png',
+        'images/Timeline Sprites/Clouds/Asset 8.png',
+        'images/Timeline Sprites/Clouds/Asset 9.png',
+        'images/Timeline Sprites/Clouds/Asset 10.png'
+      ];
+      
+      // Load UFO sprite
+      const ufoImage = new Image();
+      let ufoLoaded = false;
+      
+      let cloudsLoaded = 0;
+      const totalClouds = cloudSpritePaths.length;
+      let animationStarted = false;
+      
+      cloudSpritePaths.forEach((path, index) => {
+        const img = new Image();
+        img.onload = () => {
+          cloudsLoaded++;
+          if (cloudsLoaded === totalClouds && ufoLoaded && !animationStarted) {
+            animationStarted = true;
+            // All sprites loaded, start animation
+            requestAnimationFrame(animate);
+          }
+        };
+        img.onerror = () => {
+          console.warn(`Failed to load cloud sprite: ${path}`);
+          cloudsLoaded++;
+          if (cloudsLoaded === totalClouds && ufoLoaded && !animationStarted) {
+            animationStarted = true;
+            requestAnimationFrame(animate);
+          }
+        };
+        img.src = path;
+        cloudImages.push(img);
+      });
+      
+      // Load UFO sprite
+      ufoImage.onload = () => {
+        ufoLoaded = true;
+        if (cloudsLoaded === totalClouds && !animationStarted) {
+          animationStarted = true;
+          requestAnimationFrame(animate);
+        }
+      };
+      ufoImage.onerror = () => {
+        console.warn('Failed to load UFO sprite');
+        ufoLoaded = true; // Continue even if UFO fails to load
+        if (cloudsLoaded === totalClouds && !animationStarted) {
+          animationStarted = true;
+          requestAnimationFrame(animate);
+        }
+      };
+      ufoImage.src = 'images/Timeline Sprites/Flight/UFO.png';
+      
+      // Cloud data - using different sprites for variety (bigger and slower)
+      // Each cloud has a spawn delay in milliseconds
+      const clouds = [
+        { x: -150, y: window.innerHeight * 0.12, width: 160, height: 80, speed: 0.25, baseSpeed: 0.25, spriteIndex: 0, spawnDelay: 0, spawned: false },
+        { x: -200, y: window.innerHeight * 0.22, width: 200, height: 100, speed: 0.2, baseSpeed: 0.2, spriteIndex: 1, spawnDelay: 3000, spawned: false },
+        { x: -120, y: window.innerHeight * 0.08, width: 120, height: 60, speed: 0.225, baseSpeed: 0.225, spriteIndex: 2, spawnDelay: 6000, spawned: false },
+        { x: -250, y: window.innerHeight * 0.18, width: 180, height: 90, speed: 0.175, baseSpeed: 0.175, spriteIndex: 3, spawnDelay: 9000, spawned: false },
+        { x: -180, y: window.innerHeight * 0.05, width: 140, height: 70, speed: 0.25, baseSpeed: 0.25, spriteIndex: 4, spawnDelay: 12000, spawned: false }
+      ];
+      
+      // Track animation start time for spawn delays
+      let animationStartTime = null;
+      
+      // UFO data
+      const ufos = [];
+      const ufoSpawnInterval = 25000; // 25 seconds in milliseconds
+      let lastUfoSpawnTime = 0;
+      
+      // Alien data
+      const aliens = [];
+      const groundY = window.innerHeight - 50; // Ground level
+      
+      // Load alien sprite
+      const alienImage = new Image();
+      let alienLoaded = false;
+      let pathIndex = 0;
+      
+      // Try multiple path variations to find the correct one
+      const possiblePaths = [
+        'images/Timeline Sprites/Flight/alien.png',
+        './images/Timeline Sprites/Flight/alien.png',
+        '/images/Timeline Sprites/Flight/alien.png'
+      ];
+      
+      alienImage.onload = () => {
+        alienLoaded = true;
+        console.log('Alien sprite loaded successfully from:', alienImage.src, '- Size:', alienImage.width, 'x', alienImage.height);
+      };
+      
+      alienImage.onerror = () => {
+        console.warn('Failed to load alien sprite from:', alienImage.src);
+        // Try next path if available
+        pathIndex++;
+        if (pathIndex < possiblePaths.length) {
+          alienImage.src = possiblePaths[pathIndex];
+          console.log('Trying alternative path:', alienImage.src);
+        } else {
+          console.error('All paths failed. Alien sprite will not be displayed.');
+          alienLoaded = true; // Continue even if all paths fail
+        }
+      };
+      
+      // Start loading with first path
+      alienImage.src = possiblePaths[0];
+      console.log('Loading alien sprite from:', alienImage.src);
+      
+      // Bird data (faster than clouds)
+      const birds = [
+        { x: -30, y: window.innerHeight * 0.2, speed: 1.0, flapOffset: 0, baseSpeed: 1.0 },
+        { x: -60, y: window.innerHeight * 0.3, speed: 0.9, flapOffset: 0.3, baseSpeed: 0.9 },
+        { x: -90, y: window.innerHeight * 0.15, speed: 0.95, flapOffset: 0.6, baseSpeed: 0.95 }
+      ];
+      
+      // Draw cloud using sprite
+      function drawCloud(ctx, x, y, width, height, spriteIndex) {
+        if (cloudImages[spriteIndex] && cloudImages[spriteIndex].complete && cloudImages[spriteIndex].naturalWidth > 0) {
+          ctx.drawImage(cloudImages[spriteIndex], x, y, width, height);
+        }
+      }
+      
+      // Draw pixel bird
+      function drawBird(ctx, x, y, flapPhase) {
+        const pixelSize = 2;
+        ctx.fillStyle = '#2a2a2a';
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
+        
+        // Body
+        ctx.fillRect(x, y, 6 * pixelSize, 4 * pixelSize);
+        ctx.strokeRect(x, y, 6 * pixelSize, 4 * pixelSize);
+        
+        // Wing (animated)
+        const wingY = y + (Math.sin(flapPhase * Math.PI * 2) * 2);
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(x + 2, wingY, 4 * pixelSize, 3 * pixelSize);
+        ctx.strokeRect(x + 2, wingY, 4 * pixelSize, 3 * pixelSize);
+        
+        // Beak
+        ctx.fillStyle = '#ffa500';
+        ctx.fillRect(x + 6 * pixelSize, y + pixelSize, 2 * pixelSize, pixelSize);
+      }
+      
+      // Draw green alien body (pixel art style)
+      function drawGreenAlien(ctx, x, y, width, height) {
+        const pixelSize = 2;
+        ctx.fillStyle = '#00ff00'; // Green
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1;
+        
+        // Head (larger circle on top)
+        const headSize = width * 0.4;
+        const headX = x + width / 2;
+        const headY = y + headSize / 2;
+        ctx.beginPath();
+        ctx.arc(headX, headY, headSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        
+        // Body (rectangular)
+        const bodyWidth = width * 0.7;
+        const bodyHeight = height * 0.5;
+        const bodyX = x + (width - bodyWidth) / 2;
+        const bodyY = y + headSize;
+        ctx.fillRect(bodyX, bodyY, bodyWidth, bodyHeight);
+        ctx.strokeRect(bodyX, bodyY, bodyWidth, bodyHeight);
+        
+        // Eyes (two small black dots)
+        ctx.fillStyle = '#000';
+        ctx.fillRect(headX - 4, headY - 2, 2, 2);
+        ctx.fillRect(headX + 2, headY - 2, 2, 2);
+      }
+      
+      // Animation loop
+      let lastTime = 0;
+      function animate(currentTime) {
+        const deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+        
+        // Initialize animation start time
+        if (animationStartTime === null) {
+          animationStartTime = currentTime;
+        }
+        
+        // Calculate elapsed time since animation started
+        const elapsedTime = currentTime - animationStartTime;
+        
+        // Update character position reference
+        currentCharacterPosition = typeof characterPosition !== 'undefined' ? characterPosition : currentCharacterPosition;
+        
+        // Clear canvases
+        cloudsCtx.clearRect(0, 0, cloudsCanvas.width, cloudsCanvas.height);
+        birdsCtx.clearRect(0, 0, birdsCanvas.width, birdsCanvas.height);
+        
+        // Spawn UFO every 25 seconds
+        if (elapsedTime - lastUfoSpawnTime >= ufoSpawnInterval) {
+          ufos.push({
+            x: -100,
+            y: window.innerHeight * 0.15 + Math.random() * (window.innerHeight * 0.2),
+            width: 120,
+            height: 60,
+            speed: 0.8,
+            spawnTime: currentTime
+          });
+          lastUfoSpawnTime = elapsedTime;
+        }
+        
+        // Update and draw UFOs first (on clouds canvas so they pass behind clouds)
+        for (let i = ufos.length - 1; i >= 0; i--) {
+          const ufo = ufos[i];
+          
+          // Check if UFO should stop and release alien
+          if (!ufo.stopped && !ufo.stopPosition) {
+            // Guarantee a stop - every UFO will stop at some point
+            // Stop after moving at least 25% across screen, but before 70%
+            if (ufo.x > window.innerWidth * 0.25) {
+              // Set stop position soon (within next 5-15% of screen width)
+              ufo.stopPosition = ufo.x + (window.innerWidth * 0.05) + Math.random() * (window.innerWidth * 0.1);
+              ufo.stopPosition = Math.min(ufo.stopPosition, window.innerWidth * 0.7);
+            }
+          }
+          
+          // Stop UFO at designated position
+          if (ufo.stopPosition && ufo.x >= ufo.stopPosition && !ufo.stopped) {
+            ufo.stopped = true;
+            ufo.stopTime = currentTime;
+            ufo.alienReleased = false;
+          }
+          
+          // Release alien 500ms after stopping
+          if (ufo.stopped && !ufo.alienReleased && currentTime - ufo.stopTime >= 500) {
+            ufo.alienReleased = true;
+            // Position alien directly below the center of the UFO
+            const newAlien = {
+              x: ufo.x + (ufo.width / 2) - 15, // Center horizontally, offset by half alien width
+              y: ufo.y + ufo.height, // Start right below the UFO
+              width: 30,
+              height: 30,
+              velocityY: 0, // Start with no velocity
+              gravity: 0.5, // Fall with gravity
+              alive: true,
+              impactTime: null,
+              impactX: null,
+              impactY: null
+            };
+            aliens.push(newAlien);
+            console.log('Alien released from UFO at:', newAlien.x, newAlien.y, 'UFO at:', ufo.x, ufo.y);
+          }
+          
+          // Move UFO if not stopped
+          if (!ufo.stopped) {
+            ufo.x += ufo.speed;
+          }
+          
+          // Remove UFO if it's off screen or has been stopped for too long
+          if (ufo.x > window.innerWidth + 100 || (ufo.stopped && currentTime - ufo.stopTime > 5000)) {
+            ufos.splice(i, 1);
+            continue;
+          }
+          
+          // Draw UFO on clouds canvas (behind clouds)
+          if (ufoImage.complete && ufoImage.naturalWidth > 0) {
+            cloudsCtx.drawImage(ufoImage, ufo.x, ufo.y, ufo.width, ufo.height);
+          }
+        }
+        
+        // Update and draw aliens
+        for (let i = aliens.length - 1; i >= 0; i--) {
+          const alien = aliens[i];
+          
+          if (alien.alive) {
+            // Apply gravity
+            alien.velocityY += alien.gravity;
+            alien.y += alien.velocityY;
+            
+            // Check if alien hits the ground
+            if (alien.y + alien.height >= groundY) {
+              alien.alive = false;
+              alien.impactTime = currentTime;
+              alien.impactX = alien.x + alien.width / 2;
+              alien.impactY = groundY;
+              alien.y = groundY - alien.height;
+              
+              // Generate static blood splatter pattern (only once when alien dies)
+              if (!alien.bloodSplatter) {
+                alien.bloodSplatter = [];
+                for (let j = 0; j < 5; j++) {
+                  const angle = (j / 5) * Math.PI * 2;
+                  const distance = 2 + Math.random() * 6;
+                  const size = 1 + Math.random() * 2;
+                  alien.bloodSplatter.push({
+                    x: alien.impactX + Math.cos(angle) * distance,
+                    y: alien.impactY + Math.sin(angle) * distance,
+                    size: size
+                  });
+                }
+              }
+            }
+            
+            // Draw alive alien - use sprite if available, otherwise draw green body
+            let spriteDrawn = false;
+            if (alienImage && alienImage.complete && alienImage.naturalWidth > 0) {
+              try {
+                cloudsCtx.drawImage(alienImage, alien.x, alien.y, alien.width, alien.height);
+                spriteDrawn = true;
+              } catch (e) {
+                console.warn('Error drawing alien sprite:', e);
+              }
+            } else {
+              // Debug: log why sprite isn't being drawn
+              if (aliens.length > 0 && aliens.indexOf(alien) === aliens.length - 1) {
+                // Only log for the most recently added alien to avoid spam
+                if (!alienImage) {
+                  console.log('Alien image not defined');
+                } else if (!alienImage.complete) {
+                  console.log('Alien image not complete');
+                } else if (alienImage.naturalWidth === 0) {
+                  console.log('Alien image has no width');
+                }
+              }
+            }
+            
+            // Only draw green body if sprite didn't load or failed to draw
+            if (!spriteDrawn) {
+              drawGreenAlien(cloudsCtx, alien.x, alien.y, alien.width, alien.height);
+            }
+          } else {
+            // Alien has crashed - show blood and "ouch" text only after impact
+            const timeSinceImpact = currentTime - alien.impactTime;
+            
+            // Only show blood splatter after the alien has actually hit the ground
+            // Add a small delay (50ms) to ensure it happens after impact
+            if (timeSinceImpact >= 50 && timeSinceImpact < 2000 && alien.bloodSplatter) {
+              // Draw static blue blood splatter on the timeline (pattern generated once when alien died)
+              cloudsCtx.fillStyle = '#0066cc'; // Blue color
+              cloudsCtx.beginPath();
+              for (let j = 0; j < alien.bloodSplatter.length; j++) {
+                const splat = alien.bloodSplatter[j];
+                cloudsCtx.arc(splat.x, splat.y, splat.size, 0, Math.PI * 2);
+              }
+              cloudsCtx.fill();
+            }
+            
+            // Draw tiny "ouch" text after impact
+            if (timeSinceImpact >= 50 && timeSinceImpact < 2000) {
+              const fadeOut = Math.max(0, 1 - (timeSinceImpact / 2000));
+              cloudsCtx.save();
+              cloudsCtx.globalAlpha = fadeOut;
+              cloudsCtx.fillStyle = '#ffffff';
+              cloudsCtx.strokeStyle = '#000000';
+              cloudsCtx.lineWidth = 1.5;
+              cloudsCtx.font = 'bold 12px "Funnel Display", sans-serif';
+              cloudsCtx.textAlign = 'center';
+              cloudsCtx.textBaseline = 'bottom';
+              const textY = alien.impactY - 8 - (timeSinceImpact * 0.08);
+              cloudsCtx.strokeText('ouch', alien.impactX, textY);
+              cloudsCtx.fillText('ouch', alien.impactX, textY);
+              cloudsCtx.restore();
+            }
+            
+            // Remove alien after animation
+            if (timeSinceImpact > 2000) {
+              aliens.splice(i, 1);
+            }
+          }
+        }
+        
+        // Update and draw clouds (drawn after UFOs so clouds appear in front)
+        // Check if character is in Australia section (July 2023+)
+        const isInAustralia = currentCharacterPosition >= australiaStartPosition;
+        
+        clouds.forEach(cloud => {
+          // Check if cloud should spawn
+          if (!cloud.spawned && elapsedTime >= cloud.spawnDelay) {
+            cloud.spawned = true;
+          }
+          
+          // Only update and draw if spawned
+          if (cloud.spawned) {
+            // Reverse direction when in Australia
+            if (isInAustralia) {
+              cloud.speed = -Math.abs(cloud.baseSpeed);
+              cloud.x += cloud.speed;
+              if (cloud.x < -cloud.width) {
+                cloud.x = window.innerWidth + cloud.width;
+              }
+            } else {
+              cloud.speed = Math.abs(cloud.baseSpeed);
+              cloud.x += cloud.speed;
+              if (cloud.x > window.innerWidth + cloud.width) {
+                cloud.x = -cloud.width;
+              }
+            }
+            drawCloud(cloudsCtx, cloud.x, cloud.y, cloud.width, cloud.height, cloud.spriteIndex);
+          }
+        });
+        
+        // Update and draw birds
+        
+        birds.forEach((bird, index) => {
+          // Reverse direction when in Australia
+          if (isInAustralia) {
+            bird.speed = -Math.abs(bird.baseSpeed);
+            bird.x += bird.speed;
+            if (bird.x < -30) {
+              bird.x = window.innerWidth + 30;
+            }
+          } else {
+            bird.speed = Math.abs(bird.baseSpeed);
+            bird.x += bird.speed;
+            if (bird.x > window.innerWidth + 30) {
+              bird.x = -30;
+            }
+          }
+          const flapPhase = (currentTime * 0.005 + bird.flapOffset) % 1;
+          // Flip bird horizontally when flying backward
+          birdsCtx.save();
+          if (isInAustralia) {
+            birdsCtx.scale(-1, 1);
+            drawBird(birdsCtx, -bird.x - 12, bird.y, flapPhase);
+          } else {
+            drawBird(birdsCtx, bird.x, bird.y, flapPhase);
+          }
+          birdsCtx.restore();
+        });
+        
+        requestAnimationFrame(animate);
+      }
+      
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        cloudsCanvas.width = window.innerWidth;
+        cloudsCanvas.height = window.innerHeight;
+        birdsCanvas.width = window.innerWidth;
+        birdsCanvas.height = window.innerHeight;
+        
+        // Update cloud positions
+        clouds.forEach(cloud => {
+          cloud.y = window.innerHeight * (cloud.y / (cloudsCanvas.height || window.innerHeight));
+        });
+        
+        // Update bird positions
+        birds.forEach(bird => {
+          bird.y = window.innerHeight * (bird.y / (birdsCanvas.height || window.innerHeight));
+        });
+      });
+      
+      // Animation will start after clouds are loaded (see cloud image onload handlers)
+      // If no clouds or all already loaded, start immediately
+      if (totalClouds === 0 || cloudsLoaded === totalClouds) {
+        if (!animationStarted) {
+          animationStarted = true;
+          requestAnimationFrame(animate);
+        }
+      }
+    }
+    
+    // Update location background based on character position
+    function updateLocationBackground() {
+      if (!locationIndia || !locationAustralia || !locationDivider) return;
+      
+      const viewportWidth = window.innerWidth;
+      const timelineWidth = window.timelineWidth || 4000;
+      
+      // Calculate the position of July 2023 in viewport coordinates
+      const australiaStartViewport = australiaStartPosition - cameraOffset;
+      
+      // Calculate percentage of timeline that is before Australia
+      const indiaPercentage = (australiaStartPosition / timelineWidth) * 100;
+      const australiaPercentage = 100 - indiaPercentage;
+      
+      // Update background widths based on timeline position
+      // The divider should be at the July 2023 position in viewport
+      const dividerPosition = Math.max(0, Math.min(viewportWidth, australiaStartViewport));
+      
+      // Update India background (left side)
+      locationIndia.style.width = `${dividerPosition}px`;
+      
+      // Update Australia background (right side)
+      const australiaLeft = dividerPosition;
+      locationAustralia.style.left = `${australiaLeft}px`;
+      locationAustralia.style.width = `${viewportWidth - dividerPosition}px`;
+      
+      // Update divider position
+      locationDivider.style.left = `${dividerPosition}px`;
+    }
+
+    // Create timeline markers
+    function createMarkers() {
+      timelineData.forEach((item, index) => {
+        const marker = document.createElement('div');
+        marker.className = `timeline-marker ${item.type}`;
+        marker.style.left = `${item.position}px`;
+        marker.dataset.index = index;
+        
+        // Add icon
+        const icon = document.createElement('div');
+        icon.className = 'marker-icon';
+        if (item.type === 'education') {
+          icon.innerHTML = '🎓';
+        } else if (item.type === 'work') {
+          icon.innerHTML = '💼';
+        } else {
+          icon.innerHTML = '⭐';
+        }
+        marker.appendChild(icon);
+        
+        // Year labels removed - no longer displaying year text
+        
+        // Add start/end class for color coding
+        if (item.markerType === 'start') {
+          marker.classList.add('start');
+        } else if (item.markerType === 'end') {
+          marker.classList.add('end');
+        } else {
+          marker.classList.add('single');
+        }
+        
+        // Add sparkles for first item
+        if (index === 0) {
+          const sparkles = document.createElement('div');
+          sparkles.className = 'sparkles';
+          sparkles.innerHTML = '<div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>';
+          marker.appendChild(sparkles);
+        }
+        
+        timelineTrack.parentElement.appendChild(marker);
+      });
+    }
+
+    // Update character position and camera
+    // Update character sprite based on state
+    function updateCharacterSprite() {
+      if (!characterSprite) return;
+      
+      // Determine which sprite to use
+      let spriteToUse = null;
+      
+      if (isWalking || isJumping) {
+        // Animate through walk1 to walk9 with smooth time-based cycling
+        if (characterWalkImages.length > 0 && characterWalkLoaded > 0) {
+          // Use time-based animation for smoother cycling
+          const currentTime = Date.now();
+          
+          // Initialize last time if not set
+          if (walkAnimationLastTime === 0) {
+            walkAnimationLastTime = currentTime;
+          }
+          
+          // Check if enough time has passed to change frame
+          const timeSinceLastFrame = currentTime - walkAnimationLastTime;
+          if (timeSinceLastFrame >= walkAnimationFrameDuration) {
+            walkAnimationFrame = (walkAnimationFrame + 1) % 9; // Cycle 0-8 (walk1-walk9)
+            walkAnimationLastTime = currentTime;
+          }
+          
+          // Get current walk sprite
+          const currentWalkSprite = characterWalkImages[walkAnimationFrame];
+          if (currentWalkSprite && currentWalkSprite.complete && currentWalkSprite.naturalWidth > 0) {
+            spriteToUse = currentWalkSprite.src;
+          }
+        }
+      } else {
+        // Use idle sprite when not walking
+        if (characterIdleLoaded && characterIdleImage.complete) {
+          spriteToUse = characterIdleImage.src;
+          walkAnimationFrame = 0; // Reset walk animation when idle
+          walkAnimationLastTime = 0; // Reset timer
+        }
+      }
+      
+      // Update sprite if available
+      if (spriteToUse && characterSprite.src !== spriteToUse) {
+        characterSprite.src = spriteToUse;
+      }
+      
+      // Handle direction (flip horizontally for left)
+      if (lastCharacterDirection === 'left') {
+        characterSprite.style.transform = 'scaleX(-1)';
+      } else {
+        characterSprite.style.transform = 'scaleX(1)';
+      }
+    }
+    
+    function updateCharacterPosition() {
+      character.style.left = `${characterPosition}px`;
+      
+      // Update character sprite
+      updateCharacterSprite();
+      
+      // Camera follows character - keep character centered in viewport
+      const viewportWidth = window.innerWidth;
+      const targetCameraOffset = characterPosition - (viewportWidth / 2);
+      
+      // Smooth camera movement with interpolation
+      cameraOffset += (targetCameraOffset - cameraOffset) * 0.15;
+      
+      // Clamp camera to prevent scrolling beyond timeline bounds
+      const timelineWidth = window.timelineWidth || 4000; // Use dynamically calculated width
+      const maxCameraOffset = Math.max(0, timelineWidth - viewportWidth);
+      cameraOffset = Math.max(0, Math.min(cameraOffset, maxCameraOffset));
+      
+      // Apply camera transform to wrapper
+      gameWrapper.style.transform = `translateX(-${cameraOffset}px)`;
+      
+      // Update location background
+      updateLocationBackground();
+      
+      // Update current date based on position
+      const dateMarker = timelineData.reduce((prev, curr) => {
+        return Math.abs(curr.position - characterPosition) < Math.abs(prev.position - characterPosition) ? curr : prev;
+      });
+      
+      // Update calendar based on character position (only if content box is not active)
+      // When content box is active, calendar uses the date from the content box
+      if (!contentBox.classList.contains('active')) {
+        const currentDate = positionToDate(characterPosition);
+        calendarDate.textContent = currentDate.month.toUpperCase();
+        calendarYear.textContent = currentDate.yearNum;
+      }
+      
+      // Update skills based on current period
+      updateSkills(characterPosition);
+      
+      // Update experience based on current period
+      updateExperience(characterPosition);
+      
+      // Check if character is at a marker (only show when very close to exact position)
+      timelineData.forEach((item) => {
+        const marker = document.querySelector(`[data-index="${timelineData.indexOf(item)}"]`);
+        if (marker) {
+          const distance = Math.abs(item.position - characterPosition);
+          
+          // Only show when very close to the exact marker position (within 10px)
+          if (distance < 10) {
+            if (currentMarker !== item) {
+              currentMarker = item;
+              showContentBox(item);
+            }
+          } else if (distance >= 10 && currentMarker === item) {
+            currentMarker = null;
+            hideContentBox();
+          }
+        }
+      });
+    }
+    
+    // Show content box
+    function showContentBox(item) {
+      // Use the period's stored date for start/end markers, or calculate from position for single markers
+      let dateText = '';
+      let calendarMonth = '';
+      let calendarYearNum = '';
+      
+      if (item.markerType === 'start') {
+        // Find the period this marker belongs to
+        const period = timelinePeriods[item.periodIndex];
+        if (period && period.startDate) {
+          dateText = `Started: ${period.startDate}`;
+          // Parse the startDate to update calendar
+          const dateInfo = positionToDate(period.startPosition);
+          calendarMonth = dateInfo.month;
+          calendarYearNum = dateInfo.yearNum;
+        } else {
+          const dateInfo = positionToDate(item.position);
+          dateText = `Started: ${dateInfo.month} ${dateInfo.yearNum}`;
+          calendarMonth = dateInfo.month;
+          calendarYearNum = dateInfo.yearNum;
+        }
+      } else if (item.markerType === 'end') {
+        // Find the period this marker belongs to
+        const period = timelinePeriods[item.periodIndex];
+        if (period && period.endDate) {
+          // Use "Graduated" for education, "Ended" for work
+          const prefix = period.type === 'education' ? 'Graduated' : 'Ended';
+          dateText = `${prefix}: ${period.endDate}`;
+          // Parse the endDate to update calendar
+          const dateInfo = positionToDate(period.endPosition);
+          calendarMonth = dateInfo.month;
+          calendarYearNum = dateInfo.yearNum;
+        } else {
+          const dateInfo = positionToDate(item.position);
+          // Use "Graduated" for education, "Ended" for work
+          const prefix = item.type === 'education' ? 'Graduated' : 'Ended';
+          dateText = `${prefix}: ${dateInfo.month} ${dateInfo.yearNum}`;
+          calendarMonth = dateInfo.month;
+          calendarYearNum = dateInfo.yearNum;
+        }
+      } else {
+        // Single marker (extracurricular) - use stored date from period if available
+        const period = timelinePeriods[item.periodIndex];
+        if (period && period.startDate) {
+          dateText = period.startDate;
+          // Parse the startDate string directly (format: "Month YYYY")
+          const dateParts = period.startDate.split(' ');
+          calendarMonth = dateParts[0]; // e.g., "January"
+          calendarYearNum = parseInt(dateParts[1]); // e.g., 2025
+        } else {
+          // Fallback to position calculation
+          const dateInfo = positionToDate(item.position);
+          dateText = `${dateInfo.month} ${dateInfo.yearNum}`;
+          calendarMonth = dateInfo.month;
+          calendarYearNum = dateInfo.yearNum;
+        }
+      }
+      
+      const contentBoxYear = document.getElementById('contentBoxYear');
+      const contentBoxTitle = document.getElementById('contentBoxTitle');
+      const contentBoxSubtitle = document.getElementById('contentBoxSubtitle');
+      const contentBoxDetails = document.getElementById('contentBoxDetails');
+      const contentBoxDescription = document.getElementById('contentBoxDescription');
+      
+      if (contentBoxYear) contentBoxYear.textContent = dateText;
+      if (contentBoxTitle) contentBoxTitle.textContent = item.title;
+      if (contentBoxSubtitle) contentBoxSubtitle.textContent = item.subtitle;
+      
+      // Special handling for Masters degree
+      if (contentBoxDetails && item.title === 'Master of Interaction Design') {
+        let detailsHTML = '<div class="content-box-badges">';
+        // GPA badge (blue)
+        detailsHTML += '<span class="content-box-badge blue">GPA: 6.375</span>';
+        // Awards badges (black)
+        detailsHTML += '<span class="content-box-badge black">Dean\'s Commendation of Excellence</span>';
+        detailsHTML += '<span class="content-box-badge black">UQ Employability Award</span>';
+        detailsHTML += '</div>';
+        
+        // Core Courses section
+        detailsHTML += '<div class="content-box-courses">';
+        detailsHTML += '<div class="content-box-courses-title">Core Courses</div>';
+        detailsHTML += '<div class="content-box-courses-list">';
+        const courses = ['Design Thinking', 'Human Computer Interaction', 'Information Visualization', 'Physical Computing', 'Social and Mobile Computing'];
+        courses.forEach(course => {
+          detailsHTML += `<span class="content-box-badge blue">${course}</span>`;
+        });
+        detailsHTML += '</div></div>';
+        
+        contentBoxDetails.innerHTML = detailsHTML;
+      } else if (contentBoxDetails && item.title === 'B.Tech in Electronics and Communication Engineering') {
+        // Special handling for NITK B.Tech degree
+        let detailsHTML = '<div class="content-box-badges">';
+        // GPA badge (blue)
+        detailsHTML += '<span class="content-box-badge blue">GPA: 6.54</span>';
+        detailsHTML += '</div>';
+        
+        // Core Courses section
+        detailsHTML += '<div class="content-box-courses">';
+        detailsHTML += '<div class="content-box-courses-title">Core Courses</div>';
+        detailsHTML += '<div class="content-box-courses-list">';
+        const courses = ['Circuits and Systems', 'Digital System Design', 'Analog Electronics', 'Analog and Digital Communication', 'Microprocessors', 'Digital Signal Processing', 'VLSI Design'];
+        courses.forEach(course => {
+          detailsHTML += `<span class="content-box-badge blue">${course}</span>`;
+        });
+        detailsHTML += '</div></div>';
+        
+        contentBoxDetails.innerHTML = detailsHTML;
+      } else {
+        if (contentBoxDetails) contentBoxDetails.innerHTML = '';
+      }
+      
+      // Hide description for Masters and B.Tech degrees, show for others
+      if (contentBoxDescription) {
+        if (item.title === 'Master of Interaction Design' || item.title === 'B.Tech in Electronics and Communication Engineering') {
+          contentBoxDescription.textContent = '';
+          contentBoxDescription.style.display = 'none';
+        } else {
+          contentBoxDescription.textContent = item.description;
+          contentBoxDescription.style.display = 'block';
+        }
+      }
+      contentBox.style.left = `${item.position}px`;
+      contentBox.style.transform = 'translateX(-50%)';
+      contentBox.classList.add('active');
+      
+      // Update calendar to match content box date
+      calendarDate.textContent = calendarMonth.toUpperCase();
+      calendarYear.textContent = calendarYearNum;
+      
+      // Trigger firework animation for education graduation
+      if (item.markerType === 'end' && item.type === 'education') {
+        const period = timelinePeriods[item.periodIndex];
+        if (period && !period.fireworksShown) {
+          period.fireworksShown = true;
+          triggerFireworks(item.position);
+        }
+      }
+    }
+    
+    // Track which markers have shown fireworks
+    const fireworksShown = new Set();
+    
+    // Trigger tiny firework animation at graduation
+    function triggerFireworks(position) {
+      // Calculate the position on screen (accounting for camera offset)
+      // The position is relative to the timeline wrapper, so we need to account for camera
+      const viewportX = position - cameraOffset;
+      const timelineY = window.innerHeight - 50; // Timeline position (same as timeline track)
+      // Explode in the clouds (clouds are at ~8-22% from top, so go way up)
+      const cloudLevel = window.innerHeight * 0.15; // Cloud level (15% from top)
+      const skyHeight = -(window.innerHeight - 50 - cloudLevel); // How high the rocket flies before exploding (negative = up, to cloud level)
+      
+      // Only show if within viewport
+      if (viewportX < -50 || viewportX > window.innerWidth + 50) {
+        return; // Don't show fireworks if marker is off screen
+      }
+      
+      // Create firework container
+      const firework = document.createElement('div');
+      firework.className = 'firework';
+      firework.style.left = `${viewportX}px`;
+      firework.style.top = `${timelineY}px`;
+      document.body.appendChild(firework);
+      
+      // Create rocket that flies up
+      const rocket = document.createElement('div');
+      rocket.className = 'firework-rocket';
+      rocket.style.left = '50%';
+      rocket.style.transform = 'translateX(-50%)';
+      rocket.style.setProperty('--fly-height', `${skyHeight}px`);
+      firework.appendChild(rocket);
+      
+      // Create massive firework particles (hidden initially, will explode after rocket reaches sky)
+      const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a8e6cf', '#ff8b94', '#ff4757', '#5f27cd', '#00d2d3', '#ffa502'];
+      const particleCount = 200; // 5x larger explosion (40 * 5 = 200 particles)
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'firework-particle';
+        
+        // Position particles at the explosion point (in the clouds)
+        particle.style.left = '50%';
+        particle.style.top = `${skyHeight}px`;
+        particle.style.transform = 'translateX(-50%)';
+        
+        // Random angle for particle direction
+        const angle = (i / particleCount) * Math.PI * 2 + (Math.random() * 0.3 - 0.15); // Add some randomness
+        const distance = 300 + Math.random() * 400; // 5x larger explosion spread (60-140px * 5 = 300-700px)
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        // Set CSS variables for animation
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        // Make sure particles are initially positioned correctly
+        particle.style.display = 'block';
+        
+        // Random color
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Delay explosion until after rocket reaches sky (1s rocket flight + small delay)
+        particle.style.animationDelay = `${1.05 + Math.random() * 0.1}s`;
+        
+        firework.appendChild(particle);
+      }
+      
+      // Remove firework after animation completes
+      setTimeout(() => {
+        firework.remove();
+      }, 3000);
+    }
+    
+    // Update content box position relative to camera
+    function updateContentBoxPosition() {
+      if (contentBox.classList.contains('active') && currentMarker) {
+        // Content box position is already set relative to timeline, camera transform handles it
+      }
+    }
+    
+    // Hide content box
+    function hideContentBox() {
+      contentBox.classList.remove('active');
+      // Restore calendar to character position when content box is hidden
+      const currentDate = positionToDate(characterPosition);
+      calendarDate.textContent = currentDate.month.toUpperCase();
+      calendarYear.textContent = currentDate.yearNum;
+    }
+    
+    // Track last position for crossing detection
+    let lastPosition = 50; // Initialize to starting position
+    
+    // Skill icon mapping
+    const skillIcons = {
+      // Programming & Technical
+      'Python': '🐍',
+      'Java': '☕',
+      'C++': '⚙️',
+      'C': '⚙️',
+      'JavaScript': '📜',
+      'HTML': '🌐',
+      'CSS': '🎨',
+      'SQL': '💾',
+      'MATLAB': '🔬',
+      'R': '📊',
+      'Git': '📦',
+      'GitHub': '🐙',
+      'Linux': '🐧',
+      'Unix': '💻',
+      'Shell Scripting': '💻',
+      'Bash': '💻',
+      
+      // Data & Analytics
+      'Data Analytics': '📈',
+      'Data Analysis': '📈',
+      'Data Visualization': '📊',
+      'Machine Learning': '🤖',
+      'AI': '🤖',
+      'Deep Learning': '🧠',
+      'Neural Networks': '🧠',
+      'Statistics': '📉',
+      'Data Mining': '⛏️',
+      'Big Data': '💾',
+      'Tableau': '📊',
+      'Power BI': '📊',
+      'Excel': '📋',
+      'Healthcare Analytics': '🏥',
+      
+      // Design & Creative
+      'Graphic Design': '🎨',
+      'UI/UX Design': '✨',
+      'User Experience Design': '✨',
+      'User Research': '🔍',
+      'Figma': '🎨',
+      'Adobe Photoshop': '🖼️',
+      'Adobe Illustrator': '✏️',
+      'Adobe InDesign': '📄',
+      'Adobe XD': '🎨',
+      'Adobe Creative Suite': '🎨',
+      'Sketch': '✏️',
+      'Prototyping': '🔧',
+      'Wireframing': '📐',
+      'Visual Design': '👁️',
+      'Visual Communication': '👁️',
+      'Interaction Design': '🖱️',
+      'Product Design': '📦',
+      'Design Thinking': '💡',
+      'Branding': '🏷️',
+      
+      // Business & Management
+      'Project Management': '📋',
+      'Business Management': '💼',
+      'Marketing': '📢',
+      'E-commerce': '🛒',
+      'Leadership': '👔',
+      'Communication': '💬',
+      'Team Management': '👥',
+      'Team Collaboration': '👥',
+      'Agile': '🔄',
+      'Scrum': '🔄',
+      'Community Development': '🌱',
+      'Strategic Planning': '🗺️',
+      'Administration': '📋',
+      'Event Planning': '📅',
+      
+      // Technical & Programming
+      'Electronics': '⚡',
+      'Communication Systems': '📡',
+      'Signal Processing': '📶',
+      'C Programming': '⚙️',
+      'Web Design': '🌐',
+      'Teaching': '👨‍🏫',
+      'HTML': '🌐',
+      'CSS': '🎨',
+      'React': '⚛️',
+      'Full-Stack Development': '💻',
+      'User-Centered Design': '🎯',
+      
+      // Other
+      'Problem Solving': '🧩',
+      'Critical Thinking': '💭',
+      'Research': '🔬',
+      'Documentation': '📝',
+      'Presentation': '📊',
+      'Public Speaking': '🎤'
+    };
+
+    // Get icon for a skill (default to a generic icon if not found)
+    function getSkillIcon(skill) {
+      return skillIcons[skill] || '⭐';
+    }
+
+    // Update skills based on character position
+    function updateSkills(position) {
+      try {
+        // Update max position reached (for forward accumulation)
+        const isMovingForward = position > maxPositionReached;
+        if (isMovingForward) {
+          maxPositionReached = position;
+        }
+        
+        // Clear newly added skills tracking
+        newlyAddedSkills.nitk.clear();
+        newlyAddedSkills.capgemini.clear();
+        newlyAddedSkills.uq.clear();
+        
+        // Reset newly unlocked sections
+        newlyUnlockedSections.capgemini = false;
+        newlyUnlockedSections.uq = false;
+        
+        // Track previous position to detect crossing start points
+        // Use the stored last position, but update it after checking for crossings
+        const previousPosition = lastPosition;
+        
+        // Determine which sections should be active based on current position
+        let currentActiveCapgemini = false;
+        let currentActiveUQ = false;
+        
+        // Determine which skills should be active based on current position
+        const activeSkillsByInstitution = {
+          nitk: new Set(),
+          capgemini: new Set(),
+          uq: new Set()
+        };
+        
+        // Check for section start crossings BEFORE processing periods
+        const capgeminiStartPosition = getPosition(2021, 'Aug');
+        const uqStartPosition = getPosition(2023, 'Jul');
+        
+        // Check if crossing Capgemini start point
+        if (isMovingForward && previousPosition < capgeminiStartPosition && position >= capgeminiStartPosition) {
+          newlyUnlockedSections.capgemini = true;
+        }
+        
+        // Check if crossing UQ start point
+        if (isMovingForward && previousPosition < uqStartPosition && position >= uqStartPosition) {
+          newlyUnlockedSections.uq = true;
+        }
+        
+        // Find the active period(s) based on position
+        timelinePeriods.forEach(period => {
+          if (position >= period.startPosition && position <= period.endPosition) {
+            if (period.skillsKey && skillsByPeriod[period.skillsKey]) {
+              const periodData = skillsByPeriod[period.skillsKey];
+              const institution = periodData.institution;
+              const skills = periodData.skills;
+              
+              // Mark section as active (when in that period)
+              if (institution === 'capgemini') {
+                currentActiveCapgemini = true;
+                // Mark as reached if moving forward or first time
+                if (isMovingForward || !reachedSections.capgemini) {
+                  if (!reachedSections.capgemini) {
+                    reachedSections.capgemini = true;
+                    sectionReachedPosition.capgemini = position;
+                  }
+                }
+              }
+              if (institution === 'uq') {
+                currentActiveUQ = true;
+                // Mark as reached if moving forward or first time
+                if (isMovingForward || !reachedSections.uq) {
+                  if (!reachedSections.uq) {
+                    reachedSections.uq = true;
+                    sectionReachedPosition.uq = position;
+                  }
+                }
+              }
+              
+              skills.forEach(skill => {
+                // Record when this skill was first learned (only when moving forward or first time seeing it)
+                if (!allSkillsByPosition[institution].has(skill)) {
+                  // Only record new skills when moving forward (or at start)
+                  if (isMovingForward || maxPositionReached === 0) {
+                    allSkillsByPosition[institution].set(skill, position);
+                    skillOrder[institution].push(skill);
+                  }
+                }
+                
+                // Add to active skills if we're at or past where it was learned
+                const learnedPosition = allSkillsByPosition[institution].get(skill);
+                if (learnedPosition && position >= learnedPosition) {
+                  activeSkillsByInstitution[institution].add(skill);
+                  
+                  // Check if this is a new skill (wasn't in current active skills)
+                  if (!currentActiveSkills[institution].has(skill)) {
+                    newlyAddedSkills[institution].add(skill);
+                  }
+                }
+              });
+            }
+          }
+        });
+        
+        // If moving forward, accumulate all skills learned up to current position
+        // If moving backward, only show skills learned up to current position
+        // For both cases, show all skills learned at or before current position
+        ['nitk', 'capgemini', 'uq'].forEach(institution => {
+          allSkillsByPosition[institution].forEach((learnedPosition, skill) => {
+            if (learnedPosition <= position) {
+              activeSkillsByInstitution[institution].add(skill);
+            }
+          });
+        });
+        
+        // Update current active skills
+        currentActiveSkills.nitk = activeSkillsByInstitution.nitk;
+        currentActiveSkills.capgemini = activeSkillsByInstitution.capgemini;
+        currentActiveSkills.uq = activeSkillsByInstitution.uq;
+        
+        // Update section visibility: show if reached and (moving forward OR current position >= reached position)
+        // Hide when going back before the section was first reached
+        updateSectionVisibility(position, isMovingForward);
+        
+        // Show unlock notification and auto-collapse previous section if needed
+        if (newlyUnlockedSections.capgemini || newlyUnlockedSections.uq) {
+          showSectionUnlockNotification();
+          autoCollapsePreviousSection();
+        }
+        
+        // Render all skills
+        renderSkills();
+        
+        // Update lastPosition after all checks are done (for next frame's crossing detection)
+        lastPosition = position;
+      } catch (error) {
+        console.error('Error updating skills:', error);
+      }
+    }
+    
+    // Update section visibility (sections stay visible once reached when moving forward, disappear when going back)
+    function updateSectionVisibility(position, isMovingForward) {
+      const capgeminiSection = document.getElementById('capgeminiSection');
+      const uqSection = document.getElementById('uqSection');
+      
+      if (capgeminiSection) {
+        // Show if reached and (moving forward OR position >= where it was first reached)
+        if (reachedSections.capgemini) {
+          // If moving forward, always show. If going back, only show if position >= where it was reached
+          if (isMovingForward || (sectionReachedPosition.capgemini !== null && position >= sectionReachedPosition.capgemini)) {
+            capgeminiSection.classList.remove('hidden');
+          } else {
+            // Going back before it was reached - hide it
+            capgeminiSection.classList.add('hidden');
+          }
+        } else {
+          capgeminiSection.classList.add('hidden');
+        }
+      }
+      
+      if (uqSection) {
+        // Show if reached and (moving forward OR position >= where it was first reached)
+        if (reachedSections.uq) {
+          // If moving forward, always show. If going back, only show if position >= where it was reached
+          if (isMovingForward || (sectionReachedPosition.uq !== null && position >= sectionReachedPosition.uq)) {
+            uqSection.classList.remove('hidden');
+          } else {
+            // Going back before it was reached - hide it
+            uqSection.classList.add('hidden');
+          }
+        } else {
+          uqSection.classList.add('hidden');
+        }
+      }
+    }
+    
+    // Auto-collapse previous section when new section is unlocked
+    function autoCollapsePreviousSection() {
+      if (newlyUnlockedSections.capgemini) {
+        // Collapse NITK section when Capgemini is unlocked
+        const nitkSection = document.querySelector('[data-institution="nitk"]');
+        if (nitkSection) {
+          const nitkContent = nitkSection.querySelector('.skills-section-content');
+          if (nitkContent && !nitkContent.classList.contains('collapsed')) {
+            nitkSection.classList.add('collapsed');
+            nitkContent.classList.add('collapsed');
+          }
+        }
+      }
+      
+      if (newlyUnlockedSections.uq) {
+        // Collapse Capgemini section when UQ is unlocked
+        const capgeminiSection = document.getElementById('capgeminiSection');
+        if (capgeminiSection && reachedSections.capgemini && !capgeminiSection.classList.contains('hidden')) {
+          const capgeminiContent = capgeminiSection.querySelector('.skills-section-content');
+          if (capgeminiContent && !capgeminiContent.classList.contains('collapsed')) {
+            capgeminiSection.classList.add('collapsed');
+            capgeminiContent.classList.add('collapsed');
+          }
+        }
+      }
+    }
+    
+    // Show section unlock notification
+    function showSectionUnlockNotification() {
+      let message = '';
+      if (newlyUnlockedSections.capgemini && newlyUnlockedSections.uq) {
+        message = 'New Experience Unlocked !';
+      } else if (newlyUnlockedSections.capgemini) {
+        message = 'New Experience Unlocked !';
+      } else if (newlyUnlockedSections.uq) {
+        message = 'New Experience Unlocked !';
+      }
+      
+      if (message) {
+        const notification = document.createElement('div');
+        notification.className = 'section-unlock-notification';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          notification.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            notification.remove();
+          }, 500);
+        }, 2000);
+      }
+    }
+    
+    // Show tutor role notification
+    function showTutorNotification() {
+      const notification = document.createElement('div');
+      notification.className = 'section-unlock-notification';
+      notification.textContent = 'New Experience Unlocked !';
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => {
+          notification.remove();
+        }, 500);
+      }, 2000);
+    }
+    
+    // Render skills list organized by institution
+    function renderSkills() {
+      if (!nitkSkillsContainer || !capgeminiSkillsContainer || !uqSkillsContainer) return;
+      
+      // Render NITK skills
+      renderInstitutionSkills('nitk', nitkSkillsContainer);
+      
+      // Render Capgemini skills
+      renderInstitutionSkills('capgemini', capgeminiSkillsContainer);
+      
+      // Render UQ skills
+      renderInstitutionSkills('uq', uqSkillsContainer);
+    }
+    
+    // Render skills for a specific institution
+    function renderInstitutionSkills(institution, container) {
+      if (!container) return;
+      
+      // Get skills in timeline order (not alphabetically)
+      const activeSkillsSet = currentActiveSkills[institution];
+      const skills = skillOrder[institution].filter(skill => activeSkillsSet.has(skill));
+      
+      container.innerHTML = '';
+      
+      if (skills.length === 0) {
+        const emptyItem = document.createElement('div');
+        emptyItem.className = 'skill-item';
+        emptyItem.textContent = 'No skills yet';
+        emptyItem.style.opacity = '0.5';
+        container.appendChild(emptyItem);
+        return;
+      }
+      
+      skills.forEach(skill => {
+        const skillItem = document.createElement('div');
+        skillItem.className = 'skill-item';
+        skillItem.dataset.skill = skill;
+        
+        // Create icon element
+        const iconElement = document.createElement('div');
+        iconElement.className = 'skill-icon';
+        iconElement.textContent = getSkillIcon(skill);
+        
+        // Create title element
+        const titleElement = document.createElement('div');
+        titleElement.className = 'skill-title';
+        titleElement.textContent = skill;
+        
+        // Append icon and title to skill item
+        skillItem.appendChild(iconElement);
+        skillItem.appendChild(titleElement);
+        
+        // Add animation for newly added skills
+        if (newlyAddedSkills[institution].has(skill)) {
+          skillItem.classList.add('new');
+          
+          // Remove animation class after animation completes
+          setTimeout(() => {
+            skillItem.classList.remove('new');
+          }, 800);
+        }
+        
+        container.appendChild(skillItem);
+      });
+      
+      // Add notification for new skills if any
+      const newSkillsCount = newlyAddedSkills[institution].size;
+      if (newSkillsCount > 0) {
+        const notification = document.createElement('div');
+        notification.className = 'new-skills-notification';
+        notification.textContent = `${newSkillsCount} new skill${newSkillsCount > 1 ? 's' : ''} added!`;
+        container.appendChild(notification);
+        
+        // Remove notification after animation
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          notification.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            notification.remove();
+          }, 500);
+        }, 3000);
+      }
+    }
+
+    // Find current marker index based on character position
+    function getCurrentMarkerIndex() {
+      let closestIndex = 0;
+      let minDistance = Math.abs(timelineData[0].position - characterPosition);
+      
+      for (let i = 1; i < timelineData.length; i++) {
+        const distance = Math.abs(timelineData[i].position - characterPosition);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = i;
+        }
+      }
+      
+      return closestIndex;
+    }
+    
+    // Track if character is currently jumping
+    let isJumping = false;
+    let jumpStartPosition = 0;
+    let jumpTargetPosition = 0;
+    let jumpStartTime = 0;
+    const jumpDuration = 2500; // 2500ms for jump animation (very slow movement)
+    
+    // Track if this is the first move
+    let isFirstMove = true;
+    
+    // Jump to next or previous marker with smooth animation
+    function jumpToMarker(direction) {
+      // Don't allow new jumps while already jumping
+      if (isJumping) return;
+      
+      // If this is the first move and going right, go directly to NITK start
+      if (isFirstMove && direction === 'right') {
+        const nitkStartPosition = getPosition(2017, 'Aug');
+        // Find the NITK start marker in timelineData
+        const nitkMarker = timelineData.find(item => 
+          item.position === nitkStartPosition && 
+          item.type === 'education' && 
+          item.markerType === 'start'
+        );
+        
+        if (nitkMarker) {
+          isFirstMove = false;
+          isJumping = true;
+          isWalking = true;
+          jumpStartPosition = characterPosition;
+          jumpTargetPosition = nitkStartPosition;
+          jumpStartTime = Date.now();
+          lastCharacterDirection = direction;
+          updateCharacterSprite();
+          animateJump();
+          return;
+        }
+      }
+      
+      isFirstMove = false; // Mark that we've moved
+      
+      const currentIndex = getCurrentMarkerIndex();
+      let newIndex;
+      
+      if (direction === 'right') {
+        newIndex = Math.min(currentIndex + 1, timelineData.length - 1);
+      } else {
+        newIndex = Math.max(currentIndex - 1, 0);
+      }
+      
+      // Only jump if we're moving to a different marker
+      if (newIndex !== currentIndex) {
+        isJumping = true;
+        isWalking = true; // Set walking state during jump
+        jumpStartPosition = characterPosition;
+        jumpTargetPosition = timelineData[newIndex].position;
+        jumpStartTime = Date.now();
+        
+        // Update direction
+        lastCharacterDirection = direction;
+        
+        // Update sprite
+        updateCharacterSprite();
+        
+        // Animate the jump
+        animateJump();
+      }
+    }
+    
+    // Animate the jump smoothly
+    function animateJump() {
+      const currentTime = Date.now();
+      const elapsed = currentTime - jumpStartTime;
+      const progress = Math.min(elapsed / jumpDuration, 1);
+      
+      // Easing function for smooth animation (ease-in-out)
+      const easeProgress = progress < 0.5 
+        ? 2 * progress * progress 
+        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      
+      // Interpolate position
+      characterPosition = jumpStartPosition + (jumpTargetPosition - jumpStartPosition) * easeProgress;
+      
+      // Update position and camera
+      updateCharacterPosition();
+      
+      if (progress < 1) {
+        // Continue animation
+        requestAnimationFrame(animateJump);
+      } else {
+        // Jump complete
+        characterPosition = jumpTargetPosition;
+        isJumping = false;
+        isWalking = false; // Stop walking when jump completes
+        updateCharacterPosition();
+      }
+    }
+    
+    // Update experience based on character position
+    function updateExperience(position) {
+      try {
+        // Update max position reached (for forward accumulation)
+        const isMovingForward = position > maxPositionReached;
+        if (isMovingForward) {
+          maxPositionReached = position;
+        }
+        
+        // Clear newly added experience tracking
+        newlyAddedExperience.education.clear();
+        newlyAddedExperience.work.clear();
+        
+        // Find active education and work periods
+        const activeExperience = {
+          education: new Set(),
+          work: new Set()
+        };
+        
+        timelinePeriods.forEach((period, periodIndex) => {
+          if (period.type === 'education') {
+            // Check if we've reached or passed the start position
+            if (position >= period.startPosition) {
+              // Add if moving forward or first time
+              if (isMovingForward || !allExperienceByPosition.education.has(periodIndex)) {
+                if (!allExperienceByPosition.education.has(periodIndex)) {
+                  allExperienceByPosition.education.set(periodIndex, period.startPosition);
+                  newlyAddedExperience.education.add(periodIndex);
+                }
+              }
+              // Keep it active if we've passed the start (even if past end)
+              if (allExperienceByPosition.education.has(periodIndex)) {
+                activeExperience.education.add(periodIndex);
+              }
+            } else {
+              // Moving backward past start - remove it
+              if (allExperienceByPosition.education.has(periodIndex)) {
+                allExperienceByPosition.education.delete(periodIndex);
+              }
+            }
+          } else if (period.type === 'work') {
+            // Check if we've reached or passed the start position
+            if (position >= period.startPosition) {
+              // Add if moving forward or first time
+              if (isMovingForward || !allExperienceByPosition.work.has(periodIndex)) {
+                if (!allExperienceByPosition.work.has(periodIndex)) {
+                  allExperienceByPosition.work.set(periodIndex, period.startPosition);
+                  newlyAddedExperience.work.add(periodIndex);
+                }
+              }
+              // Keep it active if we've passed the start (even if past end)
+              if (allExperienceByPosition.work.has(periodIndex)) {
+                activeExperience.work.add(periodIndex);
+              }
+            } else {
+              // Moving backward past start - remove it
+              if (allExperienceByPosition.work.has(periodIndex)) {
+                allExperienceByPosition.work.delete(periodIndex);
+              }
+            }
+          }
+        });
+        
+        // Update current active experience
+        currentActiveExperience.education = activeExperience.education;
+        currentActiveExperience.work = activeExperience.work;
+        
+        // Check if any newly added experience is a Casual Academic Tutor role
+        newlyAddedExperience.work.forEach(periodIndex => {
+          const period = timelinePeriods[periodIndex];
+          if (period && period.title === 'Casual Academic Tutor') {
+            showTutorNotification();
+          }
+        });
+        
+        // Check if first education period (NITK) was newly added
+        newlyAddedExperience.education.forEach(periodIndex => {
+          const period = timelinePeriods[periodIndex];
+          // NITK is the first education period (index 0)
+          if (period && periodIndex === 0 && period.type === 'education') {
+            showTutorNotification();
+          }
+        });
+        
+        // Render experience
+        renderExperience();
+      } catch (error) {
+        console.error('Error updating experience:', error);
+      }
+    }
+    
+    // Render experience list
+    function renderExperience() {
+      if (!educationContainer || !workContainer) return;
+      
+      renderExperienceList('education', educationContainer);
+      renderExperienceList('work', workContainer);
+      
+      // Update counts
+      const educationCount = currentActiveExperience.education.size;
+      const workCount = currentActiveExperience.work.size;
+      const educationCountEl = document.getElementById('educationCount');
+      const workCountEl = document.getElementById('workCount');
+      if (educationCountEl) educationCountEl.textContent = educationCount;
+      if (workCountEl) workCountEl.textContent = workCount;
+    }
+    
+    // Render experience for a specific type
+    function renderExperienceList(type, container) {
+      if (!container) return;
+      
+      const activeIndices = Array.from(currentActiveExperience[type]);
+      
+      // Sort by start position (chronological order)
+      activeIndices.sort((a, b) => {
+        return timelinePeriods[a].startPosition - timelinePeriods[b].startPosition;
+      });
+      
+      container.innerHTML = '';
+      
+      if (activeIndices.length === 0) {
+        const emptyItem = document.createElement('div');
+        emptyItem.className = 'experience-item';
+        emptyItem.textContent = 'No experience yet';
+        emptyItem.style.opacity = '0.5';
+        container.appendChild(emptyItem);
+        return;
+      }
+      
+      // Show notification if new experience was added (outside dropdown, below category info)
+      const newCount = newlyAddedExperience[type].size;
+      if (newCount > 0 && activeIndices.length > 0) {
+        const category = container.closest('.experience-category');
+        if (category) {
+          // Remove existing notification if any
+          const existingNotification = category.querySelector('.experience-notification');
+          if (existingNotification) existingNotification.remove();
+          
+          const notification = document.createElement('div');
+          notification.className = 'experience-notification';
+          notification.textContent = `+${newCount} experience${newCount > 1 ? 's' : ''} added!`;
+          notification.style.cssText = 'color: white; font-size: 11px; margin-top: 5px; padding: 4px 8px; background: rgba(76, 175, 80, 0.3); border-radius: 4px; text-align: center; position: relative; z-index: 1;';
+          
+          // Insert after category-info
+          const categoryInfo = category.querySelector('.category-info');
+          if (categoryInfo) {
+            categoryInfo.parentNode.insertBefore(notification, categoryInfo.nextSibling);
+          }
+          
+          // Remove notification after 3 seconds
+          setTimeout(() => {
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => notification.remove(), 500);
+          }, 3000);
+        }
+      }
+      
+      activeIndices.forEach(periodIndex => {
+        const period = timelinePeriods[periodIndex];
+        const experienceItem = document.createElement('div');
+        experienceItem.className = 'experience-item';
+        experienceItem.dataset.periodIndex = periodIndex;
+        
+        // Add animation for newly added experience
+        if (newlyAddedExperience[type].has(periodIndex)) {
+          experienceItem.classList.add('new');
+          
+          // Remove animation class after animation completes
+          setTimeout(() => {
+            experienceItem.classList.remove('new');
+          }, 800);
+        }
+        
+        const titleElement = document.createElement('div');
+        titleElement.className = 'experience-item-title';
+        titleElement.textContent = period.title;
+        
+        const subtitleElement = document.createElement('div');
+        subtitleElement.className = 'experience-item-subtitle';
+        subtitleElement.textContent = period.subtitle;
+        
+        const dateElement = document.createElement('div');
+        dateElement.className = 'experience-item-date';
+        dateElement.textContent = `${period.startDate} - ${period.endDate}`;
+        
+        experienceItem.appendChild(titleElement);
+        experienceItem.appendChild(subtitleElement);
+        experienceItem.appendChild(dateElement);
+        
+        container.appendChild(experienceItem);
+      });
+    }
+    
+    // Initialize experience categories (click to toggle dropdown)
+    function initExperienceCategories() {
+      const experienceCategories = document.querySelectorAll('.experience-category');
+      experienceCategories.forEach(category => {
+        category.addEventListener('click', function(e) {
+          // Don't toggle if clicking inside the dropdown
+          if (e.target.closest('.experience-dropdown')) return;
+          
+          // Close other categories
+          experienceCategories.forEach(cat => {
+            if (cat !== category) {
+              cat.classList.remove('active');
+            }
+          });
+          
+          // Toggle current category
+          category.classList.toggle('active');
+        });
+      });
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.experience-category')) {
+          experienceCategories.forEach(cat => {
+            cat.classList.remove('active');
+          });
+        }
+      });
+    }
+    
+    // Initialize experience categories after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initExperienceCategories);
+    } else {
+      initExperienceCategories();
+    }
+
+    // Character movement - jump between markers
+    document.addEventListener('keydown', (e) => {
+      // Check if start screen is visible
+      const startScreen = document.getElementById('startScreen');
+      if (startScreen && !startScreen.classList.contains('hidden')) {
+        return; // Don't handle movement if start screen is visible
+      }
+      
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        jumpToMarker('left');
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        jumpToMarker('right');
+      }
+    });
+
+    // Game loop - just update position and camera
+    let gameLoopRunning = false;
+    function gameLoop() {
+      if (!gameLoopRunning) return; // Don't run if start screen is visible
+      
+      // Always update position (for camera smoothing)
+      updateCharacterPosition();
+      
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Initialize
+    createMarkers();
+    
+    // Set initial position before NITK education point
+    // NITK starts at August 2017, so start a bit before (e.g., July 2017)
+    const nitkStartPosition = getPosition(2017, 'Aug');
+    characterPosition = nitkStartPosition - 100; // Start 100px before NITK
+    
+    // Set initial character sprite
+    updateCharacterSprite();
+    
+    // Set initial calendar date
+    const initialDate = positionToDate(characterPosition);
+    calendarDate.textContent = initialDate.month.toUpperCase();
+    calendarYear.textContent = initialDate.yearNum;
+    
+    // Set initial skills
+    updateSkills(characterPosition);
+    
+    // Set initial experience
+    updateExperience(characterPosition);
+    
+    // Initialize camera position
+    const viewportWidth = window.innerWidth;
+    cameraOffset = Math.max(0, characterPosition - (viewportWidth / 2));
+    gameWrapper.style.transform = `translateX(-${cameraOffset}px)`;
+    
+    // Initialize location background
+    updateLocationBackground();
+    
+    // Update location background on window resize
+    window.addEventListener('resize', updateLocationBackground);
+    
+    // Initialize pixel art canvas elements
+    initPixelArt();
+    
+    // Show content box for initial marker if close enough
+    if (timelineData.length > 0) {
+      const distance = Math.abs(timelineData[0].position - characterPosition);
+      if (distance < 10) {
+        currentMarker = timelineData[0];
+        showContentBox(timelineData[0]);
+      }
+    }
+    
+    // Start screen functionality
+    const startScreen = document.getElementById('startScreen');
+    const startArrowLeft = document.getElementById('startArrowLeft');
+    const startArrowRight = document.getElementById('startArrowRight');
+    
+    function hideStartScreen() {
+      if (startScreen) {
+        startScreen.classList.add('hidden');
+      }
+      
+      // Ensure camera is properly initialized before starting game loop
+      const viewportWidth = window.innerWidth;
+      cameraOffset = Math.max(0, characterPosition - (viewportWidth / 2));
+      gameWrapper.style.transform = `translateX(-${cameraOffset}px)`;
+      updateLocationBackground();
+      
+      // Start game loop after start screen is hidden
+      gameLoopRunning = true;
+      console.log('Starting game loop...');
+      console.log('Character element:', character);
+      console.log('Game wrapper:', gameWrapper);
+      gameLoop();
+    }
+    
+    // Click anywhere on start screen to begin
+    if (startScreen) {
+      startScreen.addEventListener('click', (e) => {
+        // Hide start screen when clicking anywhere (arrows will also trigger this, but that's fine)
+        hideStartScreen();
+      });
+    }
+    
+    // Arrow click handlers
+    if (startArrowLeft) {
+      startArrowLeft.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent bubbling to start screen
+        hideStartScreen();
+      });
+    }
+    
+    if (startArrowRight) {
+      startArrowRight.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent bubbling to start screen
+        hideStartScreen();
+      });
+    }
+    
+    // Also allow keyboard to start (only if start screen is visible)
+    const startKeyHandler = (e) => {
+      if (startScreen && !startScreen.classList.contains('hidden')) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          hideStartScreen();
+          document.removeEventListener('keydown', startKeyHandler);
+        }
+      }
+    };
+    document.addEventListener('keydown', startKeyHandler);
+  </script>
+</body>
+</html>
+

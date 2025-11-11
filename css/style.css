@@ -5193,19 +5193,72 @@ p {
 
 /* EventHive Research Cards */
 .eventhive-research-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin: 2rem 0 0 0;
+  width: 100%;
+  align-items: stretch;
+}
+
+.eventhive-ideation-cards {
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+.eventhive-results-cards {
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+}
+
+.eventhive-results-middle {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin: 2rem 0 0 0;
-  width: fit-content;
+  gap: 2rem;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100%;
+}
+
+.eventhive-results-cards .eventhive-stat-card:first-child,
+.eventhive-results-cards .eventhive-stat-card:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.eventhive-results-cards .eventhive-stat-card:first-child .eventhive-research-card-icon {
+  margin-top: 3rem;
 }
 
 .eventhive-research-card {
-  background: rgba(194, 56, 221, 0.1);
-  border: 1px solid #c238dd;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.eventhive-research-card-icon {
+  width: 100%;
+  max-width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.eventhive-research-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .eventhive-research-card p {
@@ -5213,7 +5266,173 @@ p {
   font-size: 1rem;
   line-height: 1.4;
   margin: 0;
+  font-weight: normal;
+  text-align: center;
+}
+
+.eventhive-highlight {
+  color: var(--eventhive-purple);
   font-weight: bold;
+}
+
+/* EventHive Statistics Cards */
+.eventhive-stat-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.eventhive-stat-card .eventhive-stat-number,
+.eventhive-stat-card .eventhive-research-card-icon {
+  flex-shrink: 0;
+  margin-bottom: auto;
+}
+
+.eventhive-stat-card .eventhive-stat-description {
+  margin-top: auto;
+  margin-bottom: 0;
+  align-self: center;
+  flex-shrink: 0;
+  padding-top: 1.5rem;
+}
+
+.eventhive-stat-card .eventhive-research-card-icon {
+  max-width: 180px;
+  height: 180px;
+  width: 100%;
+}
+
+.eventhive-results-cards .eventhive-stat-card .eventhive-research-card-icon {
+  max-width: 250px;
+  height: 250px;
+  width: 100%;
+}
+
+.eventhive-stat-number {
+  color: var(--eventhive-purple);
+  font-size: 5rem;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0;
+  display: block;
+}
+
+.eventhive-stat-description {
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: normal;
+  text-align: center;
+  max-width: 100%;
+}
+
+/* Responsive design for research cards */
+@media (max-width: 1024px) {
+  .eventhive-research-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .eventhive-ideation-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .eventhive-results-cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  
+  .eventhive-results-middle {
+    gap: 1.5rem;
+  }
+  
+  .eventhive-results-cards .eventhive-stat-card .eventhive-research-card-icon {
+    max-width: 200px;
+    height: 200px;
+  }
+  
+  .eventhive-stat-number {
+    font-size: 4rem;
+  }
+  
+  .eventhive-stat-card {
+    padding: 0 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .eventhive-stat-card .eventhive-stat-description {
+    padding-top: 1rem;
+  }
+  
+  .eventhive-stat-card .eventhive-research-card-icon {
+    max-width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .eventhive-research-cards {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .eventhive-ideation-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .eventhive-results-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .eventhive-results-middle {
+    gap: 2rem;
+  }
+  
+  .eventhive-research-card-icon {
+    max-width: 100px;
+    height: 100px;
+  }
+  
+  .eventhive-stat-card {
+    padding: 0 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    gap: 0;
+  }
+  
+  .eventhive-stat-card .eventhive-stat-description {
+    padding-top: 1rem;
+  }
+  
+  .eventhive-stat-card .eventhive-research-card-icon {
+    max-width: 140px;
+    height: 140px;
+  }
+  
+  .eventhive-results-cards .eventhive-stat-card .eventhive-research-card-icon {
+    max-width: 180px;
+    height: 180px;
+  }
+  
+  .eventhive-stat-number {
+    font-size: 3.5rem;
+  }
+  
+  .eventhive-stat-description {
+    font-size: 0.95rem;
+  }
 }
 
 /* EventHive Table */

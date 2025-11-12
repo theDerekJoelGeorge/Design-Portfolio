@@ -3372,60 +3372,94 @@
       }
     });
 
-    // Touch controls for mobile - tap left/right side of screen to move
+    // Touch controls - tap anywhere on screen to move left/right
     let touchStartX = null;
     let touchStartY = null;
-    const touchThreshold = 10; // Minimum movement to distinguish from tap
+    let touchStartTime = null;
+    const touchThreshold = 30; // Maximum movement to be considered a tap (not swipe)
+    const tapMaxDuration = 300; // Maximum duration for a tap (ms)
     
-    document.addEventListener('touchstart', (e) => {
+    // Use the game wrapper as the touch target for better coverage
+    const gameArea = document.getElementById('gameWrapper') || document.body;
+    
+    gameArea.addEventListener('touchstart', (e) => {
       // Check if start screen is visible
       const startScreen = document.getElementById('startScreen');
       if (startScreen && !startScreen.classList.contains('hidden')) {
         return; // Don't handle movement if start screen is visible
       }
       
-      // Don't handle touch if clicking on content box or other interactive elements
-      if (e.target.closest('.content-box') || e.target.closest('.skills-panel') || e.target.closest('.experience-panel')) {
+      // Don't handle touch if clicking on interactive elements (but allow content box area)
+      const target = e.target;
+      if (target.closest('.skills-panel') || target.closest('.experience-panel') || 
+          target.closest('button') || target.closest('a') || target.closest('input')) {
         return;
+      }
+      
+      // Allow touches on content box itself, but not on close buttons or links inside
+      if (target.closest('.content-box')) {
+        const contentBox = target.closest('.content-box');
+        // Only ignore if clicking on interactive elements within content box
+        if (target.closest('button') || target.closest('a') || target.closest('.content-box-close')) {
+          return;
+        }
       }
       
       const touch = e.touches[0];
       touchStartX = touch.clientX;
       touchStartY = touch.clientY;
+      touchStartTime = Date.now();
     }, { passive: true });
     
-    document.addEventListener('touchend', (e) => {
+    gameArea.addEventListener('touchend', (e) => {
       // Check if start screen is visible
       const startScreen = document.getElementById('startScreen');
       if (startScreen && !startScreen.classList.contains('hidden')) {
         return; // Don't handle movement if start screen is visible
       }
       
-      // Don't handle touch if clicking on content box or other interactive elements
-      if (e.target.closest('.content-box') || e.target.closest('.skills-panel') || e.target.closest('.experience-panel')) {
+      // Don't handle touch if clicking on interactive elements
+      const target = e.target;
+      if (target.closest('.skills-panel') || target.closest('.experience-panel') || 
+          target.closest('button') || target.closest('a') || target.closest('input')) {
         touchStartX = null;
         touchStartY = null;
+        touchStartTime = null;
         return;
       }
       
-      if (touchStartX === null || touchStartY === null) return;
+      // Allow touches on content box itself, but not on close buttons or links inside
+      if (target.closest('.content-box')) {
+        const contentBox = target.closest('.content-box');
+        // Only ignore if clicking on interactive elements within content box
+        if (target.closest('button') || target.closest('a') || target.closest('.content-box-close')) {
+          touchStartX = null;
+          touchStartY = null;
+          touchStartTime = null;
+          return;
+        }
+      }
+      
+      if (touchStartX === null || touchStartY === null || touchStartTime === null) return;
       
       const touch = e.changedTouches[0];
       const touchEndX = touch.clientX;
       const touchEndY = touch.clientY;
+      const touchDuration = Date.now() - touchStartTime;
       
       // Calculate movement distance
       const deltaX = Math.abs(touchEndX - touchStartX);
       const deltaY = Math.abs(touchEndY - touchStartY);
       
-      // If it's a swipe (significant movement), ignore it
-      if (deltaX > touchThreshold || deltaY > touchThreshold) {
+      // If it's a swipe (significant movement) or too long, ignore it
+      if (deltaX > touchThreshold || deltaY > touchThreshold || touchDuration > tapMaxDuration) {
         touchStartX = null;
         touchStartY = null;
+        touchStartTime = null;
         return;
       }
       
-      // It's a tap - determine which side of screen
+      // It's a tap - determine which side of screen was tapped
       const screenWidth = window.innerWidth;
       const tapX = touchEndX;
       
@@ -3442,7 +3476,48 @@
       
       touchStartX = null;
       touchStartY = null;
+      touchStartTime = null;
     }, { passive: false });
+    
+    // Also add click handlers for desktop/laptop trackpad users
+    gameArea.addEventListener('click', (e) => {
+      // Check if start screen is visible
+      const startScreen = document.getElementById('startScreen');
+      if (startScreen && !startScreen.classList.contains('hidden')) {
+        return; // Don't handle movement if start screen is visible
+      }
+      
+      // Don't handle click if clicking on interactive elements
+      const target = e.target;
+      if (target.closest('.skills-panel') || target.closest('.experience-panel') || 
+          target.closest('button') || target.closest('a') || target.closest('input')) {
+        return;
+      }
+      
+      // Allow clicks on content box itself, but not on close buttons or links inside
+      if (target.closest('.content-box')) {
+        const contentBox = target.closest('.content-box');
+        // Only ignore if clicking on interactive elements within content box
+        if (target.closest('button') || target.closest('a') || target.closest('.content-box-close')) {
+          return;
+        }
+      }
+      
+      // Determine which side of screen was clicked
+      const screenWidth = window.innerWidth;
+      const clickX = e.clientX;
+      
+      // Divide screen into left and right halves
+      if (clickX < screenWidth / 2) {
+        // Left side clicked - move left
+        e.preventDefault();
+        jumpToMarker('left');
+      } else {
+        // Right side clicked - move right
+        e.preventDefault();
+        jumpToMarker('right');
+      }
+    });
 
     // Game loop - just update position and camera
     let gameLoopRunning = false;
@@ -3561,4 +3636,5 @@
   </script>
 </body>
 </html>
+
 

@@ -5915,6 +5915,29 @@ p {
   box-shadow: 0 0 20px rgba(85, 202, 196, 0.5);
 }
 
+/* Contact Copy Functionality */
+.copy-contact {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  color: #fff !important;
+  display: inline-block;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  animation: none !important;
+}
+
+.copy-contact:hover {
+  color: #55cac4 !important;
+  -webkit-text-fill-color: #55cac4 !important;
+}
+
+.copy-contact:active {
+  transform: scale(0.98);
+}
+
 /* My Story Modal Styles */
 .my-story-modal {
   position: fixed;

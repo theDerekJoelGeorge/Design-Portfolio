@@ -5909,3 +5909,170 @@ p {
   text-shadow: 0 0 10px rgba(194, 56, 221, 0.3);
 }
 
+/* Profile Image Hover Effect */
+#profile-image-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(85, 202, 196, 0.5);
+}
+
+/* My Story Modal Styles */
+.my-story-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.my-story-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;
+  background: #1e1e1e;
+  border-radius: 20px;
+  width: 100%;
+  max-width: min(90%, 1200px);
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10001;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  padding: 2rem;
+}
+
+.my-story-modal.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 2.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10002;
+  line-height: 1;
+  padding: 0;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  color: white;
+  padding: 1rem 0;
+}
+
+.modal-body h2 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.modal-body .quote-text {
+  color: #55cac4;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.modal-body p {
+  color: #ccc;
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+/* Modal slideshow adjustments */
+.my-story-modal .horizontal-slideshow-section {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.my-story-modal .horizontal-slideshow-section h3 {
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive modal styles */
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 95%;
+    padding: 1.5rem;
+    max-height: 95vh;
+  }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 2rem;
+  }
+
+  .modal-body h2 {
+    font-size: 2rem;
+  }
+
+  .modal-body .quote-text {
+    font-size: 1.1rem;
+  }
+
+  .modal-body p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    max-width: 100%;
+    border-radius: 0;
+    max-height: 100vh;
+    padding: 1rem;
+  }
+
+  .modal-body h2 {
+    font-size: 1.8rem;
+  }
+
+  .modal-body .quote-text {
+    font-size: 1rem;
+  }
+
+  .modal-body p {
+    font-size: 1.1rem;
+  }
+}
+

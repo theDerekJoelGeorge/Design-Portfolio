@@ -671,7 +671,7 @@
       <!-- Left Column -->
       <div style="margin-top: 4rem; position: fixed; top: 2rem; left: 5%; width: calc(40% - 2rem); max-width: 500px;">
         <!-- Profile Picture -->
-        <div style="width: 12vw; height: 12vw; min-width: 100px; max-width: 150px; min-height: 100px; max-height: 150px; border-radius: 50%; background: #d9d9d9; margin: 0 0 0.5rem 0; overflow: hidden; border: 2px solid #55cac4;">
+        <div id="profile-image-container" style="width: 12vw; height: 12vw; min-width: 100px; max-width: 150px; min-height: 100px; max-height: 150px; border-radius: 50%; background: #d9d9d9; margin: 0 0 0.5rem 0; overflow: hidden; border: 2px solid #55cac4; cursor: pointer; transition: transform 0.3s ease;">
           <img src="images/Derek_Joel_George.jpg" alt="Derek Joel George" style="width: 100%; height: 100%; object-fit: cover;" />
         </div>
         
@@ -1221,5 +1221,170 @@
   <footer class="footer" role="contentinfo">
     <p style="font-size: 0.9rem;">Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george" target="_blank" rel="noopener noreferrer" style="font-size: inherit;">this human</a></p>
   </footer>
+
+  <!-- My Story Modal -->
+  <div id="my-story-modal" class="my-story-modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-body">
+        <h2 id="modal-title" style="font-size: 2.5rem;">My Story</h2>
+        <p class="quote-text" style="font-size: 1.3rem;"><i>"Why does it feel so confusing to use something that's supposed to make life easier?"</i></p>
+
+        <p style="font-size: 1.5rem;">This curiosity led me to pursue a Master's in Interaction Design from the University of Queensland, where I deepened my understanding of human-computer interaction, user research, and prototyping.</p>
+        <p style="font-size: 1.5rem;">I discovered that UX isn't just about making things look nice—it's about solving real problems for real people.</p>
+        <p style="font-size: 1.5rem;">Today, I love transforming complex problems into simple, user-friendly solutions and continually learning how design can make technology more human.</p>
+            
+        <!-- Horizontal Scrolling Slideshow -->
+        <div class="horizontal-slideshow-section">
+            <h3 style="font-size: 1.3rem;">Moments from My Journey</h3>
+            <div class="slideshow-container">
+                <div class="slideshow-track" id="modal-slideshow-track">
+                    <!-- First set of images -->
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0044.jpg" alt="Journey Moment 1">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0046.jpg" alt="Journey Moment 2">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0047.jpg" alt="Journey Moment 3">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0048.jpg" alt="Journey Moment 4">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0050.jpg" alt="Journey Moment 5">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0051.jpg" alt="Journey Moment 6">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0052.jpg" alt="Journey Moment 7">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0055.jpg" alt="Journey Moment 8">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0056.jpg" alt="Journey Moment 9">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/WhatsApp Image 2025-09-07 at 10.28.43_9269f7b4.jpg" alt="Journey Moment 10">
+                    </div>
+                    
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0044.jpg" alt="Journey Moment 1">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0046.jpg" alt="Journey Moment 2">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0047.jpg" alt="Journey Moment 3">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0048.jpg" alt="Journey Moment 4">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0050.jpg" alt="Journey Moment 5">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0051.jpg" alt="Journey Moment 6">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0052.jpg" alt="Journey Moment 7">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0055.jpg" alt="Journey Moment 8">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/IMG-20250907-WA0056.jpg" alt="Journey Moment 9">
+                    </div>
+                    <div class="slide-card">
+                        <img src="images/about slideshow/WhatsApp Image 2025-09-07 at 10.28.43_9269f7b4.jpg" alt="Journey Moment 10">
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const profileImageContainer = document.getElementById('profile-image-container');
+      const modal = document.getElementById('my-story-modal');
+      const modalOverlay = document.getElementById('modal-overlay');
+      const modalClose = document.getElementById('modal-close');
+      const modalSlideshowTrack = document.getElementById('modal-slideshow-track');
+
+      // Open modal when clicking on profile image
+      if (profileImageContainer) {
+        profileImageContainer.addEventListener('click', function() {
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+          
+          // Initialize slideshow animation if not already running
+          if (modalSlideshowTrack) {
+            modalSlideshowTrack.style.animation = 'scroll 60s linear infinite';
+          }
+        });
+      }
+
+      // Close modal functions
+      function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+
+      // Close on overlay click
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', closeModal);
+      }
+
+      // Close on close button click
+      if (modalClose) {
+        modalClose.addEventListener('click', closeModal);
+      }
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Initialize horizontal slideshow for modal
+      function initModalSlideshow() {
+        if (!modalSlideshowTrack) return;
+
+        const slideshowContainer = modalSlideshowTrack.closest('.slideshow-container');
+        if (!slideshowContainer) return;
+
+        // Pause on hover
+        slideshowContainer.addEventListener('mouseenter', function() {
+          modalSlideshowTrack.style.animationPlayState = 'paused';
+        });
+
+        slideshowContainer.addEventListener('mouseleave', function() {
+          modalSlideshowTrack.style.animationPlayState = 'running';
+        });
+
+        // Pause when tab is not active
+        document.addEventListener('visibilitychange', function() {
+          if (document.hidden) {
+            modalSlideshowTrack.style.animationPlayState = 'paused';
+          } else if (modal.classList.contains('active')) {
+            modalSlideshowTrack.style.animationPlayState = 'running';
+          }
+        });
+      }
+
+      initModalSlideshow();
+    });
+  </script>
 </body>
 </html>

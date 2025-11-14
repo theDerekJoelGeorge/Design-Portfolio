@@ -5093,45 +5093,264 @@ p {
   font-weight: bold;
 }
 
-/* EventHive Header Section */
+/* EventHive Hero Section - Two Column Layout */
+.eventhive-hero-section {
+  min-height: 100vh;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  padding: 8rem 0 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.eventhive-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Left Column: Image and Title */
+.eventhive-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* EventHive Header Container - Just the image */
 .eventhive-header-container {
-  text-align: center;
-  margin-bottom: 2rem;
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .eventhive-header-image {
   width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
 }
 
+/* Title Container - Below Image */
 .eventhive-title-container {
-  position: relative;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-top: 2%;
+  flex-direction: column;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+/* Right Column: Title and Text Description */
+.eventhive-hero-right {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 2rem;
 }
 
 .eventhive-main-title {
-  font-size: 3rem;
+  font-size: 2rem;
   margin: 0;
+  color: white;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .eventhive-year {
-  font-size: 2rem;
-  color: rgb(201, 98, 226);
-  align-self: flex-end;
+  font-size: 1.5rem;
+  color: var(--eventhive-purple);
   font-weight: bold;
+  margin-bottom: 0.3rem;
+  align-self: flex-start;
 }
 
 .eventhive-subtitle {
-  font-size: 1.5rem;
-  color: darkgrey;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: normal;
 }
 
 .eventhive-description {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   color: white;
-  margin-top: 2%;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ========================================
+   UNMOOT PROJECT HERO SECTION
+   ======================================== */
+
+/* Unmoot Hero Section - Two Column Layout */
+.unmoot-hero-section {
+  min-height: 100vh;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  padding: 8rem 0 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.unmoot-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Left Column: Image */
+.unmoot-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Unmoot Header Container - Just the image */
+.unmoot-header-container {
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unmoot-header-image {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Title Container */
+.unmoot-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+/* Right Column: Title and Text Description */
+.unmoot-hero-right {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 2rem;
+}
+
+.unmoot-main-title {
+  font-size: 2rem;
+  margin: 0;
+  color: white;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.unmoot-year {
+  font-size: 1.5rem;
+  color: #ff6b35;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  align-self: flex-start;
+}
+
+.unmoot-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: normal;
+}
+
+.unmoot-description {
+  font-size: 1.5rem;
+  color: white;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Unmoot Section Containers */
+.unmoot-section-container {
+  margin-top: 4%;
+  padding-top: 15rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.unmoot-text-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+/* Unmoot Section Titles */
+.unmoot-section-title {
+  color: #ff4444;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.unmoot-section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 100%;
+  height: 2px;
+}
+
+/* Unmoot Section Headings */
+.unmoot-section-heading {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+  max-width: 70%;
+}
+
+/* Unmoot Section Descriptions */
+.unmoot-section-description {
+  color: white;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* EventHive Section Containers */
@@ -5432,6 +5651,94 @@ p {
   
   .eventhive-stat-description {
     font-size: 0.95rem;
+  }
+  
+  /* EventHive Hero Section Mobile */
+  .eventhive-hero-section {
+    min-height: auto;
+    padding: 6rem 5% 3rem 5%;
+  }
+  
+  .eventhive-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .eventhive-hero-left {
+    order: 1;
+  }
+  
+  .eventhive-hero-right {
+    order: 2;
+  }
+  
+  .eventhive-header-container {
+    min-height: auto;
+    padding: 0;
+  }
+  
+  .eventhive-main-title {
+    white-space: normal;
+    font-size: 1.5rem;
+  }
+  
+  .eventhive-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .eventhive-year {
+    font-size: 1.5rem;
+  }
+  
+  .eventhive-description {
+    font-size: 1.2rem;
+  }
+  
+  .eventhive-title-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  /* Unmoot Hero Section Mobile */
+  .unmoot-hero-section {
+    min-height: auto;
+    padding: 6rem 0 3rem 0;
+  }
+  
+  .unmoot-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .unmoot-hero-left {
+    order: 1;
+  }
+  
+  .unmoot-hero-right {
+    order: 2;
+  }
+  
+  .unmoot-header-container {
+    min-height: auto;
+    padding: 0;
+  }
+  
+  .unmoot-main-title {
+    white-space: normal;
+    font-size: 1.5rem;
+  }
+  
+  .unmoot-subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .unmoot-year {
+    font-size: 1.5rem;
+  }
+  
+  .unmoot-description {
+    font-size: 1.2rem;
   }
 }
 

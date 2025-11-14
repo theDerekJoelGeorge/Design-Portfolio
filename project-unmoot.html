@@ -43,7 +43,12 @@
     }
 
     .breathing-text {
-      animation: textBreathing 4s ease-in-out infinite;
+      animation: textBreathing 4s ease-in-out infinite !important;
+      background: linear-gradient(45deg, #ff6b35, #ff8c42, #ff6b35) !important;
+      background-size: 100% 100% !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
     }
   </style>
 </head>
@@ -67,27 +72,55 @@
 
 
    <div class="main-container" id="main-content">
-      <div class="container">
-       <div style="text-align: center; margin-bottom: 2rem;">
-         <img src="images/projects/unmoot/header.png" style="width: 100%;"
-           alt="Unmoot platform interface showing collaborative classroom features" class="project-main-image" />
-       </div>
-      <div
-        style="position: relative; display: flex; align-items: flex-end; justify-content: space-between; margin-top: 2%;">
-        <h1 style="font-size: 3rem; margin: 0;">Unmoot - Class Participation Platform</h1>
-        <div style="font-size: 2rem; color: rgb(218, 140, 140); align-self: flex-end; font-weight: bold;">2025</div>
+      <!-- Hero Section with Two Columns -->
+      <div class="unmoot-hero-section">
+        <div class="unmoot-hero-content">
+          <!-- Left Column: Image -->
+          <div class="unmoot-hero-left">
+            <!-- Image Container -->
+            <div class="unmoot-header-container">
+              <img src="images/projects/unmoot/header.png" class="unmoot-header-image project-main-image"
+                alt="Unmoot platform interface showing collaborative classroom features" />
             </div>
-       <h2 style="font-size: 1.5rem; color: darkgrey;">University of Queensland | Product Designer</h2>
-      <!-- Content will go here -->
+          </div>
+          
+          <!-- Right Column: Title and Text Description -->
+          <div class="unmoot-hero-right">
+            <!-- Title Section Above Paragraph -->
+            <div class="unmoot-title-container">
+              <div class="unmoot-year">2025</div>
+              <h1 class="unmoot-main-title">Unmoot - Class Participation Platform</h1>
+              <h2 class="unmoot-subtitle">University of Queensland | Product Designer</h2>
+            </div>
+            <p class="unmoot-description" style="font-size: 1.5rem; line-height: 1.6;">Unmoot, was developed as part of the Design Computing
+              Studio 3: Proposal course at the University of Queensland. Our team set out to explore the barriers to class
+              participation among IT students and design an inclusive solution to encourage engagement.</p>
+          </div>
+        </div>
       </div>
+      
       <div class="container">
-      <p style="font-size: 1.5rem; color: white; margin-top: 2%;">Unmoot, was developed as part of the Design Computing
-        Studio 3: Proposal course at the University of Queensland. Our team set out to explore the barriers to class
-        participation among IT students and design an inclusive solution to encourage engagement. My role primarily
-        involved user research, synthesizing insights, and leading the design of the prototype in Figma. Over the course
-        of the semester, I collaborated with my teammates to conduct interviews, analyze findings, and iterate on the
-        solution.</p>
-      </div>
+     <!-- Content will go here -->
+     </div>
+     
+     <!-- My Role Section -->
+     <div id="my-role" class="container unmoot-section-container">
+       <div class="unmoot-text-container">
+         <!-- Left Column -->
+         <div>
+           <div class="unmoot-section-title" style="font-size: 1rem;">MY ROLE</div>
+           <h2 class="unmoot-section-heading" style="font-size: 2rem;">What did I do for the project?</h2>
+         </div>
+         
+         <!-- Right Column -->
+         <div>
+           <p class="unmoot-section-description" style="font-size: 1.5rem;">My role primarily
+             involved user research, synthesizing insights, and leading the design of the prototype in Figma. Over the course
+             of the semester, I collaborated with my teammates to conduct interviews, analyze findings, and iterate on the
+             solution.</p>
+         </div>
+       </div>
+     </div>
         
      <!-- The Challenge Section -->
      <div id="challenge" class="container" style="margin-top: 4%; padding-top: 15rem; display: flex; flex-direction: column;">

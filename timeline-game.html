@@ -230,16 +230,24 @@
       position: fixed;
       top: 20px;
       left: 20px;
+      right: 20px;
+      bottom: 20px;
       background: transparent;
       border: none;
       border-radius: 0;
       padding: 0;
       min-width: 300px;
-      max-width: 400px;
       color: white;
       z-index: 100;
       box-shadow: none;
       pointer-events: auto;
+      overflow-y: auto;
+    }
+    
+    .experience-panel.skipped {
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      overflow: hidden;
     }
 
     .experience-title {
@@ -257,6 +265,14 @@
       gap: 20px;
       align-items: flex-start;
     }
+    
+    .experience-panel.skipped .experience-categories {
+      flex-direction: row;
+      gap: 30px;
+      width: 100%;
+      height: 100%;
+      align-items: flex-start;
+    }
 
     .experience-category {
       position: relative;
@@ -268,6 +284,22 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+    }
+    
+    .experience-panel.skipped .experience-category {
+      flex: 1;
+      min-width: 0;
+      max-width: calc(50% - 15px);
+      align-items: flex-start;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: rgba(42, 42, 42, 0.95);
+      border: 2px solid #55cac4;
+      border-radius: 8px;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .category-icon {
@@ -334,6 +366,20 @@
       display: none;
       z-index: 101;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .experience-panel.skipped .experience-dropdown {
+      position: relative;
+      top: auto;
+      left: auto;
+      min-width: 100%;
+      width: 100%;
+      max-height: none;
+      height: calc(100% - 120px);
+      margin-top: 15px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1;
     }
 
     .experience-category.active .experience-dropdown {
@@ -1079,6 +1125,31 @@
       font-weight: 500;
       margin-bottom: 10px;
     }
+    
+    .start-screen-skip-button {
+      margin-top: 30px;
+      padding: 12px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .start-screen-skip-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.8);
+      transform: translateY(-2px);
+    }
+    
+    .start-screen-skip-button:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -1097,6 +1168,7 @@
       </div>
       <div class="start-screen-instruction">Use the Arrow Keys to navigate.</div>
       <div class="start-screen-click-instruction">Click Anywhere to Begin.</div>
+      <button class="start-screen-skip-button" id="skipGameButton">Skip Game</button>
     </div>
   </div>
   
@@ -3392,6 +3464,11 @@
     const gameArea = document.getElementById('gameWrapper') || document.body;
     
     gameArea.addEventListener('touchstart', (e) => {
+      // Don't allow movement if game is skipped
+      if (window.gameSkipped) {
+        return;
+      }
+      
       // Check if start screen is visible
       const startScreen = document.getElementById('startScreen');
       if (startScreen && !startScreen.classList.contains('hidden')) {
@@ -3490,6 +3567,11 @@
     
     // Also add click handlers for desktop/laptop trackpad users
     gameArea.addEventListener('click', (e) => {
+      // Don't allow movement if game is skipped
+      if (window.gameSkipped) {
+        return;
+      }
+      
       // Check if start screen is visible
       const startScreen = document.getElementById('startScreen');
       if (startScreen && !startScreen.classList.contains('hidden')) {
@@ -3588,6 +3670,7 @@
     const startScreen = document.getElementById('startScreen');
     const startArrowLeft = document.getElementById('startArrowLeft');
     const startArrowRight = document.getElementById('startArrowRight');
+    const skipGameButton = document.getElementById('skipGameButton');
     
     function hideStartScreen() {
       if (startScreen) {
@@ -3628,6 +3711,89 @@
       startArrowRight.addEventListener('click', (e) => {
         e.stopPropagation(); // Prevent bubbling to start screen
         hideStartScreen();
+      });
+    }
+    
+    function skipGame() {
+      // Hide start screen
+      if (startScreen) {
+        startScreen.classList.add('hidden');
+      }
+      
+      // Add all education and work experience to active experience
+      timelinePeriods.forEach((period, periodIndex) => {
+        if (period.type === 'education' || period.type === 'work') {
+          currentActiveExperience[period.type].add(periodIndex);
+        }
+      });
+      
+      // Render all experience items
+      renderExperience();
+      
+      // Expand both education and work categories
+      const educationCategory = document.querySelector('.experience-category[data-type="education"]');
+      const workCategory = document.querySelector('.experience-category[data-type="work"]');
+      if (educationCategory) {
+        educationCategory.classList.add('active');
+      }
+      if (workCategory) {
+        workCategory.classList.add('active');
+      }
+      
+      // Update counts
+      const educationCount = currentActiveExperience.education.size;
+      const workCount = currentActiveExperience.work.size;
+      const educationCountEl = document.getElementById('educationCount');
+      const workCountEl = document.getElementById('workCount');
+      if (educationCountEl) educationCountEl.textContent = educationCount;
+      if (workCountEl) workCountEl.textContent = workCount;
+      
+      // Make experience panel fill the screen
+      const experiencePanel = document.getElementById('experiencePanel');
+      if (experiencePanel) {
+        experiencePanel.classList.add('skipped');
+      }
+      
+      // Set flag to prevent game interaction
+      window.gameSkipped = true;
+      
+      // Hide game elements to prevent interaction
+      const gameWrapper = document.getElementById('gameWrapper');
+      const timelineGameContainer = document.querySelector('.timeline-game-container');
+      if (gameWrapper) {
+        gameWrapper.style.pointerEvents = 'none';
+        gameWrapper.style.opacity = '0.3';
+      }
+      if (timelineGameContainer) {
+        timelineGameContainer.style.pointerEvents = 'none';
+      }
+      
+      // Disable keyboard controls
+      document.removeEventListener('keydown', startKeyHandler);
+      
+      // Remove all game event listeners
+      const character = document.getElementById('character');
+      if (character) {
+        character.style.pointerEvents = 'none';
+      }
+      
+      // Don't start the game loop - user skipped the game
+      gameLoopRunning = false;
+      
+      // Ensure camera is properly initialized (but game won't run)
+      const viewportWidth = window.innerWidth;
+      cameraOffset = Math.max(0, characterPosition - (viewportWidth / 2));
+      if (gameWrapper) {
+        gameWrapper.style.transform = `translateX(-${cameraOffset}px)`;
+      }
+      updateLocationBackground();
+    }
+    
+    // Skip game button handler
+    if (skipGameButton) {
+      skipGameButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent bubbling to start screen
+        skipGame();
       });
     }
     

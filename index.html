@@ -671,9 +671,9 @@
       <!-- Left Column -->
       <div style="margin-top: 4rem; position: fixed; top: 2rem; left: 5%; width: calc(40% - 2rem); max-width: 500px;">
         <!-- Profile Picture -->
-        <div id="profile-image-container" style="width: 12vw; height: 12vw; min-width: 100px; max-width: 150px; min-height: 100px; max-height: 150px; border-radius: 50%; background: #d9d9d9; margin: 0 0 0.5rem 0; overflow: hidden; border: 2px solid #55cac4; cursor: pointer; transition: transform 0.3s ease;">
-          <img src="images/Derek_Joel_George.jpg" alt="Derek Joel George" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
+        <button id="profile-image-container" type="button" style="width: 12vw; height: 12vw; min-width: 100px; max-width: 150px; min-height: 100px; max-height: 150px; border-radius: 50%; background: #d9d9d9; margin: 0 0 0.5rem 0; overflow: hidden; border: 2px solid #55cac4; cursor: pointer; transition: transform 0.3s ease; padding: 0; border: 2px solid #55cac4;" aria-label="View Derek Joel George's story" aria-expanded="false">
+          <img src="images/Derek_Joel_George.jpg" alt="Derek Joel George, UX/Product Designer" style="width: 100%; height: 100%; object-fit: cover;" />
+        </button>
         
         <!-- Name Section -->
         <div style="display: flex; align-items: flex-start; gap: 2rem; margin-bottom: 1.5rem;">
@@ -827,6 +827,18 @@
         <div class="desktop-projects-section" style="margin-top: 3rem; margin-bottom: 1.5rem;">
           <h2 style="font-size: 1.2rem; font-weight: 600; text-transform: uppercase; color: white; margin: 0 0 1.5rem 0;">PROJECT CASE STUDIES</h2>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <!-- SeaSaw Project Card -->
+            <a href="project-seasaw.html" style="text-decoration: none; color: inherit;">
+              <div style="background: transparent; border-radius: 0; padding: 1.5rem; box-shadow: none; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='none'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="width: 100%; height: 12rem; border-radius: 8px; margin-bottom: 1rem; overflow: hidden; background: #4a90e2;">
+                  <img src="images/projects/seasaw/header.png" alt="SeaSaw platform interface" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <h3 style="color: white; font-size: 1.1rem; font-weight: bold; margin: 0 0 0.5rem 0;">SeaSaw | Exploring Collaboration</h3>
+                <p style="color: #ccc; font-size: 0.9rem; margin: 0 0 0.5rem 0;">University of Queensland | Interaction Designer</p>
+                <p style="color: #4a90e2; font-size: 0.9rem; font-weight: bold; margin: 0;">2025</p>
+              </div>
+            </a>
+            
             <!-- Unmoot Project Card -->
             <a href="project-unmoot.html" style="text-decoration: none; color: inherit;">
               <div style="background: transparent; border-radius: 0; padding: 1.5rem; box-shadow: none; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='none'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
@@ -906,8 +918,8 @@
             <h3 style="font-size: 1.1rem; font-weight: 600; color: white; margin: 0 0 1rem 0;">Liked what you see? Let's work together</h3>
             <p style="font-size: 1rem; color: #ccc; line-height: 1.6; margin: 0 0 1rem 0;">I'm always excited to discuss new opportunities, collaborate on interesting projects, or simply chat about design and technology. Feel free to reach out through any of the channels below. (Click to copy the details to your clipboard.)</p>
             <p class="breathing-text" style="font-size: 1.2rem; color: #ccc; margin: 0;">
-              <span class="copy-contact" data-value="derekjoelgeorge@gmail.com" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease;">My Email</span> <span style="color: #ccc;">|</span> 
-              <span class="copy-contact" data-value="+61 478 670086" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease;">My phone number</span>
+              <button type="button" class="copy-contact" data-value="derekjoelgeorge@gmail.com" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease; background: none; border: none; padding: 0; font: inherit;" aria-label="Copy email address to clipboard">My Email</button> <span style="color: #ccc;" aria-hidden="true">|</span> 
+              <button type="button" class="copy-contact" data-value="+61 478 670086" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease; background: none; border: none; padding: 0; font: inherit;" aria-label="Copy phone number to clipboard">My phone number</button>
             </p>
           </div>
         </div>
@@ -964,6 +976,16 @@
         <div style="margin-bottom: 2rem; width: 100%; display: block;">
           <h2 style="font-size: 1.2rem; font-weight: 600; text-transform: uppercase; color: white; margin: 0 0 1.5rem 0;">PROJECT CASE STUDIES</h2>
           <div style="display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1.5rem; width: 100%;">
+            <a href="project-seasaw.html" style="text-decoration: none; color: inherit;">
+              <div style="background: transparent; border-radius: 0; padding: 1.5rem; box-shadow: none; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='none'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <div style="width: 100%; height: 12rem; border-radius: 8px; margin-bottom: 1rem; overflow: hidden; background: #4a90e2;">
+                  <img src="images/projects/seasaw/header.png" alt="SeaSaw platform interface" style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <h3 style="color: white; font-size: 1.1rem; font-weight: bold; margin: 0 0 0.5rem 0;">SeaSaw | Exploring Collaboration</h3>
+                <p style="color: #ccc; font-size: 0.9rem; margin: 0 0 0.5rem 0;">University of Queensland | Interaction Designer</p>
+                <p style="color: #4a90e2; font-size: 0.9rem; font-weight: bold; margin: 0;">2025</p>
+              </div>
+            </a>
             <a href="project-unmoot.html" style="text-decoration: none; color: inherit;">
               <div style="background: transparent; border-radius: 0; padding: 1.5rem; box-shadow: none; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='none'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
                 <div style="width: 100%; height: 12rem; border-radius: 8px; margin-bottom: 1rem; overflow: hidden; background: #c93246;">
@@ -1037,8 +1059,8 @@
             <h3 style="font-size: 1.1rem; font-weight: 600; color: white; margin: 0 0 1rem 0;">Liked what you see? Let's work together</h3>
             <p style="font-size: 1rem; color: #ccc; line-height: 1.6; margin: 0 0 1rem 0;">I'm always excited to discuss new opportunities, collaborate on interesting projects, or simply chat about design and technology. Feel free to reach out through any of the channels below. (Click to copy the details to your clipboard.)</p>
             <p class="breathing-text" style="font-size: 1.2rem; color: #ccc; margin: 0;">
-              <span class="copy-contact" data-value="derekjoelgeorge@gmail.com" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease;">My Email</span> <span style="color: #ccc;">|</span> 
-              <span class="copy-contact" data-value="+61 478 670086" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease;">My phone number</span>
+              <button type="button" class="copy-contact" data-value="derekjoelgeorge@gmail.com" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease; background: none; border: none; padding: 0; font: inherit;" aria-label="Copy email address to clipboard">My Email</button> <span style="color: #ccc;" aria-hidden="true">|</span> 
+              <button type="button" class="copy-contact" data-value="+61 478 670086" style="color: #fff !important; cursor: pointer; transition: all 0.3s ease; background: none; border: none; padding: 0; font: inherit;" aria-label="Copy phone number to clipboard">My phone number</button>
             </p>
           </div>
         </div>
@@ -1364,6 +1386,7 @@
         profileImageContainer.addEventListener('click', function() {
           modal.classList.add('active');
           modal.setAttribute('aria-hidden', 'false');
+          profileImageContainer.setAttribute('aria-expanded', 'true');
           document.body.style.overflow = 'hidden'; // Prevent background scrolling
           
           // Initialize slideshow animation if not already running
@@ -1377,7 +1400,10 @@
       function closeModal() {
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
+        if (profileImageContainer) profileImageContainer.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = ''; // Restore scrolling
+        // Return focus to profile image
+        if (profileImageContainer) profileImageContainer.focus();
       }
 
       // Close on overlay click

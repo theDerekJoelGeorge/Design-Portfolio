@@ -6099,3 +6099,216 @@ p {
   }
 }
 
+/* ========================================
+   SEASAW PROJECT HERO SECTION
+   ======================================== */
+
+:root {
+  --seasaw-blue: #4a90e2;
+  --seasaw-blue-transparent: rgba(74, 144, 226, 0.3);
+  --seasaw-blue-glow: rgba(74, 144, 226, 0.3);
+}
+
+/* SeaSaw Hero Section - Two Column Layout */
+.seasaw-hero-section {
+  min-height: 100vh;
+  width: 100%;
+  background: transparent;
+  position: relative;
+  padding: 8rem 0 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.seasaw-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Left Column: Image */
+.seasaw-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* SeaSaw Header Container */
+.seasaw-header-container {
+  position: relative;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seasaw-header-image {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  box-shadow: none;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.seasaw-header-container:hover .seasaw-header-image {
+  transform: scale(1.02);
+}
+
+/* Title Container */
+.seasaw-title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+/* Right Column: Title and Text Description */
+.seasaw-hero-right {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  gap: 2rem;
+}
+
+.seasaw-main-title {
+  font-size: 2rem;
+  margin: 0;
+  color: white;
+  font-weight: bold;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+.seasaw-year {
+  font-size: 1.5rem;
+  color: var(--seasaw-blue);
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  align-self: flex-start;
+}
+
+.seasaw-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-weight: normal;
+}
+
+.seasaw-description {
+  font-size: 1.5rem;
+  color: white;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* SeaSaw Section Container */
+.seasaw-section-container {
+  margin-top: 4%;
+  padding-top: 15rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.seasaw-text-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.seasaw-section-title {
+  color: var(--seasaw-blue);
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.seasaw-section-heading {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1.2;
+  max-width: 70%;
+}
+
+.seasaw-section-description {
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design for SeaSaw */
+@media (max-width: 1024px) {
+  .seasaw-hero-section {
+    min-height: auto;
+    padding: 6rem 5% 3rem 5%;
+  }
+  
+  .seasaw-hero-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .seasaw-hero-left {
+    order: 1;
+  }
+  
+  .seasaw-hero-right {
+    order: 2;
+  }
+  
+  .seasaw-header-container {
+    min-height: auto;
+    padding: 0;
+  }
+  
+  .seasaw-main-title {
+    white-space: normal;
+    font-size: 1.5rem;
+  }
+  
+  .seasaw-subtitle {
+    font-size: 1rem;
+  }
+  
+  .seasaw-description {
+    font-size: 1.2rem;
+  }
+  
+  .seasaw-text-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .seasaw-section-heading {
+    max-width: 100%;
+    font-size: 1.5rem;
+  }
+  
+  .seasaw-section-description {
+    font-size: 1.2rem;
+  }
+}
+

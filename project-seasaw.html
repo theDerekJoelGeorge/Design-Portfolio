@@ -46,6 +46,23 @@
        animation: textBreathing 4s ease-in-out infinite;
      }
 
+     /* Respect user's motion preferences */
+     @media (prefers-reduced-motion: reduce) {
+       *,
+       *::before,
+       *::after {
+         animation-duration: 0.01ms !important;
+         animation-iteration-count: 1 !important;
+         transition-duration: 0.01ms !important;
+       }
+       .breathing-text {
+         animation: none !important;
+       }
+       .testing-slideshow-track {
+         animation: none !important;
+       }
+     }
+
      .subtitle {
        font-size: 1rem;
        margin-bottom: 1rem;
@@ -70,6 +87,378 @@
        transform: translateY(-2px);
        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
      }
+
+     /* Testing slideshow animation - 9 images */
+     @keyframes scrollTesting {
+       0% {
+         transform: translateX(0);
+       }
+       100% {
+         transform: translateX(calc(-600px * 9 - 20px * 8));
+       }
+     }
+
+     .testing-slideshow-track {
+       animation: scrollTesting 60s linear infinite;
+     }
+
+     /* General overflow prevention */
+     body, html {
+       overflow-x: hidden;
+       width: 100%;
+     }
+
+     .container, section, div {
+       box-sizing: border-box;
+     }
+
+     p, h1, h2, h3, li, span, blockquote {
+       word-wrap: break-word;
+       overflow-wrap: break-word;
+       hyphens: auto;
+     }
+
+     /* Responsive Styles - Using relative units */
+     @media (max-width: 1024px) {
+       .container {
+         max-width: 80%;
+         margin: 0 auto;
+         padding: 0 2rem;
+       }
+
+       /* Prevent text overflow */
+       * {
+         word-wrap: break-word;
+         overflow-wrap: break-word;
+       }
+
+       /* Grid layouts become single column */
+       div[style*="grid-template-columns: 1fr 2fr"] {
+         grid-template-columns: 1fr !important;
+         gap: 2rem !important;
+       }
+
+       /* Section headings */
+       h2[style*="font-size: 2rem"] {
+         font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+       }
+
+       /* Paragraphs */
+       p[style*="font-size: 1.5rem"] {
+         font-size: clamp(1rem, 3vw, 1.2rem) !important;
+         line-height: 1.6 !important;
+         word-wrap: break-word !important;
+         overflow-wrap: break-word !important;
+       }
+
+       /* Slideshows - use viewport height */
+       .ideation-slide-container,
+       .iterations-slide-container {
+         height: 40vh !important;
+         min-height: 20rem !important;
+         max-height: 30rem !important;
+       }
+
+       .ideation-slide,
+       .iterations-slide {
+         height: 100% !important;
+       }
+
+       .ideation-slide img,
+       .iterations-slide img {
+         height: 100% !important;
+       }
+
+       /* Navigation buttons */
+       nav[aria-label="Section navigation"] {
+         flex-direction: row;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 1rem;
+       }
+
+       nav[aria-label="Section navigation"] button {
+         width: auto;
+         min-width: fit-content;
+         flex: 0 1 auto;
+         font-size: clamp(0.9rem, 2.5vw, 1.2rem) !important;
+         padding: 0.8rem 1.2rem !important;
+       }
+
+       /* Solution section title */
+       .breathing-text[style*="font-size: 5rem"] {
+         font-size: clamp(2rem, 8vw, 3rem) !important;
+       }
+
+       /* Video containers */
+       video {
+         max-width: 100% !important;
+         height: auto !important;
+       }
+     }
+
+     @media (max-width: 768px) {
+       .container {
+         max-width: 90%;
+         margin: 0 auto;
+         padding: 0 1.5rem;
+       }
+
+       /* Prevent horizontal overflow */
+       body {
+         overflow-x: hidden;
+       }
+
+       /* Section padding - use rem */
+       .container[style*="padding-top: 15rem"] {
+         padding-top: 6rem !important;
+       }
+
+       .container[style*="padding-top: 8rem"] {
+         padding-top: 3rem !important;
+       }
+
+       /* Section headings */
+       h2[style*="font-size: 2rem"] {
+         font-size: clamp(1.1rem, 5vw, 1.3rem) !important;
+         margin-bottom: 1rem !important;
+       }
+
+       .seasaw-section-title {
+         font-size: clamp(0.8rem, 2.5vw, 0.9rem) !important;
+       }
+
+       /* Paragraphs */
+       p[style*="font-size: 1.5rem"] {
+         font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+         line-height: 1.6 !important;
+         word-wrap: break-word !important;
+         overflow-wrap: break-word !important;
+       }
+
+       /* Slideshows */
+       .ideation-slide-container,
+       .iterations-slide-container {
+         height: 35vh !important;
+         min-height: 18rem !important;
+         max-height: 25rem !important;
+       }
+
+       /* Navigation buttons */
+       nav[aria-label="Section navigation"] {
+         flex-direction: row;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 0.75rem;
+       }
+
+       nav[aria-label="Section navigation"] button {
+         width: auto;
+         min-width: fit-content;
+         flex: 0 1 auto;
+         font-size: clamp(0.85rem, 3vw, 1rem) !important;
+         padding: 0.8rem 1.2rem !important;
+       }
+
+       /* Solution section title */
+       .breathing-text[style*="font-size: 5rem"] {
+         font-size: clamp(1.8rem, 10vw, 2.5rem) !important;
+         margin-right: 0 !important;
+       }
+
+       /* Quote text */
+       blockquote.breathing-text {
+         font-size: clamp(1.2rem, 5vw, 1.5rem) !important;
+         padding: 0 1rem !important;
+       }
+
+       /* Testing slideshow - use percentage of viewport */
+       .slide-card {
+         width: 85vw !important;
+         max-width: 25rem !important;
+         height: 60vw !important;
+         max-height: 20rem !important;
+       }
+
+       /* Testing slideshow animation adjustment for tablet */
+       @keyframes scrollTestingTablet {
+         0% {
+           transform: translateX(0);
+         }
+         100% {
+           transform: translateX(calc(-85vw * 9 - 1.25rem * 8));
+         }
+       }
+
+       .testing-slideshow-track {
+         animation: scrollTestingTablet 60s linear infinite;
+       }
+
+       /* Ordered lists */
+       ol[style*="font-size: 1.5rem"] {
+         font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+         padding-left: 1.2rem !important;
+       }
+
+       li {
+         word-wrap: break-word !important;
+         overflow-wrap: break-word !important;
+       }
+
+       /* User Testing Section - align text with slideshow on tablet */
+       #user-testing .horizontal-slideshow-section .slideshow-container {
+         max-width: 85vw !important;
+       }
+
+       #user-testing .horizontal-slideshow-section + p,
+       #user-testing .horizontal-slideshow-section + p + ol {
+         max-width: 85vw !important;
+         margin-left: 0 !important;
+         margin-right: auto !important;
+       }
+
+       /* Exhibition Grid - 2 columns on tablet */
+       .exhibition-grid {
+         grid-template-columns: repeat(2, 1fr) !important;
+         gap: clamp(1rem, 3vw, 2rem) !important;
+         max-width: 90% !important;
+       }
+
+       .exhibition-grid img {
+         height: clamp(12rem, 25vw, 18rem) !important;
+       }
+     }
+
+     @media (max-width: 480px) {
+       .container {
+         max-width: 95%;
+         margin: 0 auto;
+         padding: 0 1rem;
+       }
+
+       /* Section padding */
+       .container[style*="padding-top: 15rem"],
+       .container[style*="padding-top: 8rem"] {
+         padding-top: 3rem !important;
+       }
+
+       /* Section headings */
+       h2[style*="font-size: 2rem"] {
+         font-size: clamp(1rem, 6vw, 1.2rem) !important;
+       }
+
+       .seasaw-section-title {
+         font-size: clamp(0.75rem, 3vw, 0.8rem) !important;
+       }
+
+       /* Paragraphs */
+       p[style*="font-size: 1.5rem"] {
+         font-size: clamp(0.9rem, 4vw, 1rem) !important;
+         line-height: 1.5 !important;
+         word-wrap: break-word !important;
+         overflow-wrap: break-word !important;
+       }
+
+       /* Slideshows */
+       .ideation-slide-container,
+       .iterations-slide-container {
+         height: 30vh !important;
+         min-height: 15rem !important;
+         max-height: 20rem !important;
+       }
+
+       /* Navigation buttons */
+       nav[aria-label="Section navigation"] {
+         flex-direction: row;
+         flex-wrap: wrap;
+         justify-content: center;
+         gap: 0.5rem;
+       }
+
+       nav[aria-label="Section navigation"] button {
+         width: auto;
+         min-width: fit-content;
+         flex: 0 1 auto;
+         font-size: clamp(0.8rem, 4vw, 0.9rem) !important;
+         padding: 0.7rem 1rem !important;
+       }
+
+       /* Solution section title */
+       .breathing-text[style*="font-size: 5rem"] {
+         font-size: clamp(1.5rem, 12vw, 2rem) !important;
+       }
+
+       /* Quote text */
+       blockquote.breathing-text {
+         font-size: clamp(1rem, 5vw, 1.2rem) !important;
+         padding: 0 0.75rem !important;
+         margin: 2rem 0 1rem 0 !important;
+       }
+
+       /* Testing slideshow */
+       .slide-card {
+         width: 90vw !important;
+         max-width: 20rem !important;
+         height: 65vw !important;
+         max-height: 15rem !important;
+       }
+
+       /* Testing slideshow animation adjustment for mobile */
+       @keyframes scrollTestingMobile {
+         0% {
+           transform: translateX(0);
+         }
+         100% {
+           transform: translateX(calc(-90vw * 9 - 1.25rem * 8));
+         }
+       }
+
+       .testing-slideshow-track {
+         animation: scrollTestingMobile 60s linear infinite;
+       }
+
+       /* Ordered lists */
+       ol[style*="font-size: 1.5rem"] {
+         font-size: clamp(0.9rem, 4vw, 1rem) !important;
+         padding-left: 1rem !important;
+       }
+
+       /* Navigation dots */
+       button[class*="-dot"] {
+         width: 0.625rem !important;
+         height: 0.625rem !important;
+       }
+
+       /* Ensure all text containers don't overflow */
+       div, p, h1, h2, h3, li, span {
+         max-width: 100% !important;
+         box-sizing: border-box !important;
+       }
+
+       /* User Testing Section - align text with slideshow on mobile */
+       #user-testing .horizontal-slideshow-section .slideshow-container {
+         max-width: 90vw !important;
+       }
+
+       #user-testing .horizontal-slideshow-section + p,
+       #user-testing .horizontal-slideshow-section + p + ol {
+         max-width: 90vw !important;
+         margin-left: 0 !important;
+         margin-right: auto !important;
+       }
+
+       /* Exhibition Grid - 1 column on mobile, smaller and wider images */
+       .exhibition-grid {
+         grid-template-columns: 1fr !important;
+         gap: clamp(1.5rem, 4vw, 2rem) !important;
+         max-width: 95% !important;
+       }
+
+       .exhibition-grid img {
+         height: clamp(10rem, 35vw, 15rem) !important;
+         width: 100% !important;
+       }
+     }
   </style>
 </head>
 
@@ -87,40 +476,64 @@
         <img src="images/Logo(white).png" alt="Derek Joel George Logo" style="width: 60px; height: auto;" />
       </a>
     </div>
-    <a href="index.html" style="font-size: 1.5rem; color: white; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#55cac4'" onmouseout="this.style.color='white'">Home</a>
+    <a href="index.html" style="font-size: 1.5rem; color: white; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#55cac4'" onmouseout="this.style.color='white'" aria-label="Navigate to home page">Home</a>
   </nav>
 
 
    <div class="main-container" id="main-content">
-      <div class="container">
-       <div style="text-align: center; margin-bottom: 2rem;">
-         <img src="images/projects/seasaw/header.png" style="width: 100%;"
-           alt="SeaSaw platform interface showing interactive learning features" class="project-main-image" />
-       </div>
-      <div
-        style="position: relative; display: flex; align-items: flex-end; justify-content: space-between; margin-top: 2%;">
-        <h1 style="font-size: 3rem; margin: 0;">SeaSaw -  Exploring Collaboration and Non-Verbal
-            Communication Through Physical Balance</h1>
-        <div style="font-size: 2rem; color: rgb(140, 180, 218); align-self: flex-end; font-weight: bold;">2025</div>
+      <!-- Hero Section with Two Columns -->
+      <div class="seasaw-hero-section">
+        <div class="seasaw-hero-content">
+          <!-- Left Column: Image -->
+          <div class="seasaw-hero-left">
+            <!-- Image Container -->
+            <div class="seasaw-header-container">
+              <img src="images/projects/seasaw/header.png" class="seasaw-header-image project-main-image"
+                alt="SeaSaw platform interface showing interactive learning features" />
             </div>
-       <h2 style="font-size: 1.5rem; color: darkgrey;">University of Queensland | Interaction Designer</h2>
-      <!-- Content will go here -->
-      </div>
-      <div class="container">
-      <p style="font-size: 1.5rem; color: white; margin-top: 2%;">Sea Saw was developed as part of the course DECO7385: Physical Computing Studio at the University of Queensland. The project set out to explore how balance can be leveraged as a medium for non-verbal communication and collaboration. Designed as an interactive installation, Sea Saw allows two participants to stand on individual balance boards and jointly control a shared surfboard in a virtual ocean.
-
-        <br><br>My role in the project involved researching precedents, designing the interaction flow, building the balance board prototype, and integrating sensor data with Unity to create a responsive gameplay environment.</p>
+          </div>
+          
+          <!-- Right Column: Title and Text Description -->
+          <div class="seasaw-hero-right">
+            <!-- Title Section Above Paragraph -->
+            <div class="seasaw-title-container">
+              <div class="seasaw-year">2025</div>
+              <h1 class="seasaw-main-title">SeaSaw - Exploring Collaboration and Non-Verbal Communication Through Physical Balance</h1>
+              <h2 class="seasaw-subtitle">University of Queensland | Interaction Designer</h2>
+            </div>
+            <p class="seasaw-description" style="font-size: 1.5rem; line-height: 1.6;">Sea Saw was developed as part of the course DECO7385: Physical Computing Studio at the University of Queensland. The project set out to explore how balance can be leveraged as a medium for non-verbal communication and collaboration.</p>
+          </div>
+        </div>
       </div>
       
-     <!-- Navigation Buttons -->
-     <div style="display: flex; justify-content: center; gap: 1rem; margin: 3rem 0; flex-wrap: wrap;">
-       <a href="#challenge" class="nav-button">Challenge</a>
-       <a href="#research" class="nav-button">Research</a>
-       <a href="#problem" class="nav-button">Problem</a>
-       <a href="#ideation" class="nav-button">Ideation</a>
-       <a href="#solution" class="nav-button">Solution</a>
-       <a href="#user-testing" class="nav-button">Testing</a>
-       <a href="#reflection" class="nav-button">Reflection</a>
+      <div class="container">
+     <!-- Content will go here -->
+     </div>
+     
+     <!-- My Role Section -->
+     <div id="my-role" class="container seasaw-section-container">
+       <div class="seasaw-text-container">
+         <!-- Left Column -->
+         <div>
+           <div class="seasaw-section-title" style="font-size: 1rem;">MY ROLE</div>
+           <h2 class="seasaw-section-heading" style="font-size: 2rem;">What did I do for the project?</h2>
+         </div>
+         
+         <!-- Right Column -->
+         <div>
+           <p class="seasaw-section-description" style="font-size: 1.5rem;">My role in the project involved researching precedents, designing the interaction flow, building the balance board prototype. I designed the UI for the game and took part in Usability testing and refinement.</p>
+         </div>
+       </div>
+     </div>
+     
+     <!-- Video Case Study Section -->
+     <div class="container" style="margin-top: 4rem; padding-top: 4rem;">
+       <div style="text-align: center; max-width: 1000px; margin: 0 auto;">
+         <p style="font-size: 1.5rem; margin-bottom: 2rem; color: white; text-align: center;">View this case study in a video format.</p>
+         <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem;">
+           <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/dOaP00TO3Q4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="SeaSaw case study video - Interactive Learning Platform demonstration" aria-label="Video: SeaSaw case study showing interactive learning platform features"></iframe>
+         </div>
+       </div>
      </div>
         
      <!-- The Challenge Section -->
@@ -128,7 +541,7 @@
       <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
         <!-- Left Column -->
         <div>
-          <div class="subtitle" style="color: var(--primary-color);">THE CHALLENGE</div>
+          <div class="seasaw-section-title" style="font-size: 1rem;">THE CHALLENGE</div>
          <h2 style="font-size: 2rem; margin-bottom: 2rem;">What were we looking to solve?</h2>
        </div>        
        <!-- Right Column -->
@@ -141,7 +554,7 @@
      <div style="padding: 4rem 0; margin: 2rem 0; text-align: center; width: 100%;">
        <div style="max-width: 100%; margin: 0 auto;">
          <blockquote class="breathing-text"
-           style="font-size: 2rem; font-weight: bold; line-height: 1.4; margin: 3rem 0 1rem 0; text-shadow: 0 0 10px rgba(74, 144, 226, 0.3);">
+           style="font-size: 2rem; font-weight: bold; line-height: 1.4; margin: 3rem 0 1rem 0; text-shadow: 0 0 10px rgba(74, 144, 226, 0.3);" cite="SeaSaw Project Description">
            "Sea Saw reimagines balance as a collaborative input, encouraging participants to rely on timing, rhythm, and physical awareness to achieve a shared goal: collecting coins together."
          </blockquote>
        </div>
@@ -155,82 +568,326 @@
       <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
         <!-- Left Column -->
         <div>
-           <div class="subtitle" style="color: var(--primary-color);">THE RESEARCH</div>
+           <div class="seasaw-section-title" style="font-size: 1rem;">THE RESEARCH</div>
           <h2 style="font-size: 2rem; margin-bottom: 2rem;">What inspired the design of Sea Saw?</h2>
         </div>
         
         <!-- Right Column -->
         <div>
-          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">We conducted extensive user research through interviews, surveys, and observational studies to understand the learning behaviors and preferences of students. Our research revealed key insights about engagement patterns, learning preferences, and barriers to active participation.</p>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">The research phase for Sea Saw focused on leveraging physical balance as a medium for non-verbal communication, inspired by prior work in tangible user interfaces (TUIs) and somatic interaction design. Drawing from Hiroshi Ishii's Tangible Bits framework, which bridges digital and physical worlds to empower collaborative learning and design, Sea Saw sought to create an experience where shared movement fosters understanding. Influenced by VR systems using natural user interfaces to simulate gestures, the design incorporated inertial measurement units (MPU6050 sensors) embedded in custom-built balance boards, capturing real-time body movements for interaction.</p>
           
-          <div style="background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 10px; margin-top: 2rem;">
-            <blockquote class="breathing-text" style="font-size: 1.8rem; margin: 0; text-align: center;">
-              "I learn better when I can interact with the content and collaborate with my peers."
-            </blockquote>
-          </div>
+          
         </div>
       </div>
     </div>
 
-    <!-- Problem Section -->
-    <div id="problem" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; justify-content: center; align-items: center; min-height: 50vh;">
-      <div style="text-align: center; max-width: 800px;">
-        <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Problem</h2>
-        <p style="font-size: 1.8rem; line-height: 1.6;">Traditional learning platforms lack interactivity and fail to engage students effectively, leading to poor learning outcomes and decreased motivation.</p>
-      </div>
-    </div>
 
     <!-- Ideation Section -->
     <div id="ideation" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;">
       <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
         <!-- Left Column -->
         <div>
-           <div class="subtitle">IDEATION</div>
+           <div class="seasaw-section-title" style="font-size: 1rem;">IDEATION AND CONCEPT DEVELOPMENT</div>
           <h2 style="font-size: 2rem; margin-bottom: 2rem;">How did we approach the solution?</h2>
         </div>
         
         <!-- Right Column -->
         <div>
-          <p style="font-size: 1.5rem; line-height: 1.6;">We brainstormed multiple concepts focusing on interactivity, collaboration, and gamification. Through iterative design and user feedback, we refined our ideas into a comprehensive learning platform that combines interactive content, peer collaboration, and engaging visual design.</p>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">We started by throwing around lots of different ideas, focusing on making the experience interactive, fun, and then eventually, something people could do together. We played with physical controls and different ways to encourage teamwork through movement. As we built quick prototypes and got feedback from users, things started to get clearer. We realized the importance of simple balance sensing, clear visual cues, and game mechanics that really pushed people to work in sync. Bit by bit, we shaped the concept into something that felt natural and genuinely fun to play together.</p>
+          
+          <!-- Ideation Slideshow -->
+          <div class="ideation-slideshow" style="position: relative; width: 100%; margin: 2rem auto;">
+            <div class="ideation-slide-container" style="position: relative; width: 100%; height: 400px; overflow: hidden; border-radius: 0.5rem;">
+              <!-- Navigation Buttons -->
+              <button class="ideation-slideshow-prev" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Previous ideation image" title="Previous image">❮</button>
+              <button class="ideation-slideshow-next" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Next ideation image" title="Next image">❯</button>
+              
+              <div class="ideation-slide active" style="display: block; width: 100%; height: 400px;">
+                <img src="images/projects/seasaw/ideation-1.png" style="width: 100%; height: 400px; object-fit: cover; display: block;" alt="Sea Saw ideation concept 1" class="project-main-image" />
+              </div>
+              <div class="ideation-slide" style="display: none; width: 100%; height: 400px;">
+                <img src="images/projects/seasaw/ideation-2.png" style="width: 100%; height: 400px; object-fit: cover; display: block;" alt="Sea Saw ideation concept 2" class="project-main-image" />
+              </div>
+              <div class="ideation-slide" style="display: none; width: 100%; height: 400px;">
+                <img src="images/projects/seasaw/ideation-3.png" style="width: 100%; height: 400px; object-fit: contain; display: block;" alt="Sea Saw ideation concept 3" class="project-main-image" />
+              </div>
+              <div class="ideation-slide" style="display: none; width: 100%; height: 400px;">
+                <img src="images/projects/seasaw/ideation-4.png" style="width: 100%; height: 400px; object-fit: cover; display: block;" alt="Sea Saw ideation concept 4" class="project-main-image" />
+              </div>
+              <div class="ideation-slide" style="display: none; width: 100%; height: 400px;">
+                <img src="images/projects/seasaw/ideation-5.jpg" style="width: 100%; height: 400px; object-fit: contain; display: block;" alt="Sea Saw ideation concept 5" class="project-main-image" />
+              </div>
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div role="tablist" aria-label="Ideation slideshow navigation" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+              <button class="ideation-dot active" role="tab" aria-selected="true" aria-label="Show ideation image 1" style="width: 12px; height: 12px; border-radius: 50%; background: #4a90e2; cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="ideation-dot" role="tab" aria-selected="false" aria-label="Show ideation image 2" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="ideation-dot" role="tab" aria-selected="false" aria-label="Show ideation image 3" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="ideation-dot" role="tab" aria-selected="false" aria-label="Show ideation image 4" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="ideation-dot" role="tab" aria-selected="false" aria-label="Show ideation image 5" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Solution Section -->
-    <div id="solution" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; align-items: center; min-height: 50vh;">
-      <div style="text-align: center; max-width: 1000px; margin: 0 auto;">
-        <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Solution</h2>
-        <p style="font-size: 1.8rem; line-height: 1.6; margin-bottom: 3rem;">SeaSaw is an interactive learning platform that combines engaging content, collaborative features, and personalized learning paths to create an immersive educational experience.</p>
+    <div id="solution" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex; align-items: center; min-height: 50vh;">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center; width: 100%;">
+        <!-- Left Column - Sea Saw Title -->
+        <div>
+          <h2 class="breathing-text" style="font-size: 5rem; font-weight: bold; margin: 0; line-height: 1.3; text-shadow: 0 0 10px rgba(74, 144, 226, 0.3); margin-right: 5rem;">
+            Sea Saw</h2>
+        </div>
         
-        <div style="text-align: center; margin-top: 3rem;">
-          <img src="images/projects/seasaw/mockups.png" style="width: 100%; max-width: 800px;" alt="SeaSaw platform mockups showing key features" class="project-main-image" />
+        <!-- Right Column - Description -->
+        <div>
+          <p style="color: white; font-size: 1.5rem; line-height: 1.6; margin: 0; text-align: justify;">Sea Saw is a collaborative balance game where two players stand on custom sensor-equipped boards that detect their movements in real time. These movements control a shared virtual surfer, with simple visual cues helping players stay in sync. The design focuses on intuitive physical interaction and teamwork, creating an engaging and accessible experience that promotes non-verbal communication.</p>
         </div>
       </div>
     </div>
-
-    <!-- User Testing Section -->
-    <div id="user-testing" class="container" style="margin-top: 2%; padding-top: 8rem; display: flex; align-items: center; min-height: 50vh;">
-      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+    
+    <!-- Solution Image -->
+    <div style="padding: 4rem 0; margin: 2rem 0; text-align: center;">
+      <div style="max-width: 60%; margin: 0 auto;">
+        <img src="images/projects/seasaw/players.JPG" style="width: 100%;" alt="Sea Saw players using the balance boards" class="project-main-image" />
+      </div>
+    </div>
+    
+    <!-- Navigation Buttons -->
+    <nav aria-label="Section navigation" style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 8%; flex-wrap: wrap;">
+      <button id="technicalBtn" class="screen-nav-btn active" style="background: #4a90e2; color: white; border: none; padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;" aria-pressed="true" aria-controls="technical-section">Technical Implementation</button>
+      <button id="uiDesignBtn" class="screen-nav-btn" style="background: rgba(74, 144, 226, 0.3); color: white; border: none; padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;" aria-pressed="false" aria-controls="ui-design-section">User Interface Design</button>
+      <button id="iterationsBtn" class="screen-nav-btn" style="background: rgba(74, 144, 226, 0.3); color: white; border: none; padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease;" aria-pressed="false" aria-controls="iterations-section">Iterations</button>
+    </nav>
+    
+    <!-- Technical Implementation Section -->
+    <section id="technical-section" class="container" style="margin-top: 2%; padding-top: 0rem; display: flex; flex-direction: column;" aria-labelledby="technical-heading" aria-hidden="false">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
         <!-- Left Column -->
         <div>
-           <div class="subtitle">USER TESTING</div>
-          <h2 style="font-size: 2rem; margin-bottom: 2rem;">Did the solution meet user expectations?</h2>
+          <div class="seasaw-section-title" style="font-size: 1rem;">TECHNICAL IMPLEMENTATION</div>
+          <h2 id="technical-heading" style="font-size: 2rem; margin-bottom: 2rem;">How was Sea Saw built?</h2>
         </div>
         
         <!-- Right Column -->
         <div>
-          <p style="font-size: 1.5rem; line-height: 1.6;">We conducted usability testing with students to evaluate the platform's effectiveness. The results showed significant improvements in engagement, learning outcomes, and user satisfaction compared to traditional learning methods.</p>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">The system uses custom-built balance boards equipped with MPU6050 inertial measurement units (IMUs) connected to Arduino Uno microcontrollers which were hosted in a 3d printed hemi sperical base under the boards. These sensors capture motion data such as tilt and orientation, which is streamed in real time to a central computer. </p>
+          
+          <div style="text-align: center; margin-top: 2rem;">
+            <video controls loop autoplay muted playsinline style="width: 100%; max-width: 1000px; border-radius: 0.5rem;" aria-label="Video demonstration of MPU6050 sensors in the balance board base">
+              <source src="images/projects/seasaw/Sensors.MOV" type="video/quicktime">
+              <source src="images/projects/seasaw/Sensors.MOV" type="video/mp4">
+              <track kind="captions" src="" label="English" srclang="en" default>
+              Your browser does not support the video tag.
+            </video>
+            <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Video: MPU6050 sensors embedded in 3D printed hemispherical base under balance boards</p>
+          </div>
+          
+          <p style="font-size: 1.5rem; line-height: 1.6; margin: 2rem 0;">The data is processed in Unity to control a virtual surfer avatar, translating players' physical balance into game actions. Both boards were programmed to send their data to the central computer, and the computer would then process the average direction of the two boards and control the virtual surfer avatar.</p>
+          
+          <div style="text-align: center; margin-top: 2rem;">
+            <video controls loop autoplay muted playsinline style="width: 100%; max-width: 1000px; border-radius: 0.5rem;" aria-label="Video showing balance board movement controlling virtual surfer avatar">
+              <source src="images/projects/seasaw/Movement of Boards.MOV" type="video/quicktime">
+              <source src="images/projects/seasaw/Movement of Boards.MOV" type="video/mp4">
+              <track kind="captions" src="" label="English" srclang="en" default>
+              Your browser does not support the video tag.
+            </video>
+            <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Video: Balance board movements controlling virtual surfer avatar in Unity</p>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Reflection Section -->
-    <div id="reflection" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;">
+    
+    <!-- User Interface Design Section -->
+    <section id="ui-design-section" class="container" style="margin-top: 2%; padding-top: 0rem; display: none; flex-direction: column;" aria-labelledby="ui-design-heading" aria-hidden="true">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
+        <!-- Left Column -->
+        <div>
+          <div class="seasaw-section-title" style="font-size: 1rem;">USER INTERFACE DESIGN</div>
+          <h2 id="ui-design-heading" style="font-size: 2rem; margin-bottom: 2rem;">Designing the Game</h2>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">The user interface is minimalist, focusing on essential visual elements to avoid distracting players from the physical experience. Simple progress bars, timers, and visual effects show real-time game status and player coordination. The color palette and typography were chosen for clarity and accessibility in a shared physical space. The design emphasizes intuitive feedback that helps players synchronize movements without spoken instructions, reinforcing the collaborative nature of the game.</p>
+          
+          <!-- UI Slideshow -->
+          <div class="seasaw-slideshow" style="position: relative; max-width: 1000px; margin: 2rem auto;">
+            <div class="seasaw-slide-container" style="position: relative; width: 100%; overflow: hidden; border-radius: 0.5rem;">
+              <!-- Navigation Buttons -->
+              <button class="seasaw-slideshow-prev" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Previous UI design image" title="Previous image">❮</button>
+              <button class="seasaw-slideshow-next" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Next UI design image" title="Next image">❯</button>
+              
+              <div class="seasaw-slide active" style="display: block;">
+                <img src="images/projects/seasaw/ui_page0.jpg" style="width: 100%; display: block;" alt="Sea Saw UI Page 0" class="project-main-image" />
+              </div>
+              <div class="seasaw-slide" style="display: none;">
+                <img src="images/projects/seasaw/ui_page1.jpg" style="width: 100%; display: block;" alt="Sea Saw UI Page 1" class="project-main-image" />
+              </div>
+              <div class="seasaw-slide" style="display: none;">
+                <img src="images/projects/seasaw/ui_page2.jpg" style="width: 100%; display: block;" alt="Sea Saw UI Page 2" class="project-main-image" />
+              </div>
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div role="tablist" aria-label="UI design slideshow navigation" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+              <button class="seasaw-dot active" role="tab" aria-selected="true" aria-label="Show UI design image 1" style="width: 12px; height: 12px; border-radius: 50%; background: #4a90e2; cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="seasaw-dot" role="tab" aria-selected="false" aria-label="Show UI design image 2" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="seasaw-dot" role="tab" aria-selected="false" aria-label="Show UI design image 3" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Iterations Section -->
+    <section id="iterations-section" class="container" style="margin-top: 2%; padding-top: 0rem; display: none; flex-direction: column;" aria-labelledby="iterations-heading" aria-hidden="true">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; margin-bottom: 2rem;">
+        <!-- Left Column -->
+        <div>
+          <div class="seasaw-section-title" style="font-size: 1rem;">ITERATIONS</div>
+          <h2 id="iterations-heading" style="font-size: 2rem; margin-bottom: 2rem;">Design Evolution</h2>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">The design went through multiple iterations, each refining the interaction and user experience based on testing and feedback.</p>
+          
+          <!-- Iterations Slideshow -->
+          <div class="iterations-slideshow" style="position: relative; width: 100%; margin: 2rem auto;">
+            <div class="iterations-slide-container" style="position: relative; width: 100%; height: 600px; overflow: hidden; border-radius: 0.5rem;">
+              <!-- Navigation Buttons -->
+              <button class="iterations-slideshow-prev" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Previous iteration image" title="Previous image">❮</button>
+              <button class="iterations-slideshow-next" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); background: rgba(74, 144, 226, 0.7); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; transition: all 0.3s ease; z-index: 10;" aria-label="Next iteration image" title="Next image">❯</button>
+              
+              <div class="iterations-slide active" style="display: block; width: 100%; height: 600px;">
+                <img src="images/projects/seasaw/Iterations 1.png" style="width: 100%; height: 600px; object-fit: cover; display: block;" alt="Sea Saw iteration 1" class="project-main-image" />
+              </div>
+              <div class="iterations-slide" style="display: none; width: 100%; height: 600px;">
+                <img src="images/projects/seasaw/Iterations 2.png" style="width: 100%; height: 600px; object-fit: cover; display: block;" alt="Sea Saw iteration 2" class="project-main-image" />
+              </div>
+              <div class="iterations-slide" style="display: none; width: 100%; height: 600px;">
+                <img src="images/projects/seasaw/Iterations 3.png" style="width: 100%; height: 600px; object-fit: cover; display: block;" alt="Sea Saw iteration 3" class="project-main-image" />
+              </div>
+              <div class="iterations-slide" style="display: none; width: 100%; height: 600px;">
+                <img src="images/projects/seasaw/Iterations 4.png" style="width: 100%; height: 600px; object-fit: cover; display: block;" alt="Sea Saw iteration 4" class="project-main-image" />
+              </div>
+              <div class="iterations-slide" style="display: none; width: 100%; height: 600px;">
+                <img src="images/projects/seasaw/Iterations 5.png" style="width: 100%; height: 600px; object-fit: cover; display: block;" alt="Sea Saw iteration 5" class="project-main-image" />
+              </div>
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div role="tablist" aria-label="Iterations slideshow navigation" style="display: flex; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+              <button class="iterations-dot active" role="tab" aria-selected="true" aria-label="Show iteration image 1" style="width: 12px; height: 12px; border-radius: 50%; background: #4a90e2; cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="iterations-dot" role="tab" aria-selected="false" aria-label="Show iteration image 2" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="iterations-dot" role="tab" aria-selected="false" aria-label="Show iteration image 3" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="iterations-dot" role="tab" aria-selected="false" aria-label="Show iteration image 4" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+              <button class="iterations-dot" role="tab" aria-selected="false" aria-label="Show iteration image 5" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(74, 144, 226, 0.3); cursor: pointer; transition: all 0.3s ease; border: none; padding: 0;"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- User Testing Section -->
+    <section id="user-testing" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;" aria-labelledby="user-testing-heading">
       <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
         <!-- Left Column -->
         <div>
-           <div class="subtitle">REFLECTION</div>
-          <h2 style="font-size: 2rem; margin-bottom: 2rem;">What did I learn from this project?</h2>
+           <div class="seasaw-section-title" style="font-size: 1rem;">USER TESTING</div>
+          <h2 id="user-testing-heading" style="font-size: 2rem; margin-bottom: 2rem;">What did we learn through testing?</h2>
+        </div>
+        
+        <!-- Right Column -->
+        <div>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">We went through an iterative design process, where we kept doing testing with players across every iteration. By taking into account the people who have interacted 
+            with Sea Saw during our Interaction Design Exhibit, UQ Open Day, and OZCHI '25 conference, we would have had about a 100 participants.</p>
+          
+          <!-- Testing Scrolling Slideshow -->
+          <div class="horizontal-slideshow-section" style="margin-top: 2rem;">
+            <div class="slideshow-container" style="width: 100%; max-width: 800px; overflow: hidden;">
+              <div class="slideshow-track testing-slideshow-track">
+                <!-- First set of images -->
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-0.jpg" alt="User testing session 1" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-0.5.jpg" alt="User testing session 2" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-1.png" alt="User testing session 3" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-2.png" alt="User testing session 4" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-3.png" alt="User testing session 5" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-4.png" alt="User testing session 6" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-5.png" alt="User testing session 7" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-6.png" alt="User testing session 8" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-7.png" alt="User testing session 9" class="project-main-image" />
+                </div>
+                <!-- Duplicate set for seamless scrolling -->
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-0.jpg" alt="User testing session 1" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-0.5.jpg" alt="User testing session 2" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-1.png" alt="User testing session 3" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-2.png" alt="User testing session 4" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-3.png" alt="User testing session 5" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-4.png" alt="User testing session 6" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-5.png" alt="User testing session 7" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-6.png" alt="User testing session 8" class="project-main-image" />
+                </div>
+                <div class="slide-card">
+                  <img src="images/projects/seasaw/testing-7.png" alt="User testing session 9" class="project-main-image" />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-top: 2rem;">Throughout our sessions, we were able to observe that</p>
+          
+          <ol style="font-size: 1.5rem; line-height: 1.6; margin-top: 1rem; padding-left: 1.5rem;">
+            <li style="margin-bottom: 1rem;"><span class="breathing-text">Time Pressure</span> and <span class="breathing-text">Competitiveness</span> heightened the need for coordination between the players.</li>
+            <li style="margin-bottom: 1rem;">Players developed <span class="breathing-text">verbal cues</span> and <span class="breathing-text">physical signals</span> to maintain balance together.</li>
+            <li style="margin-bottom: 1rem;">Working together meant that the players were <span class="breathing-text">constantly adjusting to stay balanced</span>, sometimes moving with or against each other.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reflection Section -->
+    <section id="reflection" class="container" style="margin-top: 2%; padding-top: 15rem; display: flex;" aria-labelledby="reflection-heading">
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;">
+        <!-- Left Column -->
+        <div>
+           <div class="seasaw-section-title" style="font-size: 1rem;">REFLECTION</div>
+          <h2 id="reflection-heading" style="font-size: 2rem; margin-bottom: 2rem;">What did I learn from this project?</h2>
         </div>
         
         <!-- Right Column -->
@@ -238,27 +895,69 @@
           <p style="font-size: 1.5rem; line-height: 1.6;">This project taught me the importance of user-centered design in educational technology. I learned how to balance functionality with engagement, and how to create solutions that work for diverse learning styles. The experience also strengthened my skills in collaborative design and iterative prototyping.</p>
         </div>
       </div>
+    </section>
+    
+    <!-- Exhibition Grid -->
+    <div class="exhibition-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(1.5rem, 4vw, 3rem); margin: clamp(2rem, 5vw, 4rem) auto; max-width: 80%; padding: 0 clamp(1rem, 3vw, 2rem);">
+      <div style="text-align: center;">
+        <img src="images/projects/seasaw/exhibit-1.jpg" alt="Interaction Design Exhibit" style="width: 100%; height: clamp(15rem, 30vw, 25rem); object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;" class="project-main-image" />
+        <p style="font-size: clamp(0.85rem, 2vw, 1rem); color: #ccc;">Interaction Design Exhibit</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="images/projects/seasaw/exhibit-2.jpg" alt="UQ Open Day" style="width: 100%; height: clamp(15rem, 30vw, 25rem); object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;" class="project-main-image" />
+        <p style="font-size: clamp(0.85rem, 2vw, 1rem); color: #ccc;">UQ Open Day</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="images/projects/seasaw/exhibit-3.jpg" alt="UQ Illuminate Competition" style="width: 100%; height: clamp(15rem, 30vw, 25rem); object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;" class="project-main-image" />
+        <p style="font-size: clamp(0.85rem, 2vw, 1rem); color: #ccc;">UQ Illuminate Competition</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="images/projects/seasaw/exhibit-4.jpg" alt="OzCHI Conference '25" style="width: 100%; height: clamp(15rem, 30vw, 25rem); object-fit: cover; border-radius: 0.5rem; margin-bottom: 1rem;" class="project-main-image" />
+        <p style="font-size: clamp(0.85rem, 2vw, 1rem); color: #ccc;">OzCHI Conference '25</p>
+      </div>
     </div>
 
     <!-- Other Projects Section -->
     <section class="section" aria-labelledby="other-projects-heading" style="margin-top: 8rem; width: 100%;">
-      <div class="container">
-        <h2 id="other-projects-heading" style="font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Other Projects</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-          <div class="project-card" style="background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 10px; text-align: center;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">EventHive</h3>
-            <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Your Hub for Events at UQ</p>
-            <a href="project-eventhive.html" style="color: #4a90e2; text-decoration: none; font-weight: bold;">View Project →</a>
-          </div>
-          <div class="project-card" style="background: rgba(255, 255, 255, 0.1); padding: 2rem; border-radius: 10px; text-align: center;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Unmoot</h3>
-            <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">Improving Class Participation</p>
-            <a href="project-unmoot.html" style="color: #4a90e2; text-decoration: none; font-weight: bold;">View Project →</a>
-          </div>
+      <div style="width: 100%; padding: 0 5%;">
+        <h1 id="other-projects-heading" style="text-align: center; font-size: 1.5rem; margin-bottom: 2rem;">Take a look at another case study of mine</h1>
+        <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;">
+          <!-- EventHive Project Card -->
+          <a href="project-eventhive.html" style="text-decoration: none; color: inherit; flex: 1; min-width: 250px; max-width: 400px;">
+            <div style="text-align: center;">
+              <div style="width: 100%; height: 20rem; border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <img src="images/projects/eventhive/Header.png" alt="EventHive platform interface showing event management features" style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+              <div style="text-align: left;">
+                <h3 style="color: white; font-size: 1.5rem; font-weight: bold; margin: 0 0 0.5rem 0; text-align: left;">EventHive | Your Hub for Events at UQ</h3>
+                <p style="color: #ccc; font-size: 1.2rem; margin: 0 0 0.5rem 0; text-align: left;">University of Queensland | Product Designer</p>
+                <p style="color: #c444ff; font-size: 1.2rem; font-weight: bold; margin: 0; text-align: left;">2024</p>
+              </div>
+            </div>
+          </a>
+          <!-- Unmoot Project Card -->
+          <a href="project-unmoot.html" style="text-decoration: none; color: inherit; flex: 1; min-width: 250px; max-width: 400px;">
+            <div style="text-align: center;">
+              <div style="width: 100%; height: 20rem; border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <img src="images/projects/unmoot/header.png" alt="Unmoot platform interface showing collaborative classroom features" style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+              <div style="text-align: left;">
+                <h3 style="color: white; font-size: 1.5rem; font-weight: bold; margin: 0 0 0.5rem 0; text-align: left;">Unmoot | Collaborative Classroom Participation</h3>
+                <p style="color: #ccc; font-size: 1.2rem; margin: 0 0 0.5rem 0; text-align: left;">University of Queensland | Product Designer</p>
+                <p style="color: #c93246; font-size: 1.2rem; font-weight: bold; margin: 0; text-align: left;">2025</p>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
     </section>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <p>Vibe coded with ♥️ by <a class="link" href="https://linkedin.com/in/derek-joel-george" target="_blank"
+        rel="noopener noreferrer">this human</a></p>
+  </footer>
 
   <!-- Landscape Orientation Prompt -->
   <div id="landscape-prompt" class="landscape-prompt">
@@ -330,6 +1029,234 @@
   <script src="javascript/text-resize.js"></script>
   <script src="javascript/landscape-prompt.js"></script>
   <script src="javascript/pointer-effect.js"></script>
+  
+  <!-- Section Navigation Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const technicalBtn = document.getElementById('technicalBtn');
+      const uiDesignBtn = document.getElementById('uiDesignBtn');
+      const iterationsBtn = document.getElementById('iterationsBtn');
+      
+      const technicalSection = document.getElementById('technical-section');
+      const uiDesignSection = document.getElementById('ui-design-section');
+      const iterationsSection = document.getElementById('iterations-section');
+      
+      function showTechnicalSection() {
+        // Show/hide sections
+        technicalSection.style.display = 'flex';
+        uiDesignSection.style.display = 'none';
+        if (iterationsSection) iterationsSection.style.display = 'none';
+        
+        // Update button states
+        technicalBtn.style.background = '#4a90e2';
+        uiDesignBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        if (iterationsBtn) iterationsBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        technicalBtn.setAttribute('aria-pressed', 'true');
+        uiDesignBtn.setAttribute('aria-pressed', 'false');
+        if (iterationsBtn) iterationsBtn.setAttribute('aria-pressed', 'false');
+        if (technicalSection) technicalSection.setAttribute('aria-hidden', 'false');
+        if (uiDesignSection) uiDesignSection.setAttribute('aria-hidden', 'true');
+        if (iterationsSection) iterationsSection.setAttribute('aria-hidden', 'true');
+      }
+      
+      function showUIDesignSection() {
+        // Show/hide sections
+        technicalSection.style.display = 'none';
+        uiDesignSection.style.display = 'flex';
+        if (iterationsSection) iterationsSection.style.display = 'none';
+        
+        // Update button states
+        technicalBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        uiDesignBtn.style.background = '#4a90e2';
+        if (iterationsBtn) iterationsBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        technicalBtn.setAttribute('aria-pressed', 'false');
+        uiDesignBtn.setAttribute('aria-pressed', 'true');
+        if (iterationsBtn) iterationsBtn.setAttribute('aria-pressed', 'false');
+        if (technicalSection) technicalSection.setAttribute('aria-hidden', 'true');
+        if (uiDesignSection) uiDesignSection.setAttribute('aria-hidden', 'false');
+        if (iterationsSection) iterationsSection.setAttribute('aria-hidden', 'true');
+      }
+      
+      function showIterationsSection() {
+        // Show/hide sections
+        technicalSection.style.display = 'none';
+        uiDesignSection.style.display = 'none';
+        if (iterationsSection) iterationsSection.style.display = 'flex';
+        
+        // Update button states
+        technicalBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        uiDesignBtn.style.background = 'rgba(74, 144, 226, 0.3)';
+        if (iterationsBtn) iterationsBtn.style.background = '#4a90e2';
+        technicalBtn.setAttribute('aria-pressed', 'false');
+        uiDesignBtn.setAttribute('aria-pressed', 'false');
+        if (iterationsBtn) iterationsBtn.setAttribute('aria-pressed', 'true');
+        if (technicalSection) technicalSection.setAttribute('aria-hidden', 'true');
+        if (uiDesignSection) uiDesignSection.setAttribute('aria-hidden', 'true');
+        if (iterationsSection) iterationsSection.setAttribute('aria-hidden', 'false');
+      }
+      
+      // Add event listeners
+      if (technicalBtn) technicalBtn.addEventListener('click', showTechnicalSection);
+      if (uiDesignBtn) uiDesignBtn.addEventListener('click', showUIDesignSection);
+      if (iterationsBtn) iterationsBtn.addEventListener('click', showIterationsSection);
+    });
+  </script>
+  
+  <!-- UI Slideshow Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const slides = document.querySelectorAll('.seasaw-slide');
+      const dots = document.querySelectorAll('.seasaw-dot');
+      const prevBtn = document.querySelector('.seasaw-slideshow-prev');
+      const nextBtn = document.querySelector('.seasaw-slideshow-next');
+      let currentSlide = 0;
+      
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach((slide, i) => {
+          slide.style.display = i === index ? 'block' : 'none';
+        });
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          dot.style.background = i === index ? '#4a90e2' : 'rgba(74, 144, 226, 0.3)';
+          dot.classList.toggle('active', i === index);
+          dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
+        
+        currentSlide = index;
+      }
+      
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+      
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+      }
+      
+      // Navigation button handlers
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+      
+      // Allow manual navigation via dots
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+        dot.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showSlide(index);
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Ideation Slideshow Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const ideationSlides = document.querySelectorAll('.ideation-slide');
+      const ideationDots = document.querySelectorAll('.ideation-dot');
+      const ideationPrevBtn = document.querySelector('.ideation-slideshow-prev');
+      const ideationNextBtn = document.querySelector('.ideation-slideshow-next');
+      let currentIdeationSlide = 0;
+      
+      function showIdeationSlide(index) {
+        // Hide all slides
+        ideationSlides.forEach((slide, i) => {
+          slide.style.display = i === index ? 'block' : 'none';
+        });
+        
+        // Update dots
+        ideationDots.forEach((dot, i) => {
+          dot.style.background = i === index ? '#4a90e2' : 'rgba(74, 144, 226, 0.3)';
+          dot.classList.toggle('active', i === index);
+          dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
+        
+        currentIdeationSlide = index;
+      }
+      
+      function nextIdeationSlide() {
+        currentIdeationSlide = (currentIdeationSlide + 1) % ideationSlides.length;
+        showIdeationSlide(currentIdeationSlide);
+      }
+      
+      function prevIdeationSlide() {
+        currentIdeationSlide = (currentIdeationSlide - 1 + ideationSlides.length) % ideationSlides.length;
+        showIdeationSlide(currentIdeationSlide);
+      }
+      
+      // Navigation button handlers
+      if (ideationNextBtn) ideationNextBtn.addEventListener('click', nextIdeationSlide);
+      if (ideationPrevBtn) ideationPrevBtn.addEventListener('click', prevIdeationSlide);
+      
+      // Allow manual navigation via dots
+      ideationDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showIdeationSlide(index));
+        dot.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showIdeationSlide(index);
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Iterations Slideshow Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const iterationsSlides = document.querySelectorAll('.iterations-slide');
+      const iterationsDots = document.querySelectorAll('.iterations-dot');
+      const iterationsPrevBtn = document.querySelector('.iterations-slideshow-prev');
+      const iterationsNextBtn = document.querySelector('.iterations-slideshow-next');
+      let currentIterationsSlide = 0;
+      
+      function showIterationsSlide(index) {
+        // Hide all slides
+        iterationsSlides.forEach((slide, i) => {
+          slide.style.display = i === index ? 'block' : 'none';
+        });
+        
+        // Update dots
+        iterationsDots.forEach((dot, i) => {
+          dot.style.background = i === index ? '#4a90e2' : 'rgba(74, 144, 226, 0.3)';
+          dot.classList.toggle('active', i === index);
+          dot.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
+        
+        currentIterationsSlide = index;
+      }
+      
+      function nextIterationsSlide() {
+        currentIterationsSlide = (currentIterationsSlide + 1) % iterationsSlides.length;
+        showIterationsSlide(currentIterationsSlide);
+      }
+      
+      function prevIterationsSlide() {
+        currentIterationsSlide = (currentIterationsSlide - 1 + iterationsSlides.length) % iterationsSlides.length;
+        showIterationsSlide(currentIterationsSlide);
+      }
+      
+      // Navigation button handlers
+      if (iterationsNextBtn) iterationsNextBtn.addEventListener('click', nextIterationsSlide);
+      if (iterationsPrevBtn) iterationsPrevBtn.addEventListener('click', prevIterationsSlide);
+      
+      // Allow manual navigation via dots
+      iterationsDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showIterationsSlide(index));
+        dot.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            showIterationsSlide(index);
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

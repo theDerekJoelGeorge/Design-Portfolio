@@ -459,6 +459,54 @@
          width: 100% !important;
        }
      }
+     
+     /* Reference tooltip styles */
+     .reference-tooltip {
+       position: relative;
+       display: inline;
+       cursor: help;
+       z-index: 1;
+       overflow: visible;
+       color: #4a90e2;
+     }
+     
+     .reference-tooltip:hover {
+       color: #5ba0f2;
+     }
+     
+     .reference-tooltip .tooltip-content {
+       display: none;
+       position: fixed;
+       background-color: #1a1a1a !important;
+       color: #ffffff !important;
+       text-align: left;
+       padding: 1rem 1.5rem !important;
+       border-radius: 8px;
+       border: 2px solid #4a90e2 !important;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+       white-space: normal;
+       width: 400px;
+       max-width: 90vw;
+       z-index: 999999 !important;
+       font-size: 0.9rem !important;
+       line-height: 1.5 !important;
+       pointer-events: none;
+     }
+     
+     .reference-tooltip:hover .tooltip-content {
+       display: block !important;
+     }
+     
+     .reference-tooltip .tooltip-content::before {
+       content: "";
+       position: absolute;
+       top: 100%;
+       left: 50%;
+       transform: translateX(-50%);
+       border: 8px solid transparent;
+       border-top-color: #4a90e2;
+     }
+     
   </style>
 </head>
 
@@ -573,8 +621,24 @@
         </div>
         
         <!-- Right Column -->
-        <div>
-          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">The research phase for Sea Saw focused on leveraging physical balance as a medium for non-verbal communication, inspired by prior work in tangible user interfaces (TUIs) and somatic interaction design. Drawing from Hiroshi Ishii's Tangible Bits framework, which bridges digital and physical worlds to empower collaborative learning and design, Sea Saw sought to create an experience where shared movement fosters understanding. Influenced by VR systems using natural user interfaces to simulate gestures, the design incorporated inertial measurement units (MPU6050 sensors) embedded in custom-built balance boards, capturing real-time body movements for interaction.</p>
+        <div style="overflow: visible;">
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem; overflow: visible;">The research for Sea Saw focused on how balance can act as a medium for non-verbal communication and collaborative interaction, informed by work on somaesthetic interaction design and tangible user interfaces. Key sources included:</p>
+          
+          <ul style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem; padding-left: 2rem; color: white;">
+            <li><span class="reference-tooltip">Eunson's writing on non-verbal communication<span class="tooltip-content">Eunson, B. (2020). Nonverbal Communication.</span></span></li>
+            <li><span class="reference-tooltip">Höök's soma design framework<span class="tooltip-content">Höök, K. (2018). Designing with the body: Somaesthetic interaction design. MIT Press.</span></span></li>
+            <li><span class="reference-tooltip">Ishii and Ullmer's Tangible Bits<span class="tooltip-content">Ishii, H., & Ullmer, B. (1997). Tangible bits: Towards seamless interfaces between people, bits and atoms. Proceedings of the ACM SIGCHI Conference on Human Factors in Computing Systems (CHI '97), 234-241. https://doi.org/10.1145/258549.258715</span></span></li>
+            <li><span class="reference-tooltip">Pasinetti et al.'s non-verbal VR interface<span class="tooltip-content">Pasinetti, N. J., Rodríguez, G., Alvarado, Y., Fernández, J., & Guerrero, R. A. (2016). Non-verbal communication for a virtual reality interface. XXII Congreso Argentino de Ciencias de la Computación (CACIC 2016).</span></span></li>
+            <li><span class="reference-tooltip">Hess's work on nonverbal communication<span class="tooltip-content">Hess, U. (2016). Nonverbal Communication. In Encyclopedia of Mental Health. https://doi.org/10.1016/B978-0-12-397045-9.00218-4</span></span></li>
+            <li><span class="reference-tooltip">Byrne et al.'s Balance Ninja<span class="tooltip-content">Byrne, R., Marshall, J., & Mueller, F. F. (2016). Balance Ninja: Towards the design of digital vertigo games via galvanic vestibular stimulation. Proceedings of the 2016 Annual Symposium on Computer-Human Interaction in Play, 159-170.</span></span></li>
+          </ul>
+          
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 2rem;">These sources together shaped how balance, bodily awareness, and shared control were framed in the project. Influenced by VR systems using natural user interfaces to simulate gestures, the design incorporated inertial measurement units (MPU6050 sensors) embedded in custom-built balance boards, capturing real-time body movements for interaction.</p>
+          
+          <div style="margin-top: 2rem;">
+            <img src="images/projects/seasaw/research.png" alt="Balance Ninja research" style="width: 100%; max-width: 1000px; border-radius: 0.5rem; margin-bottom: 1rem;" class="project-main-image" />
+            <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Balance Ninja: Towards the design of digital vertigo games via galvanic vestibular stimulation.</p>
+          </div>
           
           
         </div>
@@ -892,7 +956,8 @@
         
         <!-- Right Column -->
         <div>
-          <p style="font-size: 1.5rem; line-height: 1.6;">This project taught me the importance of user-centered design in educational technology. I learned how to balance functionality with engagement, and how to create solutions that work for diverse learning styles. The experience also strengthened my skills in collaborative design and iterative prototyping.</p>
+          <p style="font-size: 1.5rem; line-height: 1.6; margin-bottom: 1.5rem;">Sea Saw showed how important it is to test ideas with real people, not just plan them. Trying things out, watching how players actually behaved, and changing designs step by step helped improve balance, visuals, and teamwork. This can be evidenced by the changes we had to make to our base as well as user interface. A key takeaway for the future is to prototype earlier and iterate more often to quickly find what really works.</p>
+          <p style="font-size: 1.5rem; line-height: 1.6;">We have been approached by many of our participants with the idea of commercializing and this is something that we have started to consider. Probably by the time you are reading this, we are approaching your closest gym/ co working space.</p>
         </div>
       </div>
     </section>
@@ -1253,6 +1318,28 @@
             e.preventDefault();
             showIterationsSlide(index);
           }
+        });
+      });
+    });
+    
+    // Tooltip positioning and display
+    document.addEventListener('DOMContentLoaded', function() {
+      const tooltips = document.querySelectorAll('.reference-tooltip');
+      
+      tooltips.forEach(function(tooltip) {
+        const tooltipContent = tooltip.querySelector('.tooltip-content');
+        if (!tooltipContent) return;
+        
+        tooltip.addEventListener('mouseenter', function(e) {
+          const rect = tooltip.getBoundingClientRect();
+          tooltipContent.style.display = 'block';
+          tooltipContent.style.top = (rect.top - tooltipContent.offsetHeight - 15) + 'px';
+          tooltipContent.style.left = (rect.left + (rect.width / 2)) + 'px';
+          tooltipContent.style.transform = 'translateX(-50%)';
+        });
+        
+        tooltip.addEventListener('mouseleave', function() {
+          tooltipContent.style.display = 'none';
         });
       });
     });
